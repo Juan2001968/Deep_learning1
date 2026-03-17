@@ -1,0 +1,7 @@
+format: jb-book
+root: intro
+chapters:
+  - file: docs/01_project_overview_and_eda
+  - file: docs/02_sklearn_mlp_pipeline
+  - file: docs/03_pyspark_mlp_pipeline
+  - file: docs/04_lime_and_framework_comparison

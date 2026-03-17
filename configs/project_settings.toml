@@ -1,0 +1,93 @@
+[paths]
+train_csv = "data/raw/train.gz"
+test_csv = "data/raw/test.gz"
+sampled_train_parquet = "data/processed/avazu_train_sample.parquet"
+figures_dir = "reports/figures"
+models_dir = "models"
+
+[general]
+random_state = 42
+sample_size = 1_000_000
+chunksize = 200_000
+preview_rows = 150_000
+target_col = "click"
+hour_col = "hour"
+id_col = "id"
+spark_shuffle_partitions = 100
+spark_repartition = 100
+lime_background_size = 1500
+
+[features]
+sklearn_categorical = [
+  "C1",
+  "banner_pos",
+  "site_category",
+  "app_category",
+  "device_type",
+  "device_conn_type",
+  "C14",
+  "C15",
+  "C16",
+  "C17",
+  "C18",
+  "C19",
+  "C20",
+  "C21",
+  "time_bucket",
+]
+sklearn_high_cardinality = [
+  "C14",
+  "C17",
+  "C19",
+  "C20",
+  "C21",
+]
+sklearn_low_cardinality = [
+  "C1",
+  "banner_pos",
+  "site_category",
+  "app_category",
+  "device_type",
+  "device_conn_type",
+  "C15",
+  "C16",
+  "C18",
+  "time_bucket",
+]
+sklearn_numeric = [
+  "event_day",
+  "event_hour",
+  "day_of_week",
+  "is_weekend",
+  "is_business_hour",
+]
+spark_categorical = [
+  "C1",
+  "banner_pos",
+  "site_id",
+  "site_domain",
+  "site_category",
+  "app_id",
+  "app_domain",
+  "app_category",
+  "device_model",
+  "device_type",
+  "device_conn_type",
+  "C14",
+  "C15",
+  "C16",
+  "C17",
+  "C18",
+  "C19",
+  "C20",
+  "C21",
+  "time_bucket",
+]
+spark_numeric = [
+  "event_day",
+  "event_hour",
+  "day_of_week",
+  "is_weekend",
+  "is_business_hour",
+]
+drop_columns = ["id", "device_ip", "device_id"]

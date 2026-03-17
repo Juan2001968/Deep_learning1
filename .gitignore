@@ -1,0 +1,31 @@
+.venv/
+.vscode/
+.idea/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+.DS_Store
+Thumbs.db
+*.tmp
+*.temp
+*.log
+
+# Raw and derived data artifacts
+/data/raw/*
+!/data/raw/.gitkeep
+/data/processed/*
+!/data/processed/.gitkeep
+/models/*
+!/models/.gitkeep
+/reports/figures/*
+!/reports/figures/.gitkeep
+
+# Jupyter Book build output
+/book/_build/
+
+# Archivos pesados adicionales
+*.gz
+*.pkl
+*.joblib
+.env

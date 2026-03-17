@@ -1,0 +1,9 @@
+title: Avazu CTR Deep Learning Project
+author: Juana
+only_build_toc_files: true
+execute:
+  execute_notebooks: "off"
+launch_buttons:
+  notebook_interface: jupyterlab
+repository:
+  path_to_book: book
