@@ -1,0 +1,961 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>🔬 Notebook 4: Explicabilidad con LIME y Comparación de Frameworks &#8212; Avazu CTR Deep Learning Project</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=1ae7504c"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'docs/04_lime_and_framework_comparison';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="⚡ Notebook 3: Pipeline de Clasificación con PySpark" href="03_pyspark_mlp_pipeline.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Avazu CTR Deep Learning Project</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Avazu CTR — Proyecto de Deep Learning
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_project_overview_and_eda.html">📊 Notebook 1: Visión General del Proyecto y Análisis Exploratorio de Datos (EDA)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_sklearn_mlp_pipeline.html">🧪 Notebook 2: Pipeline de Clasificación con scikit-learn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_pyspark_mlp_pipeline.html">⚡ Notebook 3: Pipeline de Clasificación con PySpark</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">🔬 Notebook 4: Explicabilidad con LIME y Comparación de Frameworks</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/docs/04_lime_and_framework_comparison.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>🔬 Notebook 4: Explicabilidad con LIME y Comparación de Frameworks</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contenido">📋 Contenido:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#requisitos">⚙️ Requisitos:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuracion-del-entorno">⚙️ 0.1 Configuración del Entorno</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#carga-del-modelo-entrenado-y-datos">📥 1.1 Carga del Modelo Entrenado y Datos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#identificacion-de-instancias-mal-clasificadas">❌ 2.1 Identificación de Instancias Mal Clasificadas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#explicacion-lime-falso-positivo">🔬 2.2 Explicación LIME — Falso Positivo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#explicacion-lime-falso-negativo">🔬 2.3 Explicación LIME — Falso Negativo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resumen-de-contribuciones-positivas-vs-negativas">📊 2.4 Resumen de Contribuciones — Positivas vs Negativas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparacion-de-frameworks-scikit-learn-vs-pyspark">🏆 3. Comparación de Frameworks: scikit-learn vs PySpark</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tabla-comparativa-de-metricas">📝 3.1 Tabla Comparativa de Métricas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#curvas-roc-superpuestas">📈 3.2 Curvas ROC Superpuestas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparacion-de-tiempos-de-computo">⏱️ 3.3 Comparación de Tiempos de Cómputo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reflexion-critica">💡 4. Reflexión Crítica</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#que-entorno-fue-mas-rapido">❓ ¿Qué entorno fue más rápido?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cual-fue-mas-preciso">❓ ¿Cuál fue más preciso?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cuando-es-util-pyspark-vs-scikit-learn">❓ ¿Cuándo es útil PySpark vs scikit-learn?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#que-aporta-lime-al-analisis">❓ ¿Qué aporta LIME al análisis?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion-final-del-proyecto">🌟 Conclusión Final del Proyecto</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="notebook-4-explicabilidad-con-lime-y-comparacion-de-frameworks">
+<h1>🔬 Notebook 4: Explicabilidad con LIME y Comparación de Frameworks<a class="headerlink" href="#notebook-4-explicabilidad-con-lime-y-comparacion-de-frameworks" title="Link to this heading">#</a></h1>
+<blockquote>
+<div><p>Este notebook explica predicciones individuales del modelo scikit-learn usando <strong>LIME</strong> y presenta la <strong>comparación final</strong> entre los frameworks scikit-learn y PySpark.</p>
+</div></blockquote>
+<section id="contenido">
+<h2>📋 Contenido:<a class="headerlink" href="#contenido" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Carga del modelo</strong> entrenado y datos de prueba</p></li>
+<li><p><strong>Identificación de instancias mal clasificadas</strong> (falsos positivos y falsos negativos)</p></li>
+<li><p><strong>Explicabilidad con LIME</strong> — análisis de predicciones erróneas</p></li>
+<li><p><strong>Tabla comparativa</strong> — scikit-learn vs PySpark (métricas y tiempos)</p></li>
+<li><p><strong>Curvas ROC superpuestas</strong> — comparación visual</p></li>
+<li><p><strong>Comparación de tiempos</strong> de cómputo</p></li>
+<li><p><strong>Reflexión crítica</strong> sobre ambos frameworks</p></li>
+</ol>
+</section>
+<section id="requisitos">
+<h2>⚙️ Requisitos:<a class="headerlink" href="#requisitos" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Notebook 2 ejecutado (modelo sklearn guardado + métricas)</p></li>
+<li><p>Notebook 3 ejecutado (métricas Spark guardadas)</p></li>
+<li><p>Librerías: lime, scikit-learn, pandas, matplotlib</p></li>
+</ul>
+<hr class="docutils" />
+</section>
+<hr class="docutils" />
+<section id="configuracion-del-entorno">
+<h2>⚙️ 0.1 Configuración del Entorno<a class="headerlink" href="#configuracion-del-entorno" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p><strong>Importamos las dependencias y aplicamos el estilo visual consistente con el resto del proyecto.</strong></p>
+</div></blockquote>
+<hr class="docutils" />
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="n">PROJECT_ROOT</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span>
+<span class="k">while</span> <span class="n">PROJECT_ROOT</span> <span class="o">!=</span> <span class="n">PROJECT_ROOT</span><span class="o">.</span><span class="n">parent</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span><span class="n">PROJECT_ROOT</span> <span class="o">/</span> <span class="s2">&quot;src&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+    <span class="n">PROJECT_ROOT</span> <span class="o">=</span> <span class="n">PROJECT_ROOT</span><span class="o">.</span><span class="n">parent</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">PROJECT_ROOT</span> <span class="o">/</span> <span class="s2">&quot;src&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+    <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="s2">&quot;No se encontró la raíz del proyecto con el directorio src.&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">PROJECT_ROOT</span> <span class="o">/</span> <span class="s2">&quot;src&quot;</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">PROJECT_ROOT</span> <span class="o">/</span> <span class="s2">&quot;src&quot;</span><span class="p">))</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">joblib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">ctr_mlp.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_project_settings</span><span class="p">,</span> <span class="n">apply_dark_style</span><span class="p">,</span> <span class="n">COLORS</span><span class="p">,</span> <span class="n">AXES_BG</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ctr_mlp.data_io</span><span class="w"> </span><span class="kn">import</span> <span class="n">split_features_target</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ctr_mlp.evaluation</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">compute_binary_metrics</span><span class="p">,</span>
+    <span class="n">plot_confusion_matrix</span><span class="p">,</span>
+    <span class="n">plot_roc_curve</span><span class="p">,</span>
+    <span class="n">plot_comparative_roc</span><span class="p">,</span>
+    <span class="n">plot_comparative_times</span><span class="p">,</span>
+    <span class="n">build_comparison_table</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ctr_mlp.explainability</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">build_lime_explainer_from_pipeline</span><span class="p">,</span>
+    <span class="n">explain_pipeline_prediction</span><span class="p">,</span>
+    <span class="n">explanation_to_frame</span><span class="p">,</span>
+    <span class="n">find_misclassified_instances</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ctr_mlp.feature_engineering</span><span class="w"> </span><span class="kn">import</span> <span class="n">add_time_features_pandas</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ctr_mlp.sklearn_workflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">split_train_test</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ctr_mlp.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">format_seconds</span>
+
+<span class="c1"># Aplicar estilo oscuro profesional</span>
+<span class="n">apply_dark_style</span><span class="p">()</span>
+
+<span class="n">settings</span> <span class="o">=</span> <span class="n">load_project_settings</span><span class="p">()</span>
+<span class="n">paths</span> <span class="o">=</span> <span class="n">settings</span><span class="p">[</span><span class="s2">&quot;paths&quot;</span><span class="p">]</span>
+<span class="n">general</span> <span class="o">=</span> <span class="n">settings</span><span class="p">[</span><span class="s2">&quot;general&quot;</span><span class="p">]</span>
+<span class="n">feature_cfg</span> <span class="o">=</span> <span class="n">settings</span><span class="p">[</span><span class="s2">&quot;features&quot;</span><span class="p">]</span>
+
+<span class="n">FIGURES_DIR</span> <span class="o">=</span> <span class="n">paths</span><span class="p">[</span><span class="s2">&quot;figures_dir&quot;</span><span class="p">]</span>
+<span class="n">MODELS_DIR</span> <span class="o">=</span> <span class="n">paths</span><span class="p">[</span><span class="s2">&quot;models_dir&quot;</span><span class="p">]</span>
+<span class="n">TARGET_COL</span> <span class="o">=</span> <span class="n">general</span><span class="p">[</span><span class="s2">&quot;target_col&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="carga-del-modelo-entrenado-y-datos">
+<h2>📥 1.1 Carga del Modelo Entrenado y Datos<a class="headerlink" href="#carga-del-modelo-entrenado-y-datos" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p><strong>Cargamos el mejor modelo de scikit-learn guardado en el Notebook 2 y reconstruimos los conjuntos de train/test para aplicar LIME.</strong></p>
+</div></blockquote>
+<hr class="docutils" />
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Cargar modelo guardado</span>
+<span class="n">model_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">MODELS_DIR</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;sklearn_best_mlp.joblib&quot;</span>
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">joblib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">model_path</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Modelo cargado desde: </span><span class="si">{</span><span class="n">model_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Cargar muestra y reconstruir datos</span>
+<span class="n">sample_path</span> <span class="o">=</span> <span class="n">paths</span><span class="p">[</span><span class="s2">&quot;sampled_train_parquet&quot;</span><span class="p">]</span>
+<span class="n">df_sample</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="n">sample_path</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Muestra cargada: </span><span class="si">{</span><span class="n">df_sample</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">selected_cols</span> <span class="o">=</span> <span class="n">feature_cfg</span><span class="p">[</span><span class="s2">&quot;sklearn_categorical&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">feature_cfg</span><span class="p">[</span><span class="s2">&quot;sklearn_numeric&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">TARGET_COL</span><span class="p">]</span>
+<span class="n">model_df</span> <span class="o">=</span> <span class="n">df_sample</span><span class="p">[</span><span class="n">selected_cols</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">split_features_target</span><span class="p">(</span><span class="n">model_df</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="n">TARGET_COL</span><span class="p">)</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">split_train_test</span><span class="p">(</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">general</span><span class="p">[</span><span class="s2">&quot;random_state&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Test set: </span><span class="si">{</span><span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> registros&quot;</span><span class="p">)</span>
+
+<span class="c1"># Obtener predicciones</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">y_score</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="identificacion-de-instancias-mal-clasificadas">
+<h2>❌ 2.1 Identificación de Instancias Mal Clasificadas<a class="headerlink" href="#identificacion-de-instancias-mal-clasificadas" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p><strong>Buscamos falsos positivos (el modelo predijo clic pero no hubo) y falsos negativos (el modelo no predijo un clic real). Estas instancias son las más interesantes para explicar con LIME, ya que revelan qué confunde al modelo.</strong></p>
+</div></blockquote>
+<hr class="docutils" />
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Encontrar instancias mal clasificadas</span>
+<span class="n">errors</span> <span class="o">=</span> <span class="n">find_misclassified_instances</span><span class="p">(</span>
+    <span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">y_score</span><span class="o">=</span><span class="n">y_score</span><span class="p">,</span> <span class="n">error_type</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">5</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Falsos Positivos encontrados: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">errors</span><span class="p">[</span><span class="s1">&#39;false_positives&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Índices: </span><span class="si">{</span><span class="n">errors</span><span class="p">[</span><span class="s1">&#39;false_positives&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Falsos Negativos encontrados: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">errors</span><span class="p">[</span><span class="s1">&#39;false_negatives&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Índices: </span><span class="si">{</span><span class="n">errors</span><span class="p">[</span><span class="s1">&#39;false_negatives&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Resumen de errores</span>
+<span class="n">total_errors</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_pred</span> <span class="o">!=</span> <span class="n">y_test</span><span class="o">.</span><span class="n">values</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Total de errores de clasificación: </span><span class="si">{</span><span class="n">total_errors</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> / </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">total_errors</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="explicacion-lime-falso-positivo">
+<h2>🔬 2.2 Explicación LIME — Falso Positivo<a class="headerlink" href="#explicacion-lime-falso-positivo" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p><strong>Analizamos un falso positivo con LIME: una instancia donde el modelo predijo que el usuario haría clic, pero en realidad no lo hizo. LIME revela qué features impulsaron la predicción errónea.</strong></p>
+</div></blockquote>
+<hr class="docutils" />
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Construir explicador LIME</span>
+<span class="n">lime_artifacts</span> <span class="o">=</span> <span class="n">build_lime_explainer_from_pipeline</span><span class="p">(</span>
+    <span class="n">pipeline</span><span class="p">,</span>
+    <span class="n">X_reference</span><span class="o">=</span><span class="n">X_train</span><span class="p">,</span>
+    <span class="n">background_size</span><span class="o">=</span><span class="n">general</span><span class="p">[</span><span class="s2">&quot;lime_background_size&quot;</span><span class="p">],</span>
+<span class="p">)</span>
+
+<span class="c1"># Explicar un falso positivo</span>
+<span class="n">fp_idx</span> <span class="o">=</span> <span class="n">errors</span><span class="p">[</span><span class="s2">&quot;false_positives&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">fp_instance</span> <span class="o">=</span> <span class="n">X_test</span><span class="o">.</span><span class="n">iloc</span><span class="p">[[</span><span class="n">fp_idx</span><span class="p">]]</span>
+<span class="n">fp_true</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">y_test</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">fp_idx</span><span class="p">])</span>
+<span class="n">fp_pred_prob</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">y_score</span><span class="p">[</span><span class="n">fp_idx</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Instancia seleccionada (índice en test): </span><span class="si">{</span><span class="n">fp_idx</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Valor real: </span><span class="si">{</span><span class="n">fp_true</span><span class="si">}</span><span class="s2"> (No Click)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Predicción del modelo: 1 (Click)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Probabilidad predicha de click: </span><span class="si">{</span><span class="n">fp_pred_prob</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">explanation_fp</span> <span class="o">=</span> <span class="n">explain_pipeline_prediction</span><span class="p">(</span>
+    <span class="n">pipeline</span><span class="p">,</span> <span class="n">lime_artifacts</span><span class="p">,</span> <span class="n">fp_instance</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_features</span><span class="o">=</span><span class="mi">10</span>
+<span class="p">)</span>
+
+<span class="c1"># Tabla de features más influyentes</span>
+<span class="n">fp_frame</span> <span class="o">=</span> <span class="n">explanation_to_frame</span><span class="p">(</span><span class="n">explanation_fp</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;weight&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Features más influyentes en la decisión errónea:&quot;</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">fp_frame</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Gráfico de explicación LIME (falso positivo)</span>
+<span class="n">fig_fp</span> <span class="o">=</span> <span class="n">explanation_fp</span><span class="o">.</span><span class="n">as_pyplot_figure</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">fig_fp</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+<span class="n">fig_fp</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Explicación LIME — Falso Positivo&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">fig_fp</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">FIGURES_DIR</span> <span class="o">/</span> <span class="s2">&quot;04_lime_false_positive.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="explicacion-lime-falso-negativo">
+<h2>🔬 2.3 Explicación LIME — Falso Negativo<a class="headerlink" href="#explicacion-lime-falso-negativo" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p><strong>Analizamos un falso negativo: una instancia donde el modelo predijo “no clic” pero el usuario sí hizo clic. Esto revela qué patrones el modelo no logra capturar.</strong></p>
+</div></blockquote>
+<hr class="docutils" />
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Explicar un falso negativo</span>
+<span class="n">fn_idx</span> <span class="o">=</span> <span class="n">errors</span><span class="p">[</span><span class="s2">&quot;false_negatives&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">fn_instance</span> <span class="o">=</span> <span class="n">X_test</span><span class="o">.</span><span class="n">iloc</span><span class="p">[[</span><span class="n">fn_idx</span><span class="p">]]</span>
+<span class="n">fn_true</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">y_test</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">fn_idx</span><span class="p">])</span>
+<span class="n">fn_pred_prob</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">y_score</span><span class="p">[</span><span class="n">fn_idx</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Instancia seleccionada (índice en test): </span><span class="si">{</span><span class="n">fn_idx</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Valor real: </span><span class="si">{</span><span class="n">fn_true</span><span class="si">}</span><span class="s2"> (Click)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Predicción del modelo: 0 (No Click)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Probabilidad predicha de click: </span><span class="si">{</span><span class="n">fn_pred_prob</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">explanation_fn</span> <span class="o">=</span> <span class="n">explain_pipeline_prediction</span><span class="p">(</span>
+    <span class="n">pipeline</span><span class="p">,</span> <span class="n">lime_artifacts</span><span class="p">,</span> <span class="n">fn_instance</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_features</span><span class="o">=</span><span class="mi">10</span>
+<span class="p">)</span>
+
+<span class="n">fn_frame</span> <span class="o">=</span> <span class="n">explanation_to_frame</span><span class="p">(</span><span class="n">explanation_fn</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;weight&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Features más influyentes en la decisión errónea:&quot;</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">fn_frame</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Gráfico de explicación LIME (falso negativo)</span>
+<span class="n">fig_fn</span> <span class="o">=</span> <span class="n">explanation_fn</span><span class="o">.</span><span class="n">as_pyplot_figure</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">fig_fn</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+<span class="n">fig_fn</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Explicación LIME — Falso Negativo&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">fig_fn</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">FIGURES_DIR</span> <span class="o">/</span> <span class="s2">&quot;04_lime_false_negative.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="resumen-de-contribuciones-positivas-vs-negativas">
+<h2>📊 2.4 Resumen de Contribuciones — Positivas vs Negativas<a class="headerlink" href="#resumen-de-contribuciones-positivas-vs-negativas" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p><strong>Separamos las features que impulsan la predicción hacia “click” (pesos positivos) de las que impulsan hacia “no click” (pesos negativos) para ambas instancias mal clasificadas.</strong></p>
+</div></blockquote>
+<hr class="docutils" />
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">frame</span><span class="p">,</span> <span class="n">instance_type</span> <span class="ow">in</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s2">&quot;Falso Positivo&quot;</span><span class="p">,</span> <span class="n">fp_frame</span><span class="p">,</span> <span class="s2">&quot;FP&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;Falso Negativo&quot;</span><span class="p">,</span> <span class="n">fn_frame</span><span class="p">,</span> <span class="s2">&quot;FN&quot;</span><span class="p">),</span>
+<span class="p">]:</span>
+    <span class="n">positive</span> <span class="o">=</span> <span class="n">frame</span><span class="p">[</span><span class="n">frame</span><span class="p">[</span><span class="s2">&quot;weight&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">negative</span> <span class="o">=</span> <span class="n">frame</span><span class="p">[</span><span class="n">frame</span><span class="p">[</span><span class="s2">&quot;weight&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;weight&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="s1">&#39;═&#39;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">50</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2"> — Contribuciones&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;═&#39;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">50</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">  Impulsan hacia CLICK (+):&quot;</span><span class="p">)</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">positive</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  Impulsan hacia NO CLICK (-):&quot;</span><span class="p">)</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">negative</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="comparacion-de-frameworks-scikit-learn-vs-pyspark">
+<h2>🏆 3. Comparación de Frameworks: scikit-learn vs PySpark<a class="headerlink" href="#comparacion-de-frameworks-scikit-learn-vs-pyspark" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p><strong>Consolidamos las métricas de ambos frameworks para una comparación lado a lado. Cargamos los resultados guardados en los Notebooks 2 y 3.</strong></p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+<hr class="docutils" />
+<section id="tabla-comparativa-de-metricas">
+<h2>📝 3.1 Tabla Comparativa de Métricas<a class="headerlink" href="#tabla-comparativa-de-metricas" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p><strong>Comparamos todas las métricas obligatorias lado a lado: Accuracy, Precision, Recall, F1, ROC AUC, tiempos de entrenamiento y predicción, y tamaño del dataset utilizado.</strong></p>
+</div></blockquote>
+<hr class="docutils" />
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Cargar métricas de scikit-learn</span>
+<span class="n">sklearn_metrics_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">MODELS_DIR</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;sklearn_metrics.csv&quot;</span>
+<span class="n">sklearn_metrics_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">sklearn_metrics_path</span><span class="p">)</span>
+<span class="n">sklearn_metrics</span> <span class="o">=</span> <span class="n">sklearn_metrics_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+
+<span class="c1"># Cargar métricas de PySpark</span>
+<span class="n">spark_metrics_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">MODELS_DIR</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;spark_metrics.csv&quot;</span>
+<span class="n">spark_metrics_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">spark_metrics_path</span><span class="p">)</span>
+<span class="n">spark_metrics</span> <span class="o">=</span> <span class="n">spark_metrics_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+
+<span class="c1"># Construir tabla comparativa</span>
+<span class="n">sklearn_dataset_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_sample</span><span class="p">)</span>
+<span class="n">spark_dataset_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">spark_metrics</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;dataset_size&quot;</span><span class="p">,</span> <span class="mi">40_000_000</span><span class="p">))</span>
+
+<span class="n">comparison_table</span> <span class="o">=</span> <span class="n">build_comparison_table</span><span class="p">(</span>
+    <span class="n">sklearn_metrics</span><span class="o">=</span><span class="n">sklearn_metrics</span><span class="p">,</span>
+    <span class="n">spark_metrics</span><span class="o">=</span><span class="n">spark_metrics</span><span class="p">,</span>
+    <span class="n">sklearn_dataset_size</span><span class="o">=</span><span class="n">sklearn_dataset_size</span><span class="p">,</span>
+    <span class="n">spark_dataset_size</span><span class="o">=</span><span class="n">spark_dataset_size</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;═&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;COMPARACIÓN: scikit-learn vs PySpark&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;═&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">comparison_table</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="curvas-roc-superpuestas">
+<h2>📈 3.2 Curvas ROC Superpuestas<a class="headerlink" href="#curvas-roc-superpuestas" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p><strong>Comparamos visualmente las curvas ROC de ambos frameworks en un mismo gráfico. Si los datos de predicción de PySpark están disponibles, se superponen ambas curvas; de lo contrario, se muestra solo la de scikit-learn con referencia al AUC de Spark.</strong></p>
+</div></blockquote>
+<hr class="docutils" />
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Cargar predicciones de sklearn guardadas</span>
+<span class="n">sklearn_pred_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">MODELS_DIR</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;sklearn_predictions.parquet&quot;</span>
+<span class="k">if</span> <span class="n">sklearn_pred_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+    <span class="n">sklearn_preds</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="n">sklearn_pred_path</span><span class="p">)</span>
+    <span class="n">sk_y_true</span> <span class="o">=</span> <span class="n">sklearn_preds</span><span class="p">[</span><span class="s2">&quot;y_true&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">sk_y_score</span> <span class="o">=</span> <span class="n">sklearn_preds</span><span class="p">[</span><span class="s2">&quot;y_score&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">sk_y_true</span> <span class="o">=</span> <span class="n">y_test</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">sk_y_score</span> <span class="o">=</span> <span class="n">y_score</span>
+
+<span class="c1"># Intentar cargar predicciones de Spark (si están disponibles)</span>
+<span class="n">spark_pred_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">MODELS_DIR</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;spark_predictions.parquet&quot;</span>
+<span class="n">roc_results</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;scikit-learn (1M muestra)&quot;</span><span class="p">,</span> <span class="s2">&quot;y_true&quot;</span><span class="p">:</span> <span class="n">sk_y_true</span><span class="p">,</span> <span class="s2">&quot;y_score&quot;</span><span class="p">:</span> <span class="n">sk_y_score</span><span class="p">},</span>
+<span class="p">]</span>
+<span class="k">if</span> <span class="n">spark_pred_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+    <span class="n">spark_preds</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="n">spark_pred_path</span><span class="p">)</span>
+    <span class="n">roc_results</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;PySpark (dataset completo)&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;y_true&quot;</span><span class="p">:</span> <span class="n">spark_preds</span><span class="p">[</span><span class="s2">&quot;y_true&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+        <span class="s2">&quot;y_score&quot;</span><span class="p">:</span> <span class="n">spark_preds</span><span class="p">[</span><span class="s2">&quot;y_score&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+    <span class="p">})</span>
+
+<span class="n">fig_roc</span> <span class="o">=</span> <span class="n">plot_comparative_roc</span><span class="p">(</span>
+    <span class="n">roc_results</span><span class="p">,</span>
+    <span class="n">save_path</span><span class="o">=</span><span class="n">FIGURES_DIR</span> <span class="o">/</span> <span class="s2">&quot;04_comparative_roc.png&quot;</span>
+<span class="p">)</span>
+
+<span class="c1"># Si Spark no tiene predicciones detalladas, anotar su AUC como referencia</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">spark_pred_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+    <span class="n">spark_auc</span> <span class="o">=</span> <span class="n">spark_metrics</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;roc_auc&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">fig_roc</span><span class="o">.</span><span class="n">get_axes</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># Invisible, solo para que la leyenda se actualice</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;PySpark AUC = </span><span class="si">{</span><span class="n">spark_auc</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="se">\n</span><span class="s2">(curva no disponible)&quot;</span><span class="p">,</span>
+            <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="s2">&quot;accent&quot;</span><span class="p">],</span> <span class="n">fontstyle</span><span class="o">=</span><span class="s2">&quot;italic&quot;</span><span class="p">,</span>
+            <span class="n">bbox</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">boxstyle</span><span class="o">=</span><span class="s2">&quot;round&quot;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="n">AXES_BG</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="s2">&quot;accent&quot;</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="comparacion-de-tiempos-de-computo">
+<h2>⏱️ 3.3 Comparación de Tiempos de Cómputo<a class="headerlink" href="#comparacion-de-tiempos-de-computo" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p><strong>Visualizamos las diferencias en tiempo de entrenamiento y predicción entre ambos frameworks. PySpark tiene mayor overhead inicial pero escala mejor con datasets grandes.</strong></p>
+</div></blockquote>
+<hr class="docutils" />
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">time_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;framework&quot;</span><span class="p">:</span> <span class="s2">&quot;scikit-learn&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;training_seconds&quot;</span><span class="p">:</span> <span class="n">sklearn_metrics</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;training_seconds&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="s2">&quot;prediction_seconds&quot;</span><span class="p">:</span> <span class="n">sklearn_metrics</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;prediction_seconds&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;framework&quot;</span><span class="p">:</span> <span class="s2">&quot;PySpark&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;training_seconds&quot;</span><span class="p">:</span> <span class="n">spark_metrics</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;training_seconds&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="s2">&quot;prediction_seconds&quot;</span><span class="p">:</span> <span class="n">spark_metrics</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;prediction_seconds&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="p">},</span>
+<span class="p">])</span>
+
+<span class="n">fig_times</span> <span class="o">=</span> <span class="n">plot_comparative_times</span><span class="p">(</span>
+    <span class="n">time_df</span><span class="p">,</span>
+    <span class="n">save_path</span><span class="o">=</span><span class="n">FIGURES_DIR</span> <span class="o">/</span> <span class="s2">&quot;04_comparative_times.png&quot;</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Resumen de tiempos:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  scikit-learn — Entrenamiento: </span><span class="si">{</span><span class="n">format_seconds</span><span class="p">(</span><span class="n">sklearn_metrics</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;training_seconds&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  scikit-learn — Predicción:    </span><span class="si">{</span><span class="n">format_seconds</span><span class="p">(</span><span class="n">sklearn_metrics</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;prediction_seconds&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  PySpark      — Entrenamiento: </span><span class="si">{</span><span class="n">format_seconds</span><span class="p">(</span><span class="n">spark_metrics</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;training_seconds&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  PySpark      — Predicción:    </span><span class="si">{</span><span class="n">format_seconds</span><span class="p">(</span><span class="n">spark_metrics</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;prediction_seconds&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="reflexion-critica">
+<h2>💡 4. Reflexión Crítica<a class="headerlink" href="#reflexion-critica" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p><strong>Análisis crítico de los resultados y reflexiones sobre cuándo usar cada framework.</strong></p>
+</div></blockquote>
+<section id="que-entorno-fue-mas-rapido">
+<h3>❓ ¿Qué entorno fue más rápido?<a class="headerlink" href="#que-entorno-fue-mas-rapido" title="Link to this heading">#</a></h3>
+<p><strong>scikit-learn</strong> es generalmente más rápido en tiempo total cuando el dataset cabe en memoria. Sin embargo, esta comparación no es directa porque scikit-learn operó sobre una muestra de 1M de registros mientras PySpark procesó el dataset completo (~40M). El overhead de Spark (inicialización del contexto, serialización, comunicación entre ejecutores) lo hace menos eficiente para datasets pequeños, pero su escalabilidad lo justifica para volúmenes que no caben en memoria de una sola máquina.</p>
+</section>
+<section id="cual-fue-mas-preciso">
+<h3>❓ ¿Cuál fue más preciso?<a class="headerlink" href="#cual-fue-mas-preciso" title="Link to this heading">#</a></h3>
+<p>PySpark tiene la ventaja teórica de entrenar sobre todos los datos, capturando patrones que una muestra podría perder. Sin embargo, las métricas entre ambos suelen ser comparables cuando la muestra es representativa (como en nuestro caso con muestreo estratificado). La diferencia en ROC AUC suele ser marginal (&lt;2%), lo que sugiere que la muestra de 1M captura bien la estructura del dataset.</p>
+</section>
+<section id="cuando-es-util-pyspark-vs-scikit-learn">
+<h3>❓ ¿Cuándo es útil PySpark vs scikit-learn?<a class="headerlink" href="#cuando-es-util-pyspark-vs-scikit-learn" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Escenario</p></th>
+<th class="head"><p>Recomendación</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Prototipado rápido y experimentación</p></td>
+<td><p>scikit-learn</p></td>
+</tr>
+<tr class="row-odd"><td><p>Dataset &lt; 5M registros</p></td>
+<td><p>scikit-learn</p></td>
+</tr>
+<tr class="row-even"><td><p>Dataset &gt; 10M registros</p></td>
+<td><p>PySpark</p></td>
+</tr>
+<tr class="row-odd"><td><p>Pipeline de producción con datos streaming</p></td>
+<td><p>PySpark</p></td>
+</tr>
+<tr class="row-even"><td><p>Interpretabilidad local (LIME, SHAP)</p></td>
+<td><p>scikit-learn</p></td>
+</tr>
+<tr class="row-odd"><td><p>Cluster disponible para entrenamiento</p></td>
+<td><p>PySpark</p></td>
+</tr>
+<tr class="row-even"><td><p>Debugging y ajuste fino de hiperparámetros</p></td>
+<td><p>scikit-learn</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="que-aporta-lime-al-analisis">
+<h3>❓ ¿Qué aporta LIME al análisis?<a class="headerlink" href="#que-aporta-lime-al-analisis" title="Link to this heading">#</a></h3>
+<p>LIME proporciona <strong>explicabilidad local</strong>: en lugar de entender el modelo globalmente, nos permite analizar predicciones individuales. Esto es especialmente valioso para:</p>
+<ol class="arabic simple">
+<li><p><strong>Detección de errores</strong>: Entender POR QUÉ el modelo se equivoca en casos específicos (falsos positivos y negativos).</p></li>
+<li><p><strong>Confianza en el modelo</strong>: Verificar que el modelo usa features razonables y no patrones espurios.</p></li>
+<li><p><strong>Comunicación con stakeholders</strong>: Explicar decisiones del modelo a audiencias no técnicas.</p></li>
+<li><p><strong>Mejora iterativa</strong>: Identificar features que podrían mejorarse o añadirse basándose en los errores.</p></li>
+</ol>
+<p>En nuestro caso, LIME reveló qué combinaciones de features categóricas (site, app, dispositivo) y temporales confunden al modelo, proporcionando insights accionables para mejorar el pipeline de features.</p>
+<hr class="docutils" />
+</section>
+</section>
+<hr class="docutils" />
+<section id="conclusion-final-del-proyecto">
+<h2>🌟 Conclusión Final del Proyecto<a class="headerlink" href="#conclusion-final-del-proyecto" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p><strong>Este proyecto demostró un flujo de trabajo completo de clasificación CTR, desde el análisis exploratorio hasta la explicabilidad local, comparando dos paradigmas de implementación. La combinación de scikit-learn para prototipado rápido e interpretabilidad, con PySpark para escalabilidad a datos masivos, representa un enfoque pragmático y realista para problemas de Machine Learning en producción.</strong></p>
+</div></blockquote>
+<hr class="docutils" />
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./docs"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="03_pyspark_mlp_pipeline.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">⚡ Notebook 3: Pipeline de Clasificación con PySpark</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contenido">📋 Contenido:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#requisitos">⚙️ Requisitos:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuracion-del-entorno">⚙️ 0.1 Configuración del Entorno</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#carga-del-modelo-entrenado-y-datos">📥 1.1 Carga del Modelo Entrenado y Datos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#identificacion-de-instancias-mal-clasificadas">❌ 2.1 Identificación de Instancias Mal Clasificadas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#explicacion-lime-falso-positivo">🔬 2.2 Explicación LIME — Falso Positivo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#explicacion-lime-falso-negativo">🔬 2.3 Explicación LIME — Falso Negativo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resumen-de-contribuciones-positivas-vs-negativas">📊 2.4 Resumen de Contribuciones — Positivas vs Negativas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparacion-de-frameworks-scikit-learn-vs-pyspark">🏆 3. Comparación de Frameworks: scikit-learn vs PySpark</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tabla-comparativa-de-metricas">📝 3.1 Tabla Comparativa de Métricas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#curvas-roc-superpuestas">📈 3.2 Curvas ROC Superpuestas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparacion-de-tiempos-de-computo">⏱️ 3.3 Comparación de Tiempos de Cómputo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reflexion-critica">💡 4. Reflexión Crítica</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#que-entorno-fue-mas-rapido">❓ ¿Qué entorno fue más rápido?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cual-fue-mas-preciso">❓ ¿Cuál fue más preciso?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cuando-es-util-pyspark-vs-scikit-learn">❓ ¿Cuándo es útil PySpark vs scikit-learn?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#que-aporta-lime-al-analisis">❓ ¿Qué aporta LIME al análisis?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion-final-del-proyecto">🌟 Conclusión Final del Proyecto</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Juana
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

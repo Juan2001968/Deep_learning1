@@ -1,0 +1,1214 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>🧪 Notebook 2: Pipeline de Clasificación con scikit-learn &#8212; Avazu CTR Deep Learning Project</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=1ae7504c"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'docs/02_sklearn_mlp_pipeline';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="⚡ Notebook 3: Pipeline de Clasificación con PySpark" href="03_pyspark_mlp_pipeline.html" />
+    <link rel="prev" title="📊 Notebook 1: Visión General del Proyecto y Análisis Exploratorio de Datos (EDA)" href="01_project_overview_and_eda.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Avazu CTR Deep Learning Project</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Avazu CTR — Proyecto de Deep Learning
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_project_overview_and_eda.html">📊 Notebook 1: Visión General del Proyecto y Análisis Exploratorio de Datos (EDA)</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">🧪 Notebook 2: Pipeline de Clasificación con scikit-learn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_pyspark_mlp_pipeline.html">⚡ Notebook 3: Pipeline de Clasificación con PySpark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_lime_and_framework_comparison.html">🔬 Notebook 4: Explicabilidad con LIME y Comparación de Frameworks</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/docs/02_sklearn_mlp_pipeline.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>🧪 Notebook 2: Pipeline de Clasificación con scikit-learn</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contenido">📋 Contenido:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#requisitos">⚙️ Requisitos:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuracion-del-entorno">⚙️ 0.1 Configuración del Entorno</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#muestreo-de-1-000-000-de-registros">📥 1.1 Muestreo de 1,000,000 de Registros</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#seleccion-de-variables-y-preparacion-del-dataset-de-modelado">🔧 2.1 Selección de Variables y Preparación del Dataset de Modelado</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#construccion-del-pipeline-y-gridsearchcv">🧠 3.1 Construcción del Pipeline y GridSearchCV</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mejores-hiperparametros-encontrados">🏆 3.2 Mejores Hiperparámetros Encontrados</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluacion-del-mejor-modelo-en-el-conjunto-de-prueba">📊 4.1 Evaluación del Mejor Modelo en el Conjunto de Prueba</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matriz-de-confusion">📊 4.2 Matriz de Confusión</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#curva-roc">📈 4.3 Curva ROC</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#guardado-del-mejor-modelo">💾 5.1 Guardado del Mejor Modelo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#guardado-de-metricas-y-datos-para-comparacion">💾 5.2 Guardado de Métricas y Datos para Comparación</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones-del-pipeline-scikit-learn">💡 6. Conclusiones del Pipeline scikit-learn</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#observaciones-clave">Observaciones clave:</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="notebook-2-pipeline-de-clasificacion-con-scikit-learn">
+<h1>🧪 Notebook 2: Pipeline de Clasificación con scikit-learn<a class="headerlink" href="#notebook-2-pipeline-de-clasificacion-con-scikit-learn" title="Link to this heading">#</a></h1>
+<blockquote>
+<div><p>Este notebook implementa el pipeline completo de clasificación con <strong>MLPClassifier</strong> sobre una muestra de <strong>1 millón de registros</strong> del dataset Avazu.</p>
+</div></blockquote>
+<section id="contenido">
+<h2>📋 Contenido:<a class="headerlink" href="#contenido" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Carga y muestreo</strong> del dataset (1,000,000 registros estratificados)</p></li>
+<li><p><strong>Feature Engineering</strong> — codificación (Target Encoding + OneHot) y escalado</p></li>
+<li><p><strong>Modelado</strong> — MLPClassifier con GridSearchCV</p></li>
+<li><p><strong>Evaluación</strong> — métricas completas, curva ROC, matriz de confusión</p></li>
+<li><p><strong>Análisis de resultados</strong> y mejores hiperparámetros</p></li>
+<li><p><strong>Guardado del modelo</strong> en <code class="docutils literal notranslate"><span class="pre">models/</span></code></p></li>
+</ol>
+</section>
+<section id="requisitos">
+<h2>⚙️ Requisitos:<a class="headerlink" href="#requisitos" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Dataset en <code class="docutils literal notranslate"><span class="pre">data/raw/train.gz</span></code></p></li>
+<li><p>Librerías: scikit-learn, pandas, matplotlib, seaborn</p></li>
+<li><p>Notebook 1 ejecutado previamente (para contexto, no dependencia técnica)</p></li>
+</ul>
+<hr class="docutils" />
+</section>
+<hr class="docutils" />
+<section id="configuracion-del-entorno">
+<h2>⚙️ 0.1 Configuración del Entorno<a class="headerlink" href="#configuracion-del-entorno" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p><strong>Importamos las librerías necesarias y aplicamos el estilo visual oscuro profesional consistente con todo el proyecto.</strong></p>
+</div></blockquote>
+<hr class="docutils" />
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="n">PROJECT_ROOT</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span>
+<span class="k">while</span> <span class="n">PROJECT_ROOT</span> <span class="o">!=</span> <span class="n">PROJECT_ROOT</span><span class="o">.</span><span class="n">parent</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span><span class="n">PROJECT_ROOT</span> <span class="o">/</span> <span class="s2">&quot;src&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+    <span class="n">PROJECT_ROOT</span> <span class="o">=</span> <span class="n">PROJECT_ROOT</span><span class="o">.</span><span class="n">parent</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">PROJECT_ROOT</span> <span class="o">/</span> <span class="s2">&quot;src&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+    <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="s2">&quot;No se encontró la raíz del proyecto con el directorio src.&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">PROJECT_ROOT</span> <span class="o">/</span> <span class="s2">&quot;src&quot;</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">PROJECT_ROOT</span> <span class="o">/</span> <span class="s2">&quot;src&quot;</span><span class="p">))</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">ctr_mlp.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_project_settings</span><span class="p">,</span> <span class="n">apply_dark_style</span><span class="p">,</span> <span class="n">COLORS</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ctr_mlp.data_io</span><span class="w"> </span><span class="kn">import</span> <span class="n">sample_csv_for_local_training</span><span class="p">,</span> <span class="n">split_features_target</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ctr_mlp.evaluation</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">benchmark_predictions</span><span class="p">,</span>
+    <span class="n">compute_binary_metrics</span><span class="p">,</span>
+    <span class="n">metrics_to_frame</span><span class="p">,</span>
+    <span class="n">plot_confusion_matrix</span><span class="p">,</span>
+    <span class="n">plot_roc_curve</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ctr_mlp.feature_engineering</span><span class="w"> </span><span class="kn">import</span> <span class="n">add_time_features_pandas</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ctr_mlp.sklearn_workflow</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">build_sklearn_pipeline</span><span class="p">,</span>
+    <span class="n">run_grid_search</span><span class="p">,</span>
+    <span class="n">split_train_test</span><span class="p">,</span>
+    <span class="n">save_sklearn_model</span><span class="p">,</span>
+    <span class="n">DEFAULT_PARAM_GRID</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ctr_mlp.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">format_seconds</span>
+
+<span class="c1"># Aplicar estilo oscuro profesional</span>
+<span class="n">apply_dark_style</span><span class="p">()</span>
+
+<span class="n">settings</span> <span class="o">=</span> <span class="n">load_project_settings</span><span class="p">()</span>
+<span class="n">paths</span> <span class="o">=</span> <span class="n">settings</span><span class="p">[</span><span class="s2">&quot;paths&quot;</span><span class="p">]</span>
+<span class="n">general</span> <span class="o">=</span> <span class="n">settings</span><span class="p">[</span><span class="s2">&quot;general&quot;</span><span class="p">]</span>
+<span class="n">feature_cfg</span> <span class="o">=</span> <span class="n">settings</span><span class="p">[</span><span class="s2">&quot;features&quot;</span><span class="p">]</span>
+
+<span class="n">TRAIN_PATH</span> <span class="o">=</span> <span class="n">paths</span><span class="p">[</span><span class="s2">&quot;train_csv&quot;</span><span class="p">]</span>
+<span class="n">SAMPLE_PATH</span> <span class="o">=</span> <span class="n">paths</span><span class="p">[</span><span class="s2">&quot;sampled_train_parquet&quot;</span><span class="p">]</span>
+<span class="n">FIGURES_DIR</span> <span class="o">=</span> <span class="n">paths</span><span class="p">[</span><span class="s2">&quot;figures_dir&quot;</span><span class="p">]</span>
+<span class="n">MODELS_DIR</span> <span class="o">=</span> <span class="n">paths</span><span class="p">[</span><span class="s2">&quot;models_dir&quot;</span><span class="p">]</span>
+<span class="n">TARGET_COL</span> <span class="o">=</span> <span class="n">general</span><span class="p">[</span><span class="s2">&quot;target_col&quot;</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tamaño de muestra objetivo: </span><span class="si">{</span><span class="n">general</span><span class="p">[</span><span class="s1">&#39;sample_size&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Random state: </span><span class="si">{</span><span class="n">general</span><span class="p">[</span><span class="s1">&#39;random_state&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tamaño de muestra objetivo: 1,000,000
+Random state: 42
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="muestreo-de-1-000-000-de-registros">
+<h2>📥 1.1 Muestreo de 1,000,000 de Registros<a class="headerlink" href="#muestreo-de-1-000-000-de-registros" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p><strong>Creamos una muestra estratificada de 1M de registros usando <code class="docutils literal notranslate"><span class="pre">df.sample(n=1000000,</span> <span class="pre">random_state=42)</span></code>. La muestra se cachea en formato Parquet para reutilización eficiente. Excluimos <code class="docutils literal notranslate"><span class="pre">id</span></code>, <code class="docutils literal notranslate"><span class="pre">device_id</span></code> y <code class="docutils literal notranslate"><span class="pre">device_ip</span></code> por su alta cardinalidad sin valor predictivo.</strong></p>
+</div></blockquote>
+<hr class="docutils" />
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Columnas necesarias para el pipeline sklearn (excluir id, device_id, device_ip)</span>
+<span class="n">raw_local_columns</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">({</span>
+    <span class="n">TARGET_COL</span><span class="p">,</span>
+    <span class="n">general</span><span class="p">[</span><span class="s2">&quot;hour_col&quot;</span><span class="p">],</span>
+    <span class="o">*</span><span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">feature_cfg</span><span class="p">[</span><span class="s2">&quot;sklearn_categorical&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">col</span> <span class="o">!=</span> <span class="s2">&quot;time_bucket&quot;</span><span class="p">],</span>
+<span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Columnas a muestrear: </span><span class="si">{</span><span class="n">raw_local_columns</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Generar o reutilizar muestra cacheada</span>
+<span class="n">regenerate_sample</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="k">if</span> <span class="n">SAMPLE_PATH</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+    <span class="n">df_sample</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="n">SAMPLE_PATH</span><span class="p">)</span>
+    <span class="n">required_cols</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span>
+        <span class="n">feature_cfg</span><span class="p">[</span><span class="s2">&quot;sklearn_categorical&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">feature_cfg</span><span class="p">[</span><span class="s2">&quot;sklearn_numeric&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">TARGET_COL</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="n">regenerate_sample</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">required_cols</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">df_sample</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">regenerate_sample</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_sample</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">general</span><span class="p">[</span><span class="s2">&quot;sample_size&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.9</span><span class="p">:</span>
+        <span class="n">regenerate_sample</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="k">if</span> <span class="n">regenerate_sample</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Generando muestra de </span><span class="si">{</span><span class="n">general</span><span class="p">[</span><span class="s1">&#39;sample_size&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> registros...&quot;</span><span class="p">)</span>
+    <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">df_sample</span> <span class="o">=</span> <span class="n">sample_csv_for_local_training</span><span class="p">(</span>
+        <span class="n">TRAIN_PATH</span><span class="p">,</span>
+        <span class="n">sample_size</span><span class="o">=</span><span class="n">general</span><span class="p">[</span><span class="s2">&quot;sample_size&quot;</span><span class="p">],</span>
+        <span class="n">chunksize</span><span class="o">=</span><span class="n">general</span><span class="p">[</span><span class="s2">&quot;chunksize&quot;</span><span class="p">],</span>
+        <span class="n">target_col</span><span class="o">=</span><span class="n">TARGET_COL</span><span class="p">,</span>
+        <span class="n">random_state</span><span class="o">=</span><span class="n">general</span><span class="p">[</span><span class="s2">&quot;random_state&quot;</span><span class="p">],</span>
+        <span class="n">usecols</span><span class="o">=</span><span class="n">raw_local_columns</span><span class="p">,</span>
+        <span class="n">compression</span><span class="o">=</span><span class="s2">&quot;gzip&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">df_sample</span> <span class="o">=</span> <span class="n">add_time_features_pandas</span><span class="p">(</span><span class="n">df_sample</span><span class="p">,</span> <span class="n">hour_col</span><span class="o">=</span><span class="n">general</span><span class="p">[</span><span class="s2">&quot;hour_col&quot;</span><span class="p">])</span>
+    <span class="n">SAMPLE_PATH</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">df_sample</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="n">SAMPLE_PATH</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Muestra generada en </span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t0</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">s y guardada en: </span><span class="si">{</span><span class="n">SAMPLE_PATH</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Reutilizando muestra cacheada: </span><span class="si">{</span><span class="n">SAMPLE_PATH</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Shape de la muestra: </span><span class="si">{</span><span class="n">df_sample</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">memory_mb</span> <span class="o">=</span> <span class="n">df_sample</span><span class="o">.</span><span class="n">memory_usage</span><span class="p">(</span><span class="n">deep</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="mi">1024</span><span class="o">**</span><span class="mi">2</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Memoria aproximada: </span><span class="si">{</span><span class="n">memory_mb</span><span class="si">:</span><span class="s2">,.2f</span><span class="si">}</span><span class="s2"> MB&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Columnas a muestrear: [&#39;C1&#39;, &#39;C14&#39;, &#39;C15&#39;, &#39;C16&#39;, &#39;C17&#39;, &#39;C18&#39;, &#39;C19&#39;, &#39;C20&#39;, &#39;C21&#39;, &#39;app_category&#39;, &#39;banner_pos&#39;, &#39;click&#39;, &#39;device_conn_type&#39;, &#39;device_type&#39;, &#39;hour&#39;, &#39;site_category&#39;]
+Generando muestra de 1,000,000 registros...
+Muestra generada en 220.5s y guardada en: C:\Users\juana\Deep_learning1-main\data\processed\avazu_train_sample.parquet
+
+Shape de la muestra: (999994, 23)
+Memoria aproximada: 114.49 MB
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Distribución del target en la muestra</span>
+<span class="n">sample_counts</span> <span class="o">=</span> <span class="n">df_sample</span><span class="p">[</span><span class="n">TARGET_COL</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+<span class="n">sample_stats</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;count&quot;</span><span class="p">:</span> <span class="n">sample_counts</span><span class="p">,</span>
+    <span class="s2">&quot;share&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">sample_counts</span> <span class="o">/</span> <span class="n">sample_counts</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span>
+<span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Distribución del target en la muestra:&quot;</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">sample_stats</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Distribución del target en la muestra:
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count</th>
+      <th>share</th>
+    </tr>
+    <tr>
+      <th>click</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>830194</td>
+      <td>0.8302</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>169800</td>
+      <td>0.1698</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="seleccion-de-variables-y-preparacion-del-dataset-de-modelado">
+<h2>🔧 2.1 Selección de Variables y Preparación del Dataset de Modelado<a class="headerlink" href="#seleccion-de-variables-y-preparacion-del-dataset-de-modelado" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p><strong>Seleccionamos las variables relevantes y separamos features (X) del target (y). Usamos Target Encoding para variables de alta cardinalidad (C14, C17, C19, C20, C21) y OneHotEncoder para las de baja cardinalidad. Las variables numéricas derivadas se escalan con StandardScaler.</strong></p>
+</div></blockquote>
+<hr class="docutils" />
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">selected_cols</span> <span class="o">=</span> <span class="n">feature_cfg</span><span class="p">[</span><span class="s2">&quot;sklearn_categorical&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">feature_cfg</span><span class="p">[</span><span class="s2">&quot;sklearn_numeric&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">TARGET_COL</span><span class="p">]</span>
+<span class="n">model_df</span> <span class="o">=</span> <span class="n">df_sample</span><span class="p">[</span><span class="n">selected_cols</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">split_features_target</span><span class="p">(</span><span class="n">model_df</span><span class="p">,</span> <span class="n">target_col</span><span class="o">=</span><span class="n">TARGET_COL</span><span class="p">)</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">split_train_test</span><span class="p">(</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">general</span><span class="p">[</span><span class="s2">&quot;random_state&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Variables categóricas de BAJA cardinalidad (OneHot Encoding):&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">feature_cfg</span><span class="p">[</span><span class="s1">&#39;sklearn_low_cardinality&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Variables categóricas de ALTA cardinalidad (Target Encoding):&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">feature_cfg</span><span class="p">[</span><span class="s1">&#39;sklearn_high_cardinality&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Variables numéricas (StandardScaler):&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">feature_cfg</span><span class="p">[</span><span class="s1">&#39;sklearn_numeric&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Train shape: </span><span class="si">{</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2"> | Test shape: </span><span class="si">{</span><span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Balance en train: </span><span class="si">{</span><span class="n">y_train</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> | Balance en test: </span><span class="si">{</span><span class="n">y_test</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Variables categóricas de BAJA cardinalidad (OneHot Encoding):
+  [&#39;C1&#39;, &#39;banner_pos&#39;, &#39;site_category&#39;, &#39;app_category&#39;, &#39;device_type&#39;, &#39;device_conn_type&#39;, &#39;C15&#39;, &#39;C16&#39;, &#39;C18&#39;, &#39;time_bucket&#39;]
+
+Variables categóricas de ALTA cardinalidad (Target Encoding):
+  [&#39;C14&#39;, &#39;C17&#39;, &#39;C19&#39;, &#39;C20&#39;, &#39;C21&#39;]
+
+Variables numéricas (StandardScaler):
+  [&#39;event_day&#39;, &#39;event_hour&#39;, &#39;day_of_week&#39;, &#39;is_weekend&#39;, &#39;is_business_hour&#39;]
+
+Train shape: (799995, 20) | Test shape: (199999, 20)
+Balance en train: 0.1698 | Balance en test: 0.1698
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="construccion-del-pipeline-y-gridsearchcv">
+<h2>🧠 3.1 Construcción del Pipeline y GridSearchCV<a class="headerlink" href="#construccion-del-pipeline-y-gridsearchcv" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p><strong>Construimos un pipeline que integra el preprocesamiento (Target Encoding + OneHot + StandardScaler) con el MLPClassifier. Ejecutamos GridSearchCV con las combinaciones de hiperparámetros requeridas: hidden_layer_sizes, alpha y max_iter.</strong></p>
+</div></blockquote>
+<hr class="docutils" />
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Construir pipeline con Target Encoding para alta cardinalidad</span>
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">build_sklearn_pipeline</span><span class="p">(</span>
+    <span class="n">categorical_columns</span><span class="o">=</span><span class="n">feature_cfg</span><span class="p">[</span><span class="s2">&quot;sklearn_categorical&quot;</span><span class="p">],</span>
+    <span class="n">numeric_columns</span><span class="o">=</span><span class="n">feature_cfg</span><span class="p">[</span><span class="s2">&quot;sklearn_numeric&quot;</span><span class="p">],</span>
+    <span class="n">high_cardinality_columns</span><span class="o">=</span><span class="n">feature_cfg</span><span class="p">[</span><span class="s2">&quot;sklearn_high_cardinality&quot;</span><span class="p">],</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="n">general</span><span class="p">[</span><span class="s2">&quot;random_state&quot;</span><span class="p">],</span>
+<span class="p">)</span>
+
+<span class="c1"># Grilla de hiperparámetros completa (según requerimientos)</span>
+<span class="n">param_grid</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;classifier__hidden_layer_sizes&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="mi">50</span><span class="p">,),</span> <span class="p">(</span><span class="mi">100</span><span class="p">,),</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">50</span><span class="p">)],</span>
+    <span class="s2">&quot;classifier__alpha&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.0001</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">],</span>
+    <span class="s2">&quot;classifier__max_iter&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">],</span>
+<span class="p">}</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hiperparámetros a explorar:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">values</span> <span class="ow">in</span> <span class="n">param_grid</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">values</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">total_combos</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">param_grid</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+    <span class="n">total_combos</span> <span class="o">*=</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Total de combinaciones: </span><span class="si">{</span><span class="n">total_combos</span><span class="si">}</span><span class="s2"> × 3 folds = </span><span class="si">{</span><span class="n">total_combos</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">3</span><span class="si">}</span><span class="s2"> ajustes&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Hiperparámetros a explorar:
+  classifier__hidden_layer_sizes: [(50,), (100,), (100, 50)]
+  classifier__alpha: [0.0001, 0.001, 0.01]
+  classifier__max_iter: [50, 100]
+
+Total de combinaciones: 18 × 3 folds = 54 ajustes
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Ejecutar GridSearchCV (mide tiempo automáticamente)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Iniciando GridSearchCV...&quot;</span><span class="p">)</span>
+<span class="n">t_start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">search</span><span class="p">,</span> <span class="n">training_seconds</span> <span class="o">=</span> <span class="n">run_grid_search</span><span class="p">(</span>
+    <span class="n">pipeline</span><span class="p">,</span>
+    <span class="n">X_train</span><span class="p">,</span>
+    <span class="n">y_train</span><span class="p">,</span>
+    <span class="n">param_grid</span><span class="o">=</span><span class="n">param_grid</span><span class="p">,</span>
+    <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;roc_auc&quot;</span><span class="p">,</span>
+    <span class="n">cv</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">t_total</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t_start</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">GridSearchCV completado en: </span><span class="si">{</span><span class="n">format_seconds</span><span class="p">(</span><span class="n">t_total</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tiempo total de entrenamiento: </span><span class="si">{</span><span class="n">format_seconds</span><span class="p">(</span><span class="n">training_seconds</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Iniciando GridSearchCV...
+Fitting 3 folds for each of 18 candidates, totalling 54 fits
+
+GridSearchCV completado en: 12m 8.7s
+Tiempo total de entrenamiento: 12m 8.6s
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="mejores-hiperparametros-encontrados">
+<h2>🏆 3.2 Mejores Hiperparámetros Encontrados<a class="headerlink" href="#mejores-hiperparametros-encontrados" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p><strong>Revisamos los resultados de la validación cruzada para identificar la mejor combinación de hiperparámetros y entender el trade-off entre complejidad del modelo y rendimiento.</strong></p>
+</div></blockquote>
+<hr class="docutils" />
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mejores hiperparámetros</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mejores hiperparámetros encontrados:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">param</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">search</span><span class="o">.</span><span class="n">best_params_</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">param</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Mejor ROC AUC (CV): </span><span class="si">{</span><span class="n">search</span><span class="o">.</span><span class="n">best_score_</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Tabla completa de resultados CV</span>
+<span class="n">cv_results</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">search</span><span class="o">.</span><span class="n">cv_results_</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;rank_test_score&quot;</span><span class="p">)</span>
+    <span class="p">[[</span><span class="s2">&quot;params&quot;</span><span class="p">,</span> <span class="s2">&quot;mean_test_score&quot;</span><span class="p">,</span> <span class="s2">&quot;std_test_score&quot;</span><span class="p">,</span> <span class="s2">&quot;rank_test_score&quot;</span><span class="p">]]</span>
+    <span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Ranking de combinaciones (top 10):&quot;</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">cv_results</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mejores hiperparámetros encontrados:
+  classifier__alpha: 0.0001
+  classifier__hidden_layer_sizes: (100, 50)
+  classifier__max_iter: 100
+
+Mejor ROC AUC (CV): 0.7052
+
+Ranking de combinaciones (top 10):
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>params</th>
+      <th>mean_test_score</th>
+      <th>std_test_score</th>
+      <th>rank_test_score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>{'classifier__alpha': 0.0001, 'classifier__hid...</td>
+      <td>0.705248</td>
+      <td>0.003038</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>{'classifier__alpha': 0.001, 'classifier__hidd...</td>
+      <td>0.704864</td>
+      <td>0.002372</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>{'classifier__alpha': 0.0001, 'classifier__hid...</td>
+      <td>0.704565</td>
+      <td>0.002422</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>{'classifier__alpha': 0.001, 'classifier__hidd...</td>
+      <td>0.703913</td>
+      <td>0.001885</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>{'classifier__alpha': 0.01, 'classifier__hidde...</td>
+      <td>0.703633</td>
+      <td>0.002082</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>{'classifier__alpha': 0.0001, 'classifier__hid...</td>
+      <td>0.703363</td>
+      <td>0.001688</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>{'classifier__alpha': 0.0001, 'classifier__hid...</td>
+      <td>0.703265</td>
+      <td>0.002515</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>{'classifier__alpha': 0.001, 'classifier__hidd...</td>
+      <td>0.703256</td>
+      <td>0.001637</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>{'classifier__alpha': 0.001, 'classifier__hidd...</td>
+      <td>0.703145</td>
+      <td>0.002377</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>{'classifier__alpha': 0.001, 'classifier__hidd...</td>
+      <td>0.703081</td>
+      <td>0.000304</td>
+      <td>10</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="evaluacion-del-mejor-modelo-en-el-conjunto-de-prueba">
+<h2>📊 4.1 Evaluación del Mejor Modelo en el Conjunto de Prueba<a class="headerlink" href="#evaluacion-del-mejor-modelo-en-el-conjunto-de-prueba" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p><strong>Evaluamos el mejor modelo encontrado por GridSearchCV sobre el conjunto de prueba (20% de la muestra). Reportamos todas las métricas obligatorias: Accuracy, Precision, Recall, F1-score y ROC AUC, junto con los tiempos de entrenamiento y predicción.</strong></p>
+</div></blockquote>
+<hr class="docutils" />
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Predicción y medición de tiempo</span>
+<span class="n">y_pred</span><span class="p">,</span> <span class="n">y_score</span><span class="p">,</span> <span class="n">prediction_seconds</span> <span class="o">=</span> <span class="n">benchmark_predictions</span><span class="p">(</span><span class="n">search</span><span class="o">.</span><span class="n">best_estimator_</span><span class="p">,</span> <span class="n">X_test</span><span class="p">)</span>
+
+<span class="c1"># Calcular todas las métricas</span>
+<span class="n">metrics</span> <span class="o">=</span> <span class="n">compute_binary_metrics</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">y_score</span><span class="o">=</span><span class="n">y_score</span><span class="p">)</span>
+<span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;training_seconds&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">training_seconds</span>
+<span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;prediction_seconds&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">prediction_seconds</span>
+
+<span class="c1"># Mostrar métricas como tabla</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;═&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;MÉTRICAS DEL MEJOR MODELO (scikit-learn)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;═&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Accuracy:    </span><span class="si">{</span><span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Precision:   </span><span class="si">{</span><span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;precision&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Recall:      </span><span class="si">{</span><span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;recall&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  F1-score:    </span><span class="si">{</span><span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;f1&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  ROC AUC:     </span><span class="si">{</span><span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;roc_auc&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;═&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Tiempo entrenamiento: </span><span class="si">{</span><span class="n">format_seconds</span><span class="p">(</span><span class="n">training_seconds</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Tiempo predicción:    </span><span class="si">{</span><span class="n">format_seconds</span><span class="p">(</span><span class="n">prediction_seconds</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;═&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">metrics_to_frame</span><span class="p">(</span><span class="n">metrics</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>══════════════════════════════════════════════════
+MÉTRICAS DEL MEJOR MODELO (scikit-learn)
+══════════════════════════════════════════════════
+  Accuracy:    0.8325
+  Precision:   0.5883
+  Recall:      0.0460
+  F1-score:    0.0854
+  ROC AUC:     0.7053
+══════════════════════════════════════════════════
+  Tiempo entrenamiento: 12m 8.6s
+  Tiempo predicción:    0.94s
+══════════════════════════════════════════════════
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>accuracy</th>
+      <td>0.832544</td>
+    </tr>
+    <tr>
+      <th>precision</th>
+      <td>0.588257</td>
+    </tr>
+    <tr>
+      <th>recall</th>
+      <td>0.046025</td>
+    </tr>
+    <tr>
+      <th>f1</th>
+      <td>0.085370</td>
+    </tr>
+    <tr>
+      <th>roc_auc</th>
+      <td>0.705311</td>
+    </tr>
+    <tr>
+      <th>true_negative</th>
+      <td>164945.000000</td>
+    </tr>
+    <tr>
+      <th>false_positive</th>
+      <td>1094.000000</td>
+    </tr>
+    <tr>
+      <th>false_negative</th>
+      <td>32397.000000</td>
+    </tr>
+    <tr>
+      <th>true_positive</th>
+      <td>1563.000000</td>
+    </tr>
+    <tr>
+      <th>training_seconds</th>
+      <td>728.632217</td>
+    </tr>
+    <tr>
+      <th>prediction_seconds</th>
+      <td>0.940349</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="matriz-de-confusion">
+<h2>📊 4.2 Matriz de Confusión<a class="headerlink" href="#matriz-de-confusion" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p><strong>La matriz de confusión muestra la distribución de aciertos y errores del clasificador. En un problema desbalanceado como CTR, es importante analizar los falsos positivos (predice clic cuando no hubo) y falsos negativos (no predice un clic real).</strong></p>
+</div></blockquote>
+<hr class="docutils" />
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig_cm</span> <span class="o">=</span> <span class="n">plot_confusion_matrix</span><span class="p">(</span>
+    <span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span>
+    <span class="n">save_path</span><span class="o">=</span><span class="n">FIGURES_DIR</span> <span class="o">/</span> <span class="s2">&quot;02_confusion_matrix.png&quot;</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/349479197a799322fee0732247cf456a81035f7856547854558c5d9cabb1bc12.png" src="../_images/349479197a799322fee0732247cf456a81035f7856547854558c5d9cabb1bc12.png" />
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="curva-roc">
+<h2>📈 4.3 Curva ROC<a class="headerlink" href="#curva-roc" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p><strong>La curva ROC visualiza el trade-off entre la tasa de verdaderos positivos (sensibilidad) y la tasa de falsos positivos a diferentes umbrales de clasificación. El área bajo la curva (AUC) resume la capacidad discriminativa del modelo.</strong></p>
+</div></blockquote>
+<hr class="docutils" />
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig_roc</span> <span class="o">=</span> <span class="n">plot_roc_curve</span><span class="p">(</span>
+    <span class="n">y_test</span><span class="p">,</span> <span class="n">y_score</span><span class="p">,</span>
+    <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;MLPClassifier (scikit-learn)&quot;</span><span class="p">,</span>
+    <span class="n">save_path</span><span class="o">=</span><span class="n">FIGURES_DIR</span> <span class="o">/</span> <span class="s2">&quot;02_roc_curve_sklearn.png&quot;</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/60a3ec7ef6303e13713d35fb47914c4b955299d19560397ebbd3fe445749b23c.png" src="../_images/60a3ec7ef6303e13713d35fb47914c4b955299d19560397ebbd3fe445749b23c.png" />
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="guardado-del-mejor-modelo">
+<h2>💾 5.1 Guardado del Mejor Modelo<a class="headerlink" href="#guardado-del-mejor-modelo" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p><strong>Guardamos el mejor modelo encontrado por GridSearchCV en el directorio <code class="docutils literal notranslate"><span class="pre">models/</span></code> para su reutilización en el notebook de explicabilidad (LIME) y en la comparación final.</strong></p>
+</div></blockquote>
+<hr class="docutils" />
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_path</span> <span class="o">=</span> <span class="n">save_sklearn_model</span><span class="p">(</span>
+    <span class="n">search</span><span class="o">.</span><span class="n">best_estimator_</span><span class="p">,</span>
+    <span class="n">save_path</span><span class="o">=</span><span class="n">MODELS_DIR</span><span class="p">,</span>
+    <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;sklearn_best_mlp.joblib&quot;</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Mejores hiperparámetros del modelo guardado:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">param</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">search</span><span class="o">.</span><span class="n">best_params_</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">param</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Modelo guardado en: C:\Users\juana\Deep_learning1-main\models\sklearn_best_mlp.joblib
+
+Mejores hiperparámetros del modelo guardado:
+  classifier__alpha: 0.0001
+  classifier__hidden_layer_sizes: (100, 50)
+  classifier__max_iter: 100
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="guardado-de-metricas-y-datos-para-comparacion">
+<h2>💾 5.2 Guardado de Métricas y Datos para Comparación<a class="headerlink" href="#guardado-de-metricas-y-datos-para-comparacion" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p><strong>Guardamos las métricas, predicciones y datos de test en formato parquet para poder cargarlos en el Notebook 4 y realizar la comparación con PySpark sin necesidad de re-entrenar.</strong></p>
+</div></blockquote>
+<hr class="docutils" />
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Guardar métricas como CSV</span>
+<span class="n">metrics_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">metrics</span><span class="p">])</span>
+<span class="n">metrics_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">MODELS_DIR</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;sklearn_metrics.csv&quot;</span>
+<span class="n">metrics_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">metrics_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">metrics_path</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Métricas guardadas en: </span><span class="si">{</span><span class="n">metrics_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Guardar predicciones para comparación ROC en Notebook 4</span>
+<span class="n">predictions_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;y_true&quot;</span><span class="p">:</span> <span class="n">y_test</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+    <span class="s2">&quot;y_pred&quot;</span><span class="p">:</span> <span class="n">y_pred</span><span class="p">,</span>
+    <span class="s2">&quot;y_score&quot;</span><span class="p">:</span> <span class="n">y_score</span><span class="p">,</span>
+<span class="p">})</span>
+<span class="n">pred_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">MODELS_DIR</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;sklearn_predictions.parquet&quot;</span>
+<span class="n">predictions_df</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="n">pred_path</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Predicciones guardadas en: </span><span class="si">{</span><span class="n">pred_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Métricas guardadas en: C:\Users\juana\Deep_learning1-main\models\sklearn_metrics.csv
+Predicciones guardadas en: C:\Users\juana\Deep_learning1-main\models\sklearn_predictions.parquet
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="conclusiones-del-pipeline-scikit-learn">
+<h2>💡 6. Conclusiones del Pipeline scikit-learn<a class="headerlink" href="#conclusiones-del-pipeline-scikit-learn" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p><strong>Resumen de los resultados y observaciones del pipeline local.</strong></p>
+</div></blockquote>
+<section id="observaciones-clave">
+<h3>Observaciones clave:<a class="headerlink" href="#observaciones-clave" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Target Encoding</strong>: Las variables de alta cardinalidad (C14, C17, C19, C20, C21) se codificaron con Target Encoding, lo que reduce significativamente la dimensionalidad respecto a OneHot Encoding puro.</p></li>
+<li><p><strong>Desbalance de clases</strong>: El desbalance inherente del dataset afecta las métricas de Precision y Recall. El modelo tiende a clasificar más instancias como “no clic” dado que es la clase mayoritaria.</p></li>
+<li><p><strong>GridSearchCV</strong>: La búsqueda exhaustiva evaluó todas las combinaciones de hiperparámetros (hidden_layer_sizes, alpha, max_iter) con validación cruzada de 3 folds.</p></li>
+<li><p><strong>Tiempo de entrenamiento</strong>: El pipeline local sobre 1M de registros es manejable en una máquina individual, a diferencia del dataset completo (~40M) que requiere PySpark.</p></li>
+<li><p><strong>Modelo guardado</strong>: El mejor modelo se guardó en <code class="docutils literal notranslate"><span class="pre">models/sklearn_best_mlp.joblib</span></code> para reutilización en LIME (Notebook 4).</p></li>
+</ol>
+<hr class="docutils" />
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./docs"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="01_project_overview_and_eda.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">📊 Notebook 1: Visión General del Proyecto y Análisis Exploratorio de Datos (EDA)</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="03_pyspark_mlp_pipeline.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">⚡ Notebook 3: Pipeline de Clasificación con PySpark</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contenido">📋 Contenido:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#requisitos">⚙️ Requisitos:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuracion-del-entorno">⚙️ 0.1 Configuración del Entorno</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#muestreo-de-1-000-000-de-registros">📥 1.1 Muestreo de 1,000,000 de Registros</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#seleccion-de-variables-y-preparacion-del-dataset-de-modelado">🔧 2.1 Selección de Variables y Preparación del Dataset de Modelado</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#construccion-del-pipeline-y-gridsearchcv">🧠 3.1 Construcción del Pipeline y GridSearchCV</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mejores-hiperparametros-encontrados">🏆 3.2 Mejores Hiperparámetros Encontrados</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluacion-del-mejor-modelo-en-el-conjunto-de-prueba">📊 4.1 Evaluación del Mejor Modelo en el Conjunto de Prueba</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matriz-de-confusion">📊 4.2 Matriz de Confusión</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#curva-roc">📈 4.3 Curva ROC</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#guardado-del-mejor-modelo">💾 5.1 Guardado del Mejor Modelo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#guardado-de-metricas-y-datos-para-comparacion">💾 5.2 Guardado de Métricas y Datos para Comparación</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones-del-pipeline-scikit-learn">💡 6. Conclusiones del Pipeline scikit-learn</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#observaciones-clave">Observaciones clave:</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Juana
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
