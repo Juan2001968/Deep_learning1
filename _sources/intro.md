@@ -1,24 +1,21 @@
-# Avazu CTR — Proyecto de Deep Learning
+# 🧠 Avazu CTR — Proyecto Integrador de Deep Learning
 
-Bienvenido a la documentación del proyecto de clasificación de Click-Through Rate (CTR) sobre el dataset Avazu.
+> Clasificación binaria de Click-Through Rate sobre ~40M de impresiones publicitarias móviles.
 
-## Objetivo del proyecto
+## 📋 Contenido del Proyecto
 
-Predecir si un usuario hará clic en un anuncio publicitario móvil utilizando redes neuronales multicapa (MLP), comparando dos entornos de ejecución:
+| Sección | Descripción |
+|---------|-------------|
+| 📊 EDA | Exploración y visualización del dataset Avazu |
+| 🧪 scikit-learn | MLP con GridSearchCV sobre 1M de registros |
+| ⚡ PySpark | MLP distribuido sobre 40M de registros |
+| 🔬 LIME | Interpretabilidad y comparación de frameworks |
 
-- **scikit-learn** sobre una muestra representativa local (1M registros)
-- **PySpark** sobre el dataset completo (~40M registros)
+## 🎯 Objetivo
+Predecir si un usuario hará clic (`click = 1`) o no (`click = 0`) en un anuncio móvil usando redes neuronales multicapa (MLP).
 
-## Contenido del libro
-
-1. **Análisis Exploratorio de Datos (EDA)** — Inspección del dataset, distribución del target, cardinalidad de variables, feature engineering temporal y visualizaciones completas.
-
-2. **Pipeline scikit-learn** — Muestreo estratificado, codificación (Target Encoding + OneHot), MLPClassifier con GridSearchCV y evaluación con métricas completas.
-
-3. **Pipeline PySpark** — Procesamiento distribuido del dataset completo con MultilayerPerceptronClassifier y búsqueda de hiperparámetros.
-
-4. **LIME y Comparación** — Explicabilidad local de predicciones erróneas, tabla comparativa de frameworks, curvas ROC superpuestas y reflexión crítica.
-
-## Estilo visual
-
-Todas las visualizaciones usan un tema oscuro profesional con colores vibrantes, diseñado para máxima legibilidad y presentación.
+## 🛠️ Tecnologías
+- **scikit-learn** — MLPClassifier + GridSearchCV
+- **PySpark** — MultilayerPerceptronClassifier
+- **LIME** — Explicabilidad local
+- **Jupyter Book** — Documentación
