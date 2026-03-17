@@ -1,9 +1,18 @@
-title: Avazu CTR Deep Learning Project
-author: Juana
-only_build_toc_files: true
+title: "Avazu CTR — Deep Learning Mini-Project"
+author: "Juan"
+logo: ""
 execute:
   execute_notebooks: "off"
-launch_buttons:
-  notebook_interface: jupyterlab
+only_build_toc_files: true
+parse:
+  myst_enable_extensions:
+    - colon_fence
+    - dollarmath
+    - html_admonition
+html:
+  use_repository_button: true
+  use_issues_button: true
+  home_page_in_navbar: false
 repository:
-  path_to_book: book
+  url: https://github.com/Juan2001968/Deep_learning1
+  branch: main
