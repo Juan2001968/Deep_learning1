@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>&lt;no title&gt; &#8212; Avazu CTR — Deep Learning Mini-Project</title>
+    <title>Avazu CTR Project Overview and Exploratory Data Analysis &#8212; Avazu CTR — Deep Learning Mini-Project</title>
   
   
   
@@ -63,7 +63,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'docs/01_project_overview_and_eda';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="&lt;no title&gt;" href="02_sklearn_mlp_pipeline.html" />
+    <link rel="next" title="Pipeline de Clasificación con scikit-learn" href="02_sklearn_mlp_pipeline.html" />
     <link rel="prev" title="🧠 Avazu CTR — Proyecto Integrador de Deep Learning" href="../intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -154,7 +154,13 @@
 </button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
-        
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">📊 1. Exploración de Datos (EDA)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_sklearn_mlp_pipeline.html">🧪 2. Pipeline scikit-learn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_pyspark_mlp_pipeline.html">⚡ 3. Pipeline PySpark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_lime_and_framework_comparison.html">🔬 4. LIME y Comparación</a></li>
+</ul>
+
     </div>
 </nav></div>
     </div>
@@ -322,9 +328,7 @@
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
 </button>
-<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</button>
+
 </div></div>
       
     </div>
@@ -335,19 +339,11 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1><no title></h1>
+    <h1>Avazu CTR Project Overview and Exploratory Data Analysis</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="simple visible nav section-nav flex-column">
-</ul>
-
-            </nav>
         </div>
     </div>
 </div>
@@ -357,7 +353,9 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <div style="background: linear-gradient(135deg, #0c2d48 0%, #0f172a 100%); color:#f8fafc; padding:28px 32px; border-radius:18px; margin-bottom:12px; border-left:6px solid #219ebc; box-shadow:0 18px 40px rgba(0,0,0,0.35); border:1px solid rgba(33,158,188,0.15);">
+  <section class="tex2jax_ignore mathjax_ignore" id="avazu-ctr-project-overview-and-exploratory-data-analysis">
+<h1>Avazu CTR Project Overview and Exploratory Data Analysis<a class="headerlink" href="#avazu-ctr-project-overview-and-exploratory-data-analysis" title="Link to this heading">#</a></h1>
+<div style="background: linear-gradient(135deg, #0c2d48 0%, #0f172a 100%); color:#f8fafc; padding:28px 32px; border-radius:18px; margin-bottom:12px; border-left:6px solid #219ebc; box-shadow:0 18px 40px rgba(0,0,0,0.35); border:1px solid rgba(33,158,188,0.15);">
   <h1 style="margin:0; font-size:2rem; letter-spacing:-0.02em; color:#f8fafc;">
     Avazu CTR Project Overview and Exploratory Data Analysis
   </h1>
@@ -2182,6 +2180,7 @@ Name: count, dtype: int64[pyarrow]
 - Incluir **features temporales** (hora, día, franja) como predictores.
 - Excluir `id`, `device_id` y `device_ip` por alta cardinalidad sin valor predictivo.
 <hr class="docutils" />
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -2227,7 +2226,7 @@ Name: count, dtype: int64[pyarrow]
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">&lt;no title&gt;</p>
+        <p class="prev-next-title">Pipeline de Clasificación con scikit-learn</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -2237,23 +2236,6 @@ Name: count, dtype: int64[pyarrow]
             </div>
             
             
-              
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
-                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item"><div
-    id="pst-page-navigation-heading-2"
-    class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
-    <ul class="simple visible nav section-nav flex-column">
-</ul>
-
-  </nav></div>
-
-</div></div>
               
             
           </div>

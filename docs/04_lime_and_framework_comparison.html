@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>&lt;no title&gt; &#8212; Avazu CTR — Deep Learning Mini-Project</title>
+    <title>Explicabilidad con LIME y Comparación de Frameworks &#8212; Avazu CTR — Deep Learning Mini-Project</title>
   
   
   
@@ -63,7 +63,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'docs/04_lime_and_framework_comparison';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="&lt;no title&gt;" href="03_pyspark_mlp_pipeline.html" />
+    <link rel="prev" title="Pipeline de Clasificación con PySpark" href="03_pyspark_mlp_pipeline.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -153,7 +153,13 @@
 </button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
-        
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_project_overview_and_eda.html">📊 1. Exploración de Datos (EDA)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_sklearn_mlp_pipeline.html">🧪 2. Pipeline scikit-learn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_pyspark_mlp_pipeline.html">⚡ 3. Pipeline PySpark</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">🔬 4. LIME y Comparación</a></li>
+</ul>
+
     </div>
 </nav></div>
     </div>
@@ -321,9 +327,7 @@
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
 </button>
-<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</button>
+
 </div></div>
       
     </div>
@@ -334,19 +338,11 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1><no title></h1>
+    <h1>Explicabilidad con LIME y Comparación de Frameworks</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="simple visible nav section-nav flex-column">
-</ul>
-
-            </nav>
         </div>
     </div>
 </div>
@@ -356,7 +352,9 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <div style="background: linear-gradient(135deg, #1a0f2e 0%, #0f172a 100%); color:#f8fafc; padding:28px 32px; border-radius:18px; margin-bottom:16px; border-left:6px solid #c4b5fd; box-shadow:0 20px 45px rgba(0,0,0,0.35);">
+  <section class="tex2jax_ignore mathjax_ignore" id="explicabilidad-con-lime-y-comparacion-de-frameworks">
+<h1>Explicabilidad con LIME y Comparación de Frameworks<a class="headerlink" href="#explicabilidad-con-lime-y-comparacion-de-frameworks" title="Link to this heading">#</a></h1>
+<div style="background: linear-gradient(135deg, #1a0f2e 0%, #0f172a 100%); color:#f8fafc; padding:28px 32px; border-radius:18px; margin-bottom:16px; border-left:6px solid #c4b5fd; box-shadow:0 20px 45px rgba(0,0,0,0.35);">
   <h1 style="margin:0 0 6px 0; font-size:2.1rem; letter-spacing:-0.02em;">Notebook 4: Explicabilidad con LIME y Comparación de Frameworks</h1>
   <p style="margin:0; font-size:1.05rem; line-height:1.65; color:#94a3b8;">
     Este notebook explica predicciones individuales del modelo MLP con <b style="color:#f8fafc;">LIME</b> y consolida la <b style="color:#f8fafc;">comparación final</b> entre scikit-learn y PySpark.
@@ -1370,7 +1368,8 @@ COMPARACIÓN: scikit-learn vs PySpark
   <p style="margin:0; color:#94a3b8; font-size:0.92rem; line-height:1.7;">
     Este proyecto demostró un flujo de trabajo completo de clasificación CTR, desde el análisis exploratorio hasta la explicabilidad local, comparando dos paradigmas de implementación. La combinación de scikit-learn para prototipado rápido e interpretabilidad, con PySpark para escalabilidad a datos masivos, representa un enfoque pragmático y realista para problemas de Machine Learning en producción.
   </p>
-</div>
+</div></section>
+
     <script type="text/x-thebe-config">
     {
         requestKernel: true,
@@ -1407,7 +1406,7 @@ COMPARACIÓN: scikit-learn vs PySpark
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">&lt;no title&gt;</p>
+        <p class="prev-next-title">Pipeline de Clasificación con PySpark</p>
       </div>
     </a>
 </div>
@@ -1416,23 +1415,6 @@ COMPARACIÓN: scikit-learn vs PySpark
             </div>
             
             
-              
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
-                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item"><div
-    id="pst-page-navigation-heading-2"
-    class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
-    <ul class="simple visible nav section-nav flex-column">
-</ul>
-
-  </nav></div>
-
-</div></div>
               
             
           </div>
