@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>📊 Notebook 1: Visión General del Proyecto y Análisis Exploratorio de Datos (EDA) &#8212; Avazu CTR — Deep Learning Mini-Project</title>
+    <title>&lt;no title&gt; &#8212; Avazu CTR — Deep Learning Mini-Project</title>
   
   
   
@@ -63,7 +63,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'docs/01_project_overview_and_eda';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="🧪 Notebook 2: Pipeline de Clasificación con scikit-learn" href="02_sklearn_mlp_pipeline.html" />
+    <link rel="next" title="&lt;no title&gt;" href="02_sklearn_mlp_pipeline.html" />
     <link rel="prev" title="🧠 Avazu CTR — Proyecto Integrador de Deep Learning" href="../intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -154,13 +154,7 @@
 </button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
-        <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">📊 1. Exploración de Datos (EDA)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="02_sklearn_mlp_pipeline.html">🧪 2. Pipeline scikit-learn</a></li>
-<li class="toctree-l1"><a class="reference internal" href="03_pyspark_mlp_pipeline.html">⚡ 3. Pipeline PySpark</a></li>
-<li class="toctree-l1"><a class="reference internal" href="04_lime_and_framework_comparison.html">🔬 4. LIME y Comparación</a></li>
-</ul>
-
+        
     </div>
 </nav></div>
     </div>
@@ -341,7 +335,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>📊 Notebook 1: Visión General del Proyecto y Análisis Exploratorio de Datos (EDA)</h1>
+    <h1><no title></h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -350,34 +344,9 @@
                 <h2> Contents </h2>
             </div>
             <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contenido">📋 Contenido:</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#requisitos">⚙️ Requisitos:</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuracion-del-entorno-e-importaciones">⚙️ 0.1 Configuración del Entorno e Importaciones</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#carga-del-dataset">📥 1.1 Carga del Dataset</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inspeccion-basica-del-dataset">🔍 1.2 Inspección Básica del Dataset</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#verificacion-de-valores-faltantes">❓ 1.3 Verificación de Valores Faltantes</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distribucion-de-la-variable-target-click">🎯 1.4 Distribución de la Variable Target (<code class="docutils literal notranslate"><span class="pre">click</span></code>)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cardinalidad-de-variables-categoricas">🗂️ 1.5 Cardinalidad de Variables Categóricas</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-engineering-temporal">⏰ 1.6 Feature Engineering Temporal</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#histogramas-de-variables-numericas-derivadas">📊 2.1 Histogramas de Variables Numéricas Derivadas</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#frecuencia-de-las-principales-variables-categoricas">📈 2.2 Frecuencia de las Principales Variables Categóricas</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distribucion-de-clics-por-hora-del-dia">📉 2.3 Distribución de Clics por Hora del Día</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matriz-de-correlacion-para-variables-numericas">🧩 2.4 Matriz de Correlación para Variables Numéricas</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ctr-por-franja-horaria">🌙 2.5 CTR por Franja Horaria</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ctr-por-tipo-de-dispositivo-device-type">📱 2.6 CTR por Tipo de Dispositivo (<code class="docutils literal notranslate"><span class="pre">device_type</span></code>)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ctr-por-posicion-del-banner-banner-pos">🖼️ 2.7 CTR por Posición del Banner (<code class="docutils literal notranslate"><span class="pre">banner_pos</span></code>)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ctr-por-tipo-de-conexion-device-conn-type">🔗 2.8 CTR por Tipo de Conexión (<code class="docutils literal notranslate"><span class="pre">device_conn_type</span></code>)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#top-10-site-id-por-volumen-y-su-ctr">🌐 2.9 Top 10 <code class="docutils literal notranslate"><span class="pre">site_id</span></code> por Volumen y su CTR</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#top-10-app-id-por-volumen-y-su-ctr">📲 2.10 Top 10 <code class="docutils literal notranslate"><span class="pre">app_id</span></code> por Volumen y su CTR</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distribucion-de-registros-por-dia">📅 2.11 Distribución de Registros por Día</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dashboard-resumen-del-dataset">🏆 2.12 Dashboard Resumen del Dataset</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones-del-eda">💡 3. Conclusiones del EDA</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hallazgos-principales">Hallazgos principales:</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implicaciones-para-el-modelado">Implicaciones para el modelado:</a></li>
+                <ul class="simple visible nav section-nav flex-column">
 </ul>
-</li>
-</ul>
+
             </nav>
         </div>
     </div>
@@ -388,13 +357,19 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="notebook-1-vision-general-del-proyecto-y-analisis-exploratorio-de-datos-eda">
-<h1>📊 Notebook 1: Visión General del Proyecto y Análisis Exploratorio de Datos (EDA)<a class="headerlink" href="#notebook-1-vision-general-del-proyecto-y-analisis-exploratorio-de-datos-eda" title="Link to this heading">#</a></h1>
+  <div style="background: linear-gradient(135deg, #0c2d48 0%, #0f172a 100%); color:#f8fafc; padding:28px 32px; border-radius:18px; margin-bottom:12px; border-left:6px solid #219ebc; box-shadow:0 18px 40px rgba(0,0,0,0.35); border:1px solid rgba(33,158,188,0.15);">
+  <h1 style="margin:0; font-size:2rem; letter-spacing:-0.02em; color:#f8fafc;">
+    Avazu CTR Project Overview and Exploratory Data Analysis
+  </h1>
+</div>
 <blockquote>
 <div><p>Este notebook realiza el <strong>análisis exploratorio completo</strong> del dataset Avazu (~40M registros de impresiones publicitarias móviles) para entender la estructura, distribución y patrones de clics antes del modelado.</p>
 </div></blockquote>
-<section id="contenido">
-<h2>📋 Contenido:<a class="headerlink" href="#contenido" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #0c2d48 0%, #0f172a 100%); color:#f8fafc; padding:16px 22px; border-radius:12px; margin-bottom:6px; border-left:4px solid #219ebc; box-shadow:0 8px 20px rgba(0,0,0,0.22);">
+  <h3 style="margin:0; font-size:1.15rem; color:#e2e8f0;">
+    Contenido
+  </h3>
+</div>
 <ol class="arabic simple">
 <li><p><strong>Carga del dataset</strong> desde <code class="docutils literal notranslate"><span class="pre">data/raw/train.gz</span></code></p></li>
 <li><p><strong>Inspección básica</strong> — <code class="docutils literal notranslate"><span class="pre">.shape</span></code>, <code class="docutils literal notranslate"><span class="pre">.dtypes</span></code>, <code class="docutils literal notranslate"><span class="pre">.head()</span></code>, <code class="docutils literal notranslate"><span class="pre">.describe()</span></code>, <code class="docutils literal notranslate"><span class="pre">.info()</span></code></p></li>
@@ -405,23 +380,21 @@
 <li><p><strong>Visualizaciones completas</strong> — histogramas, frecuencias, CTR por segmentos, correlaciones</p></li>
 <li><p><strong>Dashboard resumen</strong> con métricas clave del dataset</p></li>
 </ol>
-</section>
-<section id="requisitos">
-<h2>⚙️ Requisitos:<a class="headerlink" href="#requisitos" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #0c2d48 0%, #0f172a 100%); color:#f8fafc; padding:16px 22px; border-radius:12px; margin-bottom:6px; border-left:4px solid #219ebc; box-shadow:0 8px 20px rgba(0,0,0,0.22);">
+  <h3 style="margin:0; font-size:1.15rem; color:#e2e8f0;">
+    Requisitos
+  </h3>
+</div>
 <ul class="simple">
 <li><p>Dataset en <code class="docutils literal notranslate"><span class="pre">data/raw/train.gz</span></code> (comprimido, se lee directamente)</p></li>
 <li><p>Entorno: <code class="docutils literal notranslate"><span class="pre">deep_env</span></code> con las dependencias del proyecto</p></li>
 </ul>
 <hr class="docutils" />
-</section>
-<hr class="docutils" />
-<section id="configuracion-del-entorno-e-importaciones">
-<h2>⚙️ 0.1 Configuración del Entorno e Importaciones<a class="headerlink" href="#configuracion-del-entorno-e-importaciones" title="Link to this heading">#</a></h2>
-<blockquote>
-<div><p><strong>Cargamos todas las librerías necesarias y aplicamos el estilo visual oscuro profesional que se mantendrá consistente en todos los notebooks del proyecto.</strong></p>
-</div></blockquote>
-<hr class="docutils" />
-<div class="cell docutils container">
+<div style="background: linear-gradient(135deg, #1a0f2e 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #c4b5fd; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+  <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
+    <span style="color:#c4b5fd;">0.1</span> &nbsp;Configuración del Entorno e Importaciones
+  </h2>
+</div><div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
@@ -484,10 +457,12 @@ Figuras se guardarán en: C:\Users\juana\Deep_learning1-main\reports\figures
 </div>
 </div>
 </div>
-</section>
 <hr class="docutils" />
-<section id="carga-del-dataset">
-<h2>📥 1.1 Carga del Dataset<a class="headerlink" href="#carga-del-dataset" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #0c2d48 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #219ebc; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+  <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
+    <span style="color:#8ecae6;">1.1</span> &nbsp;Carga del Dataset
+  </h2>
+</div>
 <blockquote>
 <div><p><strong>Cargamos una vista previa del dataset comprimido (<code class="docutils literal notranslate"><span class="pre">train.gz</span></code>) directamente sin descomprimirlo. Usamos 150,000 filas para el EDA, suficientes para análisis representativo sin saturar la memoria.</strong></p>
 </div></blockquote>
@@ -511,10 +486,12 @@ Columnas: [&#39;id&#39;, &#39;click&#39;, &#39;hour&#39;, &#39;C1&#39;, &#39;ban
 </div>
 </div>
 </div>
-</section>
 <hr class="docutils" />
-<section id="inspeccion-basica-del-dataset">
-<h2>🔍 1.2 Inspección Básica del Dataset<a class="headerlink" href="#inspeccion-basica-del-dataset" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #0c2d48 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #219ebc; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+  <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
+    <span style="color:#8ecae6;">1.2</span> &nbsp;Inspección Básica del Dataset
+  </h2>
+</div>
 <blockquote>
 <div><p><strong>Examinamos la estructura fundamental del dataset: tipos de datos, primeras filas, estadísticas descriptivas e información general. Esto nos permite identificar rápidamente qué variables son categóricas, cuáles numéricas y si hay anomalías evidentes.</strong></p>
 </div></blockquote>
@@ -1261,10 +1238,12 @@ memory usage: 30.1 MB
 </div>
 </div>
 </div>
-</section>
 <hr class="docutils" />
-<section id="verificacion-de-valores-faltantes">
-<h2>❓ 1.3 Verificación de Valores Faltantes<a class="headerlink" href="#verificacion-de-valores-faltantes" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #0c2d48 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #219ebc; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+  <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
+    <span style="color:#8ecae6;">1.3</span> &nbsp;Verificación de Valores Faltantes
+  </h2>
+</div>
 <blockquote>
 <div><p><strong>Analizamos la completitud de cada columna. En datasets de publicidad como Avazu, es común que las columnas estén completas ya que provienen de logs de servidores, pero es importante verificarlo antes de proceder al modelado.</strong></p>
 </div></blockquote>
@@ -1441,10 +1420,12 @@ memory usage: 30.1 MB
 <img alt="../_images/6609c335aedce0e964da7974d3fa6b2c30f6bbd830d806f2cbbcef69cc016015.png" src="../_images/6609c335aedce0e964da7974d3fa6b2c30f6bbd830d806f2cbbcef69cc016015.png" />
 </div>
 </div>
-</section>
 <hr class="docutils" />
-<section id="distribucion-de-la-variable-target-click">
-<h2>🎯 1.4 Distribución de la Variable Target (<code class="docutils literal notranslate"><span class="pre">click</span></code>)<a class="headerlink" href="#distribucion-de-la-variable-target-click" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #0c2d48 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #219ebc; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+  <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
+    <span style="color:#8ecae6;">1.4</span> &nbsp;Distribución de la Variable Target (<code>click</code>)
+  </h2>
+</div>
 <blockquote>
 <div><p><strong>Analizamos el balance de clases para entender el desbalance inherente del dataset. Un CTR típico en publicidad móvil es del 2-5%, lo que implica un fuerte desbalance que debemos considerar en el modelado. Calculamos la distribución global usando lectura por chunks sobre todo el dataset.</strong></p>
 </div></blockquote>
@@ -1531,10 +1512,12 @@ CTR global: 16.98%
 </div></div><img alt="../_images/b3243a1125434a8d2595dce4bbe3fdd26063bc3b7aab6fee88e8190b6f7c0baf.png" src="../_images/b3243a1125434a8d2595dce4bbe3fdd26063bc3b7aab6fee88e8190b6f7c0baf.png" />
 </div>
 </div>
-</section>
 <hr class="docutils" />
-<section id="cardinalidad-de-variables-categoricas">
-<h2>🗂️ 1.5 Cardinalidad de Variables Categóricas<a class="headerlink" href="#cardinalidad-de-variables-categoricas" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #0f1a0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #90be6d; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+  <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
+    <span style="color:#90be6d;">1.5</span> &nbsp;Cardinalidad de Variables Categóricas
+  </h2>
+</div>
 <blockquote>
 <div><p><strong>Analizamos cuántos valores únicos tiene cada variable categórica. Las variables con muy alta cardinalidad (como <code class="docutils literal notranslate"><span class="pre">device_id</span></code>, <code class="docutils literal notranslate"><span class="pre">device_ip</span></code>, <code class="docutils literal notranslate"><span class="pre">site_id</span></code>) requieren tratamiento especial (Target Encoding) mientras que las de baja cardinalidad pueden usar OneHot Encoding sin problemas.</strong></p>
 </div></blockquote>
@@ -1687,10 +1670,12 @@ CTR global: 16.98%
 </div></div><img alt="../_images/105785a6cdbaf4d9f4db74950ba984042ddecf9f0514e6166232e2753a10421b.png" src="../_images/105785a6cdbaf4d9f4db74950ba984042ddecf9f0514e6166232e2753a10421b.png" />
 </div>
 </div>
-</section>
 <hr class="docutils" />
-<section id="feature-engineering-temporal">
-<h2>⏰ 1.6 Feature Engineering Temporal<a class="headerlink" href="#feature-engineering-temporal" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #1a0f2e 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #c4b5fd; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+  <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
+    <span style="color:#c4b5fd;">1.6</span> &nbsp;Feature Engineering Temporal
+  </h2>
+</div>
 <blockquote>
 <div><p><strong>Transformamos la columna <code class="docutils literal notranslate"><span class="pre">hour</span></code> (formato YYMMDDHH) en nuevas features interpretables: <code class="docutils literal notranslate"><span class="pre">event_day</span></code> (día), <code class="docutils literal notranslate"><span class="pre">event_hour</span></code> (hora del día) y <code class="docutils literal notranslate"><span class="pre">franja_horaria</span></code> (madrugada/mañana/tarde/noche). Estas variables capturan patrones temporales de comportamiento del usuario.</strong></p>
 </div></blockquote>
@@ -1868,10 +1853,12 @@ Name: count, dtype: int64[pyarrow]
 </div>
 </div>
 </div>
-</section>
 <hr class="docutils" />
-<section id="histogramas-de-variables-numericas-derivadas">
-<h2>📊 2.1 Histogramas de Variables Numéricas Derivadas<a class="headerlink" href="#histogramas-de-variables-numericas-derivadas" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #0c2d48 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #219ebc; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+  <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
+    <span style="color:#8ecae6;">2.1</span> &nbsp;Histogramas de Variables Numéricas Derivadas
+  </h2>
+</div>
 <blockquote>
 <div><p><strong>Visualizamos la distribución de las variables numéricas clave: <code class="docutils literal notranslate"><span class="pre">event_hour</span></code>, <code class="docutils literal notranslate"><span class="pre">event_day</span></code>, <code class="docutils literal notranslate"><span class="pre">C1</span></code>, <code class="docutils literal notranslate"><span class="pre">banner_pos</span></code>, <code class="docutils literal notranslate"><span class="pre">device_type</span></code> y <code class="docutils literal notranslate"><span class="pre">device_conn_type</span></code>. Esto nos permite identificar patrones de concentración y posibles outliers.</strong></p>
 </div></blockquote>
@@ -1891,10 +1878,12 @@ Name: count, dtype: int64[pyarrow]
 <img alt="../_images/bc658a75e22caa32889306b2f957e6f7697dfb9dfdf0b90536428a0abe5709e1.png" src="../_images/bc658a75e22caa32889306b2f957e6f7697dfb9dfdf0b90536428a0abe5709e1.png" />
 </div>
 </div>
-</section>
 <hr class="docutils" />
-<section id="frecuencia-de-las-principales-variables-categoricas">
-<h2>📈 2.2 Frecuencia de las Principales Variables Categóricas<a class="headerlink" href="#frecuencia-de-las-principales-variables-categoricas" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #0f1a0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #90be6d; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+  <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
+    <span style="color:#90be6d;">2.2</span> &nbsp;Frecuencia de las Principales Variables Categóricas
+  </h2>
+</div>
 <blockquote>
 <div><p><strong>Examinamos los top 10-15 valores más frecuentes de las variables categóricas de alta cardinalidad: <code class="docutils literal notranslate"><span class="pre">site_id</span></code>, <code class="docutils literal notranslate"><span class="pre">site_domain</span></code>, <code class="docutils literal notranslate"><span class="pre">app_id</span></code>, <code class="docutils literal notranslate"><span class="pre">app_domain</span></code> y <code class="docutils literal notranslate"><span class="pre">device_model</span></code>. Esto revela qué sitios, apps y dispositivos dominan el dataset.</strong></p>
 </div></blockquote>
@@ -1919,10 +1908,12 @@ Name: count, dtype: int64[pyarrow]
 <img alt="../_images/109251228be8ea19d5ca347dd0366fc69aae332077f253e77802f1814ce62924.png" src="../_images/109251228be8ea19d5ca347dd0366fc69aae332077f253e77802f1814ce62924.png" />
 </div>
 </div>
-</section>
 <hr class="docutils" />
-<section id="distribucion-de-clics-por-hora-del-dia">
-<h2>📉 2.3 Distribución de Clics por Hora del Día<a class="headerlink" href="#distribucion-de-clics-por-hora-del-dia" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #1a0f2e 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #c4b5fd; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+  <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
+    <span style="color:#c4b5fd;">2.3</span> &nbsp;Distribución de Clics por Hora del Día
+  </h2>
+</div>
 <blockquote>
 <div><p><strong>El CTR varía significativamente a lo largo del día. Las horas nocturnas y de madrugada suelen tener CTR diferentes a las horas laborales, reflejando distintos patrones de uso de dispositivos móviles.</strong></p>
 </div></blockquote>
@@ -1941,10 +1932,12 @@ Name: count, dtype: int64[pyarrow]
 <img alt="../_images/3fd215b67a256a031185c0b973e4aa85a7a8f3c571499bde2a387e286f849a77.png" src="../_images/3fd215b67a256a031185c0b973e4aa85a7a8f3c571499bde2a387e286f849a77.png" />
 </div>
 </div>
-</section>
 <hr class="docutils" />
-<section id="matriz-de-correlacion-para-variables-numericas">
-<h2>🧩 2.4 Matriz de Correlación para Variables Numéricas<a class="headerlink" href="#matriz-de-correlacion-para-variables-numericas" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #0c2d48 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #219ebc; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+  <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
+    <span style="color:#8ecae6;">2.4</span> &nbsp;Matriz de Correlación para Variables Numéricas
+  </h2>
+</div>
 <blockquote>
 <div><p><strong>La matriz de correlación nos permite detectar multicolinealidad entre las features numéricas creadas. Variables altamente correlacionadas podrían aportar información redundante al modelo.</strong></p>
 </div></blockquote>
@@ -1965,10 +1958,12 @@ Name: count, dtype: int64[pyarrow]
 <img alt="../_images/37d6ce470d0954d530c85b64dec19a74eba72f8e92e923f7a49f57a6aa70a9bf.png" src="../_images/37d6ce470d0954d530c85b64dec19a74eba72f8e92e923f7a49f57a6aa70a9bf.png" />
 </div>
 </div>
-</section>
 <hr class="docutils" />
-<section id="ctr-por-franja-horaria">
-<h2>🌙 2.5 CTR por Franja Horaria<a class="headerlink" href="#ctr-por-franja-horaria" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #1a0f2e 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #c4b5fd; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+  <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
+    <span style="color:#c4b5fd;">2.5</span> &nbsp;CTR por Franja Horaria
+  </h2>
+</div>
 <blockquote>
 <div><p><strong>Agrupamos las horas en franjas (madrugada, mañana, tarde, noche) para ver patrones más amplios en el comportamiento de clics. Esta variable se usa como feature en el modelado.</strong></p>
 </div></blockquote>
@@ -1987,10 +1982,12 @@ Name: count, dtype: int64[pyarrow]
 <img alt="../_images/993af92da7bcba6383420ae002a57532dea6d9dbd3209c8e70b551d0a7c33887.png" src="../_images/993af92da7bcba6383420ae002a57532dea6d9dbd3209c8e70b551d0a7c33887.png" />
 </div>
 </div>
-</section>
 <hr class="docutils" />
-<section id="ctr-por-tipo-de-dispositivo-device-type">
-<h2>📱 2.6 CTR por Tipo de Dispositivo (<code class="docutils literal notranslate"><span class="pre">device_type</span></code>)<a class="headerlink" href="#ctr-por-tipo-de-dispositivo-device-type" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #0f1a0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #90be6d; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+  <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
+    <span style="color:#90be6d;">2.6</span> &nbsp;CTR por Tipo de Dispositivo (<code>device_type</code>)
+  </h2>
+</div>
 <blockquote>
 <div><p><strong>Diferentes tipos de dispositivos pueden tener tasas de clic muy distintas. Los dispositivos móviles suelen tener pantallas más pequeñas donde los anuncios ocupan proporcionalmente más espacio visual.</strong></p>
 </div></blockquote>
@@ -2009,10 +2006,12 @@ Name: count, dtype: int64[pyarrow]
 <img alt="../_images/e9d1b36144af6b29a95287f9b5876881708684e25b06bb2de5b9ceb096874b0c.png" src="../_images/e9d1b36144af6b29a95287f9b5876881708684e25b06bb2de5b9ceb096874b0c.png" />
 </div>
 </div>
-</section>
 <hr class="docutils" />
-<section id="ctr-por-posicion-del-banner-banner-pos">
-<h2>🖼️ 2.7 CTR por Posición del Banner (<code class="docutils literal notranslate"><span class="pre">banner_pos</span></code>)<a class="headerlink" href="#ctr-por-posicion-del-banner-banner-pos" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #0f1a0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #90be6d; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+  <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
+    <span style="color:#90be6d;">2.7</span> &nbsp;CTR por Posición del Banner (<code>banner_pos</code>)
+  </h2>
+</div>
 <blockquote>
 <div><p><strong>La posición del anuncio en la pantalla es un factor clave en publicidad digital. Las posiciones más visibles (arriba de la página, por ejemplo) tienden a generar más clics.</strong></p>
 </div></blockquote>
@@ -2031,10 +2030,12 @@ Name: count, dtype: int64[pyarrow]
 <img alt="../_images/87af39f1117e6a24436f7a1af66b1998407f6861d8589f97c28f729e74ca01c5.png" src="../_images/87af39f1117e6a24436f7a1af66b1998407f6861d8589f97c28f729e74ca01c5.png" />
 </div>
 </div>
-</section>
 <hr class="docutils" />
-<section id="ctr-por-tipo-de-conexion-device-conn-type">
-<h2>🔗 2.8 CTR por Tipo de Conexión (<code class="docutils literal notranslate"><span class="pre">device_conn_type</span></code>)<a class="headerlink" href="#ctr-por-tipo-de-conexion-device-conn-type" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #0f1a0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #90be6d; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+  <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
+    <span style="color:#90be6d;">2.8</span> &nbsp;CTR por Tipo de Conexión (<code>device_conn_type</code>)
+  </h2>
+</div>
 <blockquote>
 <div><p><strong>El tipo de conexión (WiFi, 3G, 4G, etc.) puede influir en el comportamiento del usuario. Conexiones más rápidas pueden favorecer la interacción con anuncios rich media.</strong></p>
 </div></blockquote>
@@ -2053,10 +2054,12 @@ Name: count, dtype: int64[pyarrow]
 <img alt="../_images/9fb917496a83175c3b8e49df7e66676cfce0600d83731c062e36b0394b2d6cd2.png" src="../_images/9fb917496a83175c3b8e49df7e66676cfce0600d83731c062e36b0394b2d6cd2.png" />
 </div>
 </div>
-</section>
 <hr class="docutils" />
-<section id="top-10-site-id-por-volumen-y-su-ctr">
-<h2>🌐 2.9 Top 10 <code class="docutils literal notranslate"><span class="pre">site_id</span></code> por Volumen y su CTR<a class="headerlink" href="#top-10-site-id-por-volumen-y-su-ctr" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #0f1a0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #90be6d; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+  <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
+    <span style="color:#90be6d;">2.9</span> &nbsp;Top 10 <code>site_id</code> por Volumen y su CTR
+  </h2>
+</div>
 <blockquote>
 <div><p><strong>Identificamos los sitios web con mayor volumen de impresiones y analizamos si los sitios más populares tienen tasas de clic proporcionalmente diferentes. Esto puede revelar nichos de alto engagement.</strong></p>
 </div></blockquote>
@@ -2075,10 +2078,12 @@ Name: count, dtype: int64[pyarrow]
 <img alt="../_images/5d7f6cde752f52f6789535dc2a1acd22beb35754cff75907ff24b27efbd9a5eb.png" src="../_images/5d7f6cde752f52f6789535dc2a1acd22beb35754cff75907ff24b27efbd9a5eb.png" />
 </div>
 </div>
-</section>
 <hr class="docutils" />
-<section id="top-10-app-id-por-volumen-y-su-ctr">
-<h2>📲 2.10 Top 10 <code class="docutils literal notranslate"><span class="pre">app_id</span></code> por Volumen y su CTR<a class="headerlink" href="#top-10-app-id-por-volumen-y-su-ctr" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #0f1a0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #90be6d; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+  <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
+    <span style="color:#90be6d;">2.10</span> &nbsp;Top 10 <code>app_id</code> por Volumen y su CTR
+  </h2>
+</div>
 <blockquote>
 <div><p><strong>De forma similar a los sitios web, analizamos las aplicaciones móviles con mayor volumen de impresiones. Las apps de ciertos verticales (juegos, noticias) suelen tener CTR característicos.</strong></p>
 </div></blockquote>
@@ -2097,10 +2102,12 @@ Name: count, dtype: int64[pyarrow]
 <img alt="../_images/ec75195be79399290c1f107c5e5b494af437ad43e8077b9d9a1d48ea31e2a600.png" src="../_images/ec75195be79399290c1f107c5e5b494af437ad43e8077b9d9a1d48ea31e2a600.png" />
 </div>
 </div>
-</section>
 <hr class="docutils" />
-<section id="distribucion-de-registros-por-dia">
-<h2>📅 2.11 Distribución de Registros por Día<a class="headerlink" href="#distribucion-de-registros-por-dia" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #1a0f2e 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #c4b5fd; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+  <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
+    <span style="color:#c4b5fd;">2.11</span> &nbsp;Distribución de Registros por Día
+  </h2>
+</div>
 <blockquote>
 <div><p><strong>Analizamos cómo se distribuyen las impresiones a lo largo de los días disponibles en el dataset. Variaciones significativas pueden indicar eventos especiales, problemas de recolección o patrones estacionales.</strong></p>
 </div></blockquote>
@@ -2119,10 +2126,12 @@ Name: count, dtype: int64[pyarrow]
 <img alt="../_images/500dd16dac65f0a4c409f98545b86143de73699557f13237dcecf66d87c925ad.png" src="../_images/500dd16dac65f0a4c409f98545b86143de73699557f13237dcecf66d87c925ad.png" />
 </div>
 </div>
-</section>
 <hr class="docutils" />
-<section id="dashboard-resumen-del-dataset">
-<h2>🏆 2.12 Dashboard Resumen del Dataset<a class="headerlink" href="#dashboard-resumen-del-dataset" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #0c2d48 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #219ebc; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+  <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
+    <span style="color:#8ecae6;">2.12</span> &nbsp;Dashboard Resumen del Dataset
+  </h2>
+</div>
 <blockquote>
 <div><p><strong>Consolidamos las métricas clave del dataset en un resumen visual tipo dashboard: total de registros, CTR global, número de features, variables categóricas, numéricas y valores faltantes.</strong></p>
 </div></blockquote>
@@ -2141,15 +2150,20 @@ Name: count, dtype: int64[pyarrow]
 <img alt="../_images/acfd9094cc6afb465d1241b281983cfca5905b21c31d6f2d233aec48852fe3c8.png" src="../_images/acfd9094cc6afb465d1241b281983cfca5905b21c31d6f2d233aec48852fe3c8.png" />
 </div>
 </div>
-</section>
 <hr class="docutils" />
-<section id="conclusiones-del-eda">
-<h2>💡 3. Conclusiones del EDA<a class="headerlink" href="#conclusiones-del-eda" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #0f1a0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #90be6d; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+  <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
+    <span style="color:#90be6d;">3.</span> &nbsp;Conclusiones del EDA
+  </h2>
+</div>
 <blockquote>
 <div><p><strong>Resumen de los hallazgos más importantes del análisis exploratorio.</strong></p>
 </div></blockquote>
-<section id="hallazgos-principales">
-<h3>Hallazgos principales:<a class="headerlink" href="#hallazgos-principales" title="Link to this heading">#</a></h3>
+<div style="background: linear-gradient(135deg, #0f1a0f 0%, #0f172a 100%); color:#f8fafc; padding:16px 22px; border-radius:12px; margin-bottom:6px; border-left:4px solid #90be6d; box-shadow:0 8px 20px rgba(0,0,0,0.22);">
+  <h3 style="margin:0; font-size:1.15rem; color:#e2e8f0;">
+    Hallazgos principales
+  </h3>
+</div>
 <ol class="arabic simple">
 <li><p><strong>Desbalance de clases</strong>: El dataset presenta un fuerte desbalance típico de publicidad digital, con un CTR global cercano al 17%. Aunque es más alto que el estándar de la industria (2-5%), sigue siendo un dataset desbalanceado que requiere atención en el modelado.</p></li>
 <li><p><strong>Alta cardinalidad</strong>: Variables como <code class="docutils literal notranslate"><span class="pre">device_id</span></code>, <code class="docutils literal notranslate"><span class="pre">device_ip</span></code>, <code class="docutils literal notranslate"><span class="pre">site_id</span></code> y <code class="docutils literal notranslate"><span class="pre">app_id</span></code> tienen cardinalidades extremadamente altas (miles o millones de valores únicos). Estas variables requieren <strong>Target Encoding</strong> en lugar de OneHot para evitar explosión dimensional.</p></li>
@@ -2158,19 +2172,16 @@ Name: count, dtype: int64[pyarrow]
 <li><p><strong>Efecto de posición</strong>: La posición del banner (<code class="docutils literal notranslate"><span class="pre">banner_pos</span></code>) muestra diferencias claras en CTR, confirmando que la ubicación del anuncio es un predictor importante.</p></li>
 <li><p><strong>Concentración de tráfico</strong>: Un pequeño número de <code class="docutils literal notranslate"><span class="pre">site_id</span></code> y <code class="docutils literal notranslate"><span class="pre">app_id</span></code> concentra la mayoría del volumen, con CTR variable entre ellos.</p></li>
 </ol>
-</section>
-<section id="implicaciones-para-el-modelado">
-<h3>Implicaciones para el modelado:<a class="headerlink" href="#implicaciones-para-el-modelado" title="Link to this heading">#</a></h3>
-<ul class="simple">
-<li><p>Usar <strong>muestreo estratificado</strong> para mantener la proporción de clases.</p></li>
-<li><p>Aplicar <strong>Target Encoding</strong> para variables de alta cardinalidad.</p></li>
-<li><p>Incluir <strong>features temporales</strong> (hora, día, franja) como predictores.</p></li>
-<li><p>Excluir <code class="docutils literal notranslate"><span class="pre">id</span></code>, <code class="docutils literal notranslate"><span class="pre">device_id</span></code> y <code class="docutils literal notranslate"><span class="pre">device_ip</span></code> por alta cardinalidad sin valor predictivo.</p></li>
-</ul>
+<div style="background: linear-gradient(135deg, #0f1a0f 0%, #0f172a 100%); color:#f8fafc; padding:16px 22px; border-radius:12px; margin-bottom:6px; border-left:4px solid #90be6d; box-shadow:0 8px 20px rgba(0,0,0,0.22);">
+  <h3 style="margin:0; font-size:1.15rem; color:#e2e8f0;">
+    Implicaciones para el modelado
+  </h3>
+</div>
+- Usar **muestreo estratificado** para mantener la proporción de clases.
+- Aplicar **Target Encoding** para variables de alta cardinalidad.
+- Incluir **features temporales** (hora, día, franja) como predictores.
+- Excluir `id`, `device_id` y `device_ip` por alta cardinalidad sin valor predictivo.
 <hr class="docutils" />
-</section>
-</section>
-</section>
 
     <script type="text/x-thebe-config">
     {
@@ -2216,7 +2227,7 @@ Name: count, dtype: int64[pyarrow]
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">🧪 Notebook 2: Pipeline de Clasificación con scikit-learn</p>
+        <p class="prev-next-title">&lt;no title&gt;</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -2237,34 +2248,9 @@ Name: count, dtype: int64[pyarrow]
     <i class="fa-solid fa-list"></i> Contents
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contenido">📋 Contenido:</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#requisitos">⚙️ Requisitos:</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuracion-del-entorno-e-importaciones">⚙️ 0.1 Configuración del Entorno e Importaciones</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#carga-del-dataset">📥 1.1 Carga del Dataset</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inspeccion-basica-del-dataset">🔍 1.2 Inspección Básica del Dataset</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#verificacion-de-valores-faltantes">❓ 1.3 Verificación de Valores Faltantes</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distribucion-de-la-variable-target-click">🎯 1.4 Distribución de la Variable Target (<code class="docutils literal notranslate"><span class="pre">click</span></code>)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cardinalidad-de-variables-categoricas">🗂️ 1.5 Cardinalidad de Variables Categóricas</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-engineering-temporal">⏰ 1.6 Feature Engineering Temporal</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#histogramas-de-variables-numericas-derivadas">📊 2.1 Histogramas de Variables Numéricas Derivadas</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#frecuencia-de-las-principales-variables-categoricas">📈 2.2 Frecuencia de las Principales Variables Categóricas</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distribucion-de-clics-por-hora-del-dia">📉 2.3 Distribución de Clics por Hora del Día</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matriz-de-correlacion-para-variables-numericas">🧩 2.4 Matriz de Correlación para Variables Numéricas</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ctr-por-franja-horaria">🌙 2.5 CTR por Franja Horaria</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ctr-por-tipo-de-dispositivo-device-type">📱 2.6 CTR por Tipo de Dispositivo (<code class="docutils literal notranslate"><span class="pre">device_type</span></code>)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ctr-por-posicion-del-banner-banner-pos">🖼️ 2.7 CTR por Posición del Banner (<code class="docutils literal notranslate"><span class="pre">banner_pos</span></code>)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ctr-por-tipo-de-conexion-device-conn-type">🔗 2.8 CTR por Tipo de Conexión (<code class="docutils literal notranslate"><span class="pre">device_conn_type</span></code>)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#top-10-site-id-por-volumen-y-su-ctr">🌐 2.9 Top 10 <code class="docutils literal notranslate"><span class="pre">site_id</span></code> por Volumen y su CTR</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#top-10-app-id-por-volumen-y-su-ctr">📲 2.10 Top 10 <code class="docutils literal notranslate"><span class="pre">app_id</span></code> por Volumen y su CTR</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distribucion-de-registros-por-dia">📅 2.11 Distribución de Registros por Día</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dashboard-resumen-del-dataset">🏆 2.12 Dashboard Resumen del Dataset</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones-del-eda">💡 3. Conclusiones del EDA</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hallazgos-principales">Hallazgos principales:</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implicaciones-para-el-modelado">Implicaciones para el modelado:</a></li>
+    <ul class="simple visible nav section-nav flex-column">
 </ul>
-</li>
-</ul>
+
   </nav></div>
 
 </div></div>

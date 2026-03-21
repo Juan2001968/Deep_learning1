@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>⚡ Notebook 3: Pipeline de Clasificación con PySpark &#8212; Avazu CTR — Deep Learning Mini-Project</title>
+    <title>&lt;no title&gt; &#8212; Avazu CTR — Deep Learning Mini-Project</title>
   
   
   
@@ -63,8 +63,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'docs/03_pyspark_mlp_pipeline';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="🔬 Notebook 4: Explicabilidad con LIME y Comparación de Frameworks" href="04_lime_and_framework_comparison.html" />
-    <link rel="prev" title="🧪 Notebook 2: Pipeline de Clasificación con scikit-learn" href="02_sklearn_mlp_pipeline.html" />
+    <link rel="next" title="&lt;no title&gt;" href="04_lime_and_framework_comparison.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="02_sklearn_mlp_pipeline.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -154,13 +154,7 @@
 </button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
-        <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="01_project_overview_and_eda.html">📊 1. Exploración de Datos (EDA)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="02_sklearn_mlp_pipeline.html">🧪 2. Pipeline scikit-learn</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">⚡ 3. Pipeline PySpark</a></li>
-<li class="toctree-l1"><a class="reference internal" href="04_lime_and_framework_comparison.html">🔬 4. LIME y Comparación</a></li>
-</ul>
-
+        
     </div>
 </nav></div>
     </div>
@@ -341,7 +335,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>⚡ Notebook 3: Pipeline de Clasificación con PySpark</h1>
+    <h1><no title></h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -350,26 +344,9 @@
                 <h2> Contents </h2>
             </div>
             <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contenido">📋 Contenido:</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#requisitos">⚙️ Requisitos:</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuracion-del-entorno-e-inicio-de-spark">⚙️ 0.1 Configuración del Entorno e Inicio de Spark</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#crear-sesion-spark-con-memoria-extendida">🚀 0.2 Crear Sesión Spark con Memoria Extendida</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lectura-del-dataset-completo">📥 1.1 Lectura del Dataset Completo</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-engineering-temporal-reduccion-de-cardinalidad-y-division">⏰ 2.1 Feature Engineering Temporal, Reducción de Cardinalidad y División</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#verificacion-de-cardinalidad-reducida">🔍 2.2 Verificación de Cardinalidad Reducida</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pipeline-de-preprocesamiento-spark-ml">🔧 3.1 Pipeline de Preprocesamiento Spark ML</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#entrenamiento-con-multilayerperceptronclassifier">🧠 4.1 Entrenamiento con MultilayerPerceptronClassifier</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mejor-configuracion-y-metricas">🏆 4.2 Mejor Configuración y Métricas</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matriz-de-confusion-del-mejor-modelo">📊 4.3 Matriz de Confusión del Mejor Modelo</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizacion-de-resultados-de-la-busqueda">📈 4.4 Visualización de Resultados de la Búsqueda</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#guardado-del-mejor-modelo-y-metricas">💾 5.1 Guardado del Mejor Modelo y Métricas</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones-del-pipeline-pyspark">💡 6. Conclusiones del Pipeline PySpark</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#observaciones-clave">Observaciones clave:</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparacion-pendiente">Comparación pendiente:</a></li>
+                <ul class="simple visible nav section-nav flex-column">
 </ul>
-</li>
-</ul>
+
             </nav>
         </div>
     </div>
@@ -380,43 +357,52 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="notebook-3-pipeline-de-clasificacion-con-pyspark">
-<h1>⚡ Notebook 3: Pipeline de Clasificación con PySpark<a class="headerlink" href="#notebook-3-pipeline-de-clasificacion-con-pyspark" title="Link to this heading">#</a></h1>
-<blockquote>
-<div><p>Este notebook escala el flujo de trabajo al <strong>dataset completo</strong> de Avazu (~40M registros) usando <strong>PySpark ML</strong> con <code class="docutils literal notranslate"><span class="pre">MultilayerPerceptronClassifier</span></code> distribuido.</p>
-</div></blockquote>
-<section id="contenido">
-<h2>📋 Contenido:<a class="headerlink" href="#contenido" title="Link to this heading">#</a></h2>
-<ol class="arabic simple">
-<li><p><strong>Carga del dataset completo</strong> desde <code class="docutils literal notranslate"><span class="pre">data/raw/train.gz</span></code> con Spark</p></li>
-<li><p><strong>Feature Engineering</strong> — misma transformación temporal que en EDA</p></li>
-<li><p><strong>Reducción de cardinalidad</strong> — top 100 valores por columna, resto → ‘OTHER’</p></li>
-<li><p><strong>Preprocesamiento</strong> — StringIndexer + VectorAssembler + StandardScaler (sin OneHotEncoder)</p></li>
-<li><p><strong>División</strong> — randomSplit([0.8, 0.2], seed=42)</p></li>
-<li><p><strong>Entrenamiento</strong> — MultilayerPerceptronClassifier con múltiples configuraciones</p></li>
-<li><p><strong>Evaluación</strong> — BinaryClassificationEvaluator + métricas de clasificación</p></li>
-<li><p><strong>Guardado del modelo</strong> en <code class="docutils literal notranslate"><span class="pre">models/</span></code></p></li>
-</ol>
-</section>
-<section id="requisitos">
-<h2>⚙️ Requisitos:<a class="headerlink" href="#requisitos" title="Link to this heading">#</a></h2>
-<ul class="simple">
-<li><p>Dataset en <code class="docutils literal notranslate"><span class="pre">data/raw/train.gz</span></code></p></li>
-<li><p>PySpark instalado y configurado</p></li>
-<li><p>Suficiente memoria para procesar el dataset completo (~8 GB de RAM recomendados para el driver)</p></li>
-</ul>
-<hr class="docutils" />
-</section>
-<hr class="docutils" />
-<section id="configuracion-del-entorno-e-inicio-de-spark">
-<h2>⚙️ 0.1 Configuración del Entorno e Inicio de Spark<a class="headerlink" href="#configuracion-del-entorno-e-inicio-de-spark" title="Link to this heading">#</a></h2>
+  <div style="background: linear-gradient(135deg, #1a0f0f 0%, #0f172a 100%); color:#f8fafc; padding:28px 32px; border-radius:18px; margin-bottom:16px; border-left:6px solid #f28482; box-shadow:0 20px 45px rgba(0,0,0,0.35);">
+  <h1 style="margin:0 0 6px 0; font-size:2.1rem; letter-spacing:-0.02em;">Notebook 3: Pipeline de Clasificación con PySpark</h1>
+  <p style="margin:0; font-size:1.05rem; line-height:1.65; color:#94a3b8;">
+    Este notebook escala el flujo de trabajo al <b style="color:#f8fafc;">dataset completo</b> de Avazu (~40M registros) usando <b style="color:#f8fafc;">PySpark ML</b> con <code style="background:#1e293b; color:#f28482; padding:2px 6px; border-radius:4px;">MultilayerPerceptronClassifier</code> distribuido.
+  </p>
+</div>
+<p style="margin-bottom:18px;">
+  <span style="background-color:#0f172a; color:#f28482; border:1px solid #f28482; padding:4px 12px; border-radius:999px; font-weight:600; font-size:0.88rem;">Framework: PySpark ML</span>
+  <span style="background-color:#0f172a; color:#ffb703; border:1px solid #fb8500; padding:4px 12px; border-radius:999px; font-weight:600; font-size:0.88rem; margin-left:6px;">~40M registros</span>
+  <span style="background-color:#0f172a; color:#8ecae6; border:1px solid #219ebc; padding:4px 12px; border-radius:999px; font-weight:600; font-size:0.88rem; margin-left:6px;">Procesamiento distribuido</span>
+</p>
+<div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
+  <div style="flex:1; min-width:280px; background: linear-gradient(135deg, #1a0f0f 0%, #0f172a 100%); border-left:4px solid #f28482; padding:14px 18px; border-radius:12px; box-shadow:0 8px 20px rgba(0,0,0,0.22);">
+    <p style="margin:0 0 6px 0; font-weight:700; color:#f28482; font-size:0.95rem;">Contenido</p>
+    <p style="margin:0; color:#cbd5e1; font-size:0.88rem; line-height:1.65;">
+      1. <b style="color:#e2e8f0;">Carga del dataset completo</b> desde <code style="background:#1e293b; color:#67e8f9; padding:2px 6px; border-radius:4px;">data/raw/train.gz</code> con Spark<br>
+      2. <b style="color:#e2e8f0;">Feature Engineering</b> — misma transformación temporal que en EDA<br>
+      3. <b style="color:#e2e8f0;">Reducción de cardinalidad</b> — top 100 valores por columna, resto a OTHER<br>
+      4. <b style="color:#e2e8f0;">Preprocesamiento</b> — StringIndexer + VectorAssembler + StandardScaler<br>
+      5. <b style="color:#e2e8f0;">División</b> — randomSplit([0.8, 0.2], seed=42)<br>
+      6. <b style="color:#e2e8f0;">Entrenamiento</b> — MultilayerPerceptronClassifier con múltiples configuraciones<br>
+      7. <b style="color:#e2e8f0;">Evaluación</b> — BinaryClassificationEvaluator + métricas de clasificación<br>
+      8. <b style="color:#e2e8f0;">Guardado del modelo</b> en <code style="background:#1e293b; color:#67e8f9; padding:2px 6px; border-radius:4px;">models/</code>
+    </p>
+  </div>
+  <div style="flex:1; min-width:280px; background: linear-gradient(135deg, #1a0f2e 0%, #0f172a 100%); border-left:4px solid #c4b5fd; padding:14px 18px; border-radius:12px; box-shadow:0 8px 20px rgba(0,0,0,0.22);">
+    <p style="margin:0 0 6px 0; font-weight:700; color:#c4b5fd; font-size:0.95rem;">Requisitos</p>
+    <p style="margin:0; color:#cbd5e1; font-size:0.88rem; line-height:1.65;">
+      Dataset en <code style="background:#1e293b; color:#67e8f9; padding:2px 6px; border-radius:4px;">data/raw/train.gz</code><br>
+      PySpark instalado y configurado<br>
+      Suficiente memoria para procesar el dataset completo (~8 GB de RAM recomendados para el driver)
+    </p>
+  </div>
+</div><hr class="docutils" />
+<div style="background: linear-gradient(135deg, #1a0f2e 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #c4b5fd; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+  <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
+    <span style="color:#c4b5fd;">0.1</span> &nbsp;Configuración del Entorno e Inicio de Spark
+  </h2>
+</div>
 <blockquote>
 <div><p><strong>Importamos las dependencias, aplicamos el estilo visual oscuro y creamos la sesión de Spark con configuración de memoria extendida (8 GB driver) y timeouts amplios para evitar desconexiones de la JVM durante el procesamiento de ~40M registros.</strong></p>
 </div></blockquote>
 <hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
@@ -467,17 +453,19 @@
 </div>
 </div>
 </div>
-</section>
 <hr class="docutils" />
-<section id="crear-sesion-spark-con-memoria-extendida">
-<h2>🚀 0.2 Crear Sesión Spark con Memoria Extendida<a class="headerlink" href="#crear-sesion-spark-con-memoria-extendida" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #1a0f2e 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #c4b5fd; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+  <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
+    <span style="color:#c4b5fd;">0.2</span> &nbsp;Crear Sesión Spark con Memoria Extendida
+  </h2>
+</div>
 <blockquote>
 <div><p><strong>Creamos la sesión Spark con 8 GB de memoria para el driver, 4 GB para executors, y timeouts extendidos. Esto evita el <code class="docutils literal notranslate"><span class="pre">ConnectionRefusedError</span></code> que ocurre cuando la JVM se queda sin memoria al procesar columnas de alta cardinalidad con StringIndexer.</strong></p>
 </div></blockquote>
 <hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Crear sesión Spark con memoria y timeouts configurados</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Crear sesión Spark con memoria y timeouts configurados</span>
 <span class="c1"># (cierra automáticamente cualquier sesión zombie previa)</span>
 <span class="n">spark</span> <span class="o">=</span> <span class="n">create_spark_session</span><span class="p">(</span>
     <span class="n">app_name</span><span class="o">=</span><span class="s2">&quot;avazu-ctr-mlp&quot;</span><span class="p">,</span>
@@ -518,17 +506,19 @@ Spark está operativo.
 </div>
 </div>
 </div>
-</section>
 <hr class="docutils" />
-<section id="lectura-del-dataset-completo">
-<h2>📥 1.1 Lectura del Dataset Completo<a class="headerlink" href="#lectura-del-dataset-completo" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #0c2d48 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #219ebc; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+  <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
+    <span style="color:#8ecae6;">1.1</span> &nbsp;Lectura del Dataset Completo
+  </h2>
+</div>
 <blockquote>
 <div><p><strong>Leemos el archivo comprimido <code class="docutils literal notranslate"><span class="pre">train.gz</span></code> directamente con Spark (sin descompresión manual). Reparticionamos el DataFrame para mejorar el paralelismo, ya que gzip no es un formato splittable.</strong></p>
 </div></blockquote>
 <hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">t_load</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t_load</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 <span class="n">spark_df</span> <span class="o">=</span> <span class="n">read_ctr_csv_spark</span><span class="p">(</span>
     <span class="n">spark</span><span class="p">,</span>
     <span class="n">paths</span><span class="p">[</span><span class="s2">&quot;train_csv&quot;</span><span class="p">],</span>
@@ -861,22 +851,24 @@ Spark está operativo.
 <p>5 rows × 24 columns</p>
 </div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total de registros cargados: 40,428,967
 Particiones después de repartition: 100
-Tiempo de carga: 485.2s
+Tiempo de carga: 611.6s
 </pre></div>
 </div>
 </div>
 </div>
-</section>
 <hr class="docutils" />
-<section id="feature-engineering-temporal-reduccion-de-cardinalidad-y-division">
-<h2>⏰ 2.1 Feature Engineering Temporal, Reducción de Cardinalidad y División<a class="headerlink" href="#feature-engineering-temporal-reduccion-de-cardinalidad-y-division" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #1c1408 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #ffb703; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+ <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
+  <span style="color:#ffb703;">2.1</span> &nbsp;Feature Engineering Temporal, Reducción de Cardinalidad y División
+ </h2>
+</div>
 <blockquote>
 <div><p><strong>Aplicamos la misma transformación temporal que en el EDA (hora, día, franja horaria) usando funciones nativas de Spark SQL. Eliminamos <code class="docutils literal notranslate"><span class="pre">id</span></code>, <code class="docutils literal notranslate"><span class="pre">device_ip</span></code> y <code class="docutils literal notranslate"><span class="pre">device_id</span></code> (alta cardinalidad sin valor predictivo). Reducimos la cardinalidad de columnas categóricas con &gt;100 valores únicos (site_id, site_domain, app_id, app_domain, device_model, etc.) manteniendo solo los top 100 valores más frecuentes y agrupando el resto como <code class="docutils literal notranslate"><span class="pre">'OTHER'</span></code>. Esto es estándar en CTR prediction y evita la explosión de dimensionalidad. Dividimos en 80% train / 20% test.</strong></p>
 </div></blockquote>
 <hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Feature engineering temporal</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Feature engineering temporal</span>
 <span class="n">spark_df</span> <span class="o">=</span> <span class="n">add_time_features_spark</span><span class="p">(</span><span class="n">spark_df</span><span class="p">,</span> <span class="n">hour_col</span><span class="o">=</span><span class="n">general</span><span class="p">[</span><span class="s2">&quot;hour_col&quot;</span><span class="p">])</span>
 
 <span class="c1"># Eliminar columnas de alta cardinalidad sin valor predictivo</span>
@@ -1027,43 +1019,35 @@ Columnas restantes: 28
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cardinalidad aproximada de columnas categoricas:
   C1: ~7
   banner_pos: ~7
-  site_id: ~4,495 --&gt; REDUCIR a top 100
-  site_domain: ~8,009 --&gt; REDUCIR a top 100
   site_category: ~27
-  app_id: ~9,055 --&gt; REDUCIR a top 100
-  app_domain: ~553 --&gt; REDUCIR a top 100
   app_category: ~33
-  device_model: ~8,064 --&gt; REDUCIR a top 100
   device_type: ~5
   device_conn_type: ~4
-  C14: ~2,743 --&gt; REDUCIR a top 100
   C15: ~8
   C16: ~9
-  C17: ~428 --&gt; REDUCIR a top 100
   C18: ~4
-  C19: ~65
-  C20: ~173 --&gt; REDUCIR a top 100
-  C21: ~60
   time_bucket: ~4
 
-Reduciendo 8 columnas a top 100 valores...
+Reduciendo 0 columnas a top 100 valores...
 
 Train: 32,339,655 registros | Test: 8,089,312 registros
 </pre></div>
 </div>
 </div>
 </div>
-</section>
 <hr class="docutils" />
-<section id="verificacion-de-cardinalidad-reducida">
-<h2>🔍 2.2 Verificación de Cardinalidad Reducida<a class="headerlink" href="#verificacion-de-cardinalidad-reducida" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #1c1408 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #ffb703; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+  <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
+    <span style="color:#ffb703;">2.2</span> &nbsp;Verificación de Cardinalidad Reducida
+  </h2>
+</div>
 <blockquote>
 <div><p><strong>Verificamos que la reducción de cardinalidad funcionó correctamente. Cada columna categórica de alta cardinalidad debería tener &lt;= 101 valores únicos (top 100 + ‘OTHER’). La dimensionalidad del vector de features será ~25 (índices de StringIndexer + numéricas) en lugar de cientos de miles con OneHotEncoder.</strong></p>
 </div></blockquote>
 <hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Verificar cardinalidad despues de la reduccion</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Verificar cardinalidad despues de la reduccion</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyspark.sql</span><span class="w"> </span><span class="kn">import</span> <span class="n">functions</span> <span class="k">as</span> <span class="n">F</span>
 
 <span class="n">cat_cols_check</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">feature_cfg</span><span class="p">[</span><span class="s2">&quot;spark_categorical&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">spark_df</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
@@ -1088,46 +1072,47 @@ Train: 32,339,655 registros | Test: 8,089,312 registros
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cardinalidad despues de reduccion:
   C1: ~7
   banner_pos: ~7
-  site_id: ~100
-  site_domain: ~98
   site_category: ~27
-  app_id: ~104
-  app_domain: ~100
   app_category: ~33
-  device_model: ~100
   device_type: ~5
   device_conn_type: ~4
-  C14: ~103
   C15: ~8
   C16: ~9
-  C17: ~100
   C18: ~4
-  C19: ~65
-  C20: ~103
-  C21: ~60
   time_bucket: ~4
 
-Total columnas categoricas: 20
+Total columnas categoricas: 10
 Total columnas numericas: 5
-Dimensionalidad estimada del vector de features: ~25
+Dimensionalidad estimada del vector de features: ~15
 (Solo indices numericos de StringIndexer, sin OneHotEncoder)
 </pre></div>
 </div>
 </div>
 </div>
-</section>
 <hr class="docutils" />
-<section id="pipeline-de-preprocesamiento-spark-ml">
-<h2>🔧 3.1 Pipeline de Preprocesamiento Spark ML<a class="headerlink" href="#pipeline-de-preprocesamiento-spark-ml" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #0f1a0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #90be6d; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+  <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
+    <span style="color:#90be6d;">3.1</span> &nbsp;Pipeline de Preprocesamiento Spark ML
+  </h2>
+</div>
 <blockquote>
 <div><p><strong>Construimos el pipeline de Spark ML con StringIndexer para convertir categóricas a índices numéricos, VectorAssembler para combinar features y StandardScaler para normalización. Se eliminó OneHotEncoder para evitar la explosión de dimensionalidad (~100K+ columnas sparse) que causaba tiempos de preprocesamiento de 97+ minutos en modo local. La dimensionalidad resultante es de ~25 features (índices + numéricas) en lugar de cientos de miles.</strong></p>
 </div></blockquote>
 <hr class="docutils" />
-<div class="cell docutils container">
+<div style="background-color:#1f2937; border-left:5px solid #f59e0b; color:#fcd34d; padding:14px 18px; border-radius:12px; box-shadow:0 10px 25px rgba(0,0,0,0.18);">
+<b>Nota sobre el manejo de cardinalidad</b><br>
+Las columnas categóricas se dividen en dos grupos para el preprocesamiento en Spark:
+<ul>
+  <li><b>Baja cardinalidad</b> (C1, banner_pos, site_category, app_category, device_type, device_conn_type, C15, C16, C18, time_bucket): se procesan con <code>StringIndexer</code> → <code>OneHotEncoder</code>.</li>
+  <li><b>Alta cardinalidad</b> (site_id, site_domain, app_id, app_domain, device_id, device_model, C14, C17, C19, C20, C21): se procesan <b>únicamente</b> con <code>StringIndexer</code>, usando el índice numérico como feature directa.</li>
+</ul>
+Aplicar <code>OneHotEncoder</code> a columnas como <code>device_id</code> (~2M valores únicos) generaría un vector de features de más de 2 millones de dimensiones, lo cual excede la memoria disponible en entorno local y hace inviable el entrenamiento del MLP. Esta separación es una decisión de ingeniería estándar cuando se trabaja con datasets de alta cardinalidad en Spark ML.
+</div><div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">t_prep</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t_prep</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Categóricas para StringIndexer: </span><span class="si">{</span><span class="n">feature_cfg</span><span class="p">[</span><span class="s1">&#39;spark_categorical&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Categóricas (baja cardinalidad → OHE): </span><span class="si">{</span><span class="n">feature_cfg</span><span class="p">[</span><span class="s1">&#39;spark_categorical&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Alta cardinalidad (solo StringIndexer): </span><span class="si">{</span><span class="n">feature_cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;spark_high_cardinality&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">[])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Numéricas: </span><span class="si">{</span><span class="n">feature_cfg</span><span class="p">[</span><span class="s1">&#39;spark_numeric&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">()</span>
 
@@ -1138,10 +1123,11 @@ Dimensionalidad estimada del vector de features: ~25
     <span class="n">numeric_columns</span><span class="o">=</span><span class="n">feature_cfg</span><span class="p">[</span><span class="s2">&quot;spark_numeric&quot;</span><span class="p">],</span>
     <span class="n">label_col</span><span class="o">=</span><span class="n">general</span><span class="p">[</span><span class="s2">&quot;target_col&quot;</span><span class="p">],</span>
     <span class="n">scale_features</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">high_cardinality_columns</span><span class="o">=</span><span class="n">feature_cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;spark_high_cardinality&quot;</span><span class="p">,</span> <span class="p">[]),</span>
 <span class="p">)</span>
 
 <span class="n">num_features</span> <span class="o">=</span> <span class="n">train_features</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">feature_col</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">size</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Columna de features: </span><span class="si">{</span><span class="n">feature_col</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Columna de features: </span><span class="si">{</span><span class="n">feature_col</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dimensionalidad del vector de features: </span><span class="si">{</span><span class="n">num_features</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Particiones de train preparado: </span><span class="si">{</span><span class="n">train_features</span><span class="o">.</span><span class="n">rdd</span><span class="o">.</span><span class="n">getNumPartitions</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tiempo de preprocesamiento: </span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t_prep</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">)</span>
@@ -1149,30 +1135,34 @@ Dimensionalidad estimada del vector de features: ~25
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Categóricas para StringIndexer: [&#39;C1&#39;, &#39;banner_pos&#39;, &#39;site_id&#39;, &#39;site_domain&#39;, &#39;site_category&#39;, &#39;app_id&#39;, &#39;app_domain&#39;, &#39;app_category&#39;, &#39;device_model&#39;, &#39;device_type&#39;, &#39;device_conn_type&#39;, &#39;C14&#39;, &#39;C15&#39;, &#39;C16&#39;, &#39;C17&#39;, &#39;C18&#39;, &#39;C19&#39;, &#39;C20&#39;, &#39;C21&#39;, &#39;time_bucket&#39;]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Categóricas (baja cardinalidad → OHE): [&#39;C1&#39;, &#39;banner_pos&#39;, &#39;site_category&#39;, &#39;app_category&#39;, &#39;device_type&#39;, &#39;device_conn_type&#39;, &#39;C15&#39;, &#39;C16&#39;, &#39;C18&#39;, &#39;time_bucket&#39;]
+Alta cardinalidad (solo StringIndexer): [&#39;site_id&#39;, &#39;site_domain&#39;, &#39;app_id&#39;, &#39;app_domain&#39;, &#39;device_id&#39;, &#39;device_model&#39;, &#39;C14&#39;, &#39;C17&#39;, &#39;C19&#39;, &#39;C20&#39;, &#39;C21&#39;]
 Numéricas: [&#39;event_day&#39;, &#39;event_hour&#39;, &#39;day_of_week&#39;, &#39;is_weekend&#39;, &#39;is_business_hour&#39;]
 
-Particiones train: 100
-Particiones test: 100
+Feature vector size: 135
+Train rows: 32,339,655 | Test rows: 8,089,312
+
 Columna de features: features
-Dimensionalidad del vector de features: 25
+Dimensionalidad del vector de features: 135
 Particiones de train preparado: 100
-Tiempo de preprocesamiento: 1159.5s
+Tiempo de preprocesamiento: 1153.9s
 </pre></div>
 </div>
 </div>
 </div>
-</section>
 <hr class="docutils" />
-<section id="entrenamiento-con-multilayerperceptronclassifier">
-<h2>🧠 4.1 Entrenamiento con MultilayerPerceptronClassifier<a class="headerlink" href="#entrenamiento-con-multilayerperceptronclassifier" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #1c1408 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #fb8500; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+  <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
+    <span style="color:#fb8500;">4.1</span> &nbsp;Entrenamiento con MultilayerPerceptronClassifier
+  </h2>
+</div>
 <blockquote>
 <div><p><strong>Entrenamos múltiples configuraciones del MLP distribuido con las combinaciones requeridas: layers [n, 10, 2], [n, 50, 2], [n, 100, 2] con stepSize 0.1 y 0.01, y maxIter 100 y 200. Registramos tiempo de entrenamiento y predicción para cada combinación.</strong></p>
 </div></blockquote>
 <hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Iniciando búsqueda de hiperparámetros Spark MLP...&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Iniciando búsqueda de hiperparámetros Spark MLP...&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Configuraciones: hidden_widths=(10,50,100) × step_sizes=(0.1,0.01) × max_iters=(100,200)&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total: 3 × 2 × 2 = 12 modelos a entrenar</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
@@ -1199,21 +1189,286 @@ Tiempo de preprocesamiento: 1159.5s
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Iniciando búsqueda de hiperparámetros Spark MLP...
 Configuraciones: hidden_widths=(10,50,100) × step_sizes=(0.1,0.01) × max_iters=(100,200)
 Total: 3 × 2 × 2 = 12 modelos a entrenar
+
+Iniciando búsqueda de hiperparámetros Spark MLP...
+Configuraciones: hidden_widths=(10, 50, 100) × step_sizes=(0.1, 0.01) × max_iters=(100, 200)
+Total: 3 × 2 × 2 = 12 modelos a entrenar
+Tamaño del vector de features: 135
+
+[1/12] layers=[135, 10, 2], stepSize=0.1, maxIter=100 ... ROC AUC=0.6740  (24m 8.3s)
+[2/12] layers=[135, 10, 2], stepSize=0.1, maxIter=200 ... ROC AUC=0.6759  (46m 12.6s)
+[3/12] layers=[135, 10, 2], stepSize=0.01, maxIter=100 ... ROC AUC=0.6740  (23m 34.5s)
+[4/12] layers=[135, 10, 2], stepSize=0.01, maxIter=200 ... ROC AUC=0.6759  (47m 19.8s)
+[5/12] layers=[135, 50, 2], stepSize=0.1, maxIter=100 ... ROC AUC=0.6775  (64m 33.0s)
+[6/12] layers=[135, 50, 2], stepSize=0.1, maxIter=200 ... ROC AUC=0.6813  (153m 38.9s)
+[7/12] layers=[135, 50, 2], stepSize=0.01, maxIter=100 ... ROC AUC=0.6775  (93m 12.6s)
+[8/12] layers=[135, 50, 2], stepSize=0.01, maxIter=200 ... ROC AUC=0.6813  (127m 47.9s)
+[9/12] layers=[135, 100, 2], stepSize=0.1, maxIter=100 ... ROC AUC=0.6755  (118m 5.0s)
+[10/12] layers=[135, 100, 2], stepSize=0.1, maxIter=200 ... ROC AUC=0.6848  (249m 14.7s)
+[11/12] layers=[135, 100, 2], stepSize=0.01, maxIter=100 ... ROC AUC=0.6755  (118m 48.3s)
+[12/12] layers=[135, 100, 2], stepSize=0.01, maxIter=200 ... ROC AUC=0.6848  (240m 21.7s)
+
+Búsqueda completada en: 1317m 28.2s
+
+Resultados (ordenados por ROC AUC):
 </pre></div>
 </div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>accuracy</th>
+      <th>precision</th>
+      <th>recall</th>
+      <th>f1</th>
+      <th>roc_auc</th>
+      <th>true_positive</th>
+      <th>true_negative</th>
+      <th>false_positive</th>
+      <th>false_negative</th>
+      <th>hidden_width</th>
+      <th>step_size</th>
+      <th>max_iter</th>
+      <th>training_seconds</th>
+      <th>prediction_seconds</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.832369</td>
+      <td>0.588358</td>
+      <td>0.045031</td>
+      <td>0.083659</td>
+      <td>0.684774</td>
+      <td>61900.0</td>
+      <td>6671391.0</td>
+      <td>43308.0</td>
+      <td>1312713.0</td>
+      <td>100</td>
+      <td>0.01</td>
+      <td>200</td>
+      <td>14421.695358</td>
+      <td>26.274801</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.832369</td>
+      <td>0.588358</td>
+      <td>0.045031</td>
+      <td>0.083659</td>
+      <td>0.684774</td>
+      <td>61900.0</td>
+      <td>6671391.0</td>
+      <td>43308.0</td>
+      <td>1312713.0</td>
+      <td>100</td>
+      <td>0.10</td>
+      <td>200</td>
+      <td>14954.719872</td>
+      <td>27.380986</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.832374</td>
+      <td>0.587295</td>
+      <td>0.045595</td>
+      <td>0.084620</td>
+      <td>0.681321</td>
+      <td>62675.0</td>
+      <td>6670656.0</td>
+      <td>44043.0</td>
+      <td>1311938.0</td>
+      <td>50</td>
+      <td>0.10</td>
+      <td>200</td>
+      <td>9218.898017</td>
+      <td>30.353295</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.832374</td>
+      <td>0.587295</td>
+      <td>0.045595</td>
+      <td>0.084620</td>
+      <td>0.681321</td>
+      <td>62675.0</td>
+      <td>6670656.0</td>
+      <td>44043.0</td>
+      <td>1311938.0</td>
+      <td>50</td>
+      <td>0.01</td>
+      <td>200</td>
+      <td>7667.924600</td>
+      <td>19.740896</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.832109</td>
+      <td>0.584562</td>
+      <td>0.041461</td>
+      <td>0.077430</td>
+      <td>0.677460</td>
+      <td>56993.0</td>
+      <td>6674195.0</td>
+      <td>40504.0</td>
+      <td>1317620.0</td>
+      <td>50</td>
+      <td>0.01</td>
+      <td>100</td>
+      <td>5592.558176</td>
+      <td>29.116923</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.832109</td>
+      <td>0.584562</td>
+      <td>0.041461</td>
+      <td>0.077430</td>
+      <td>0.677460</td>
+      <td>56993.0</td>
+      <td>6674195.0</td>
+      <td>40504.0</td>
+      <td>1317620.0</td>
+      <td>50</td>
+      <td>0.10</td>
+      <td>100</td>
+      <td>3872.954401</td>
+      <td>23.057576</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.832049</td>
+      <td>0.592904</td>
+      <td>0.037149</td>
+      <td>0.069917</td>
+      <td>0.675917</td>
+      <td>51065.0</td>
+      <td>6679637.0</td>
+      <td>35062.0</td>
+      <td>1323548.0</td>
+      <td>10</td>
+      <td>0.10</td>
+      <td>200</td>
+      <td>2772.587793</td>
+      <td>14.422436</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0.832049</td>
+      <td>0.592904</td>
+      <td>0.037149</td>
+      <td>0.069917</td>
+      <td>0.675916</td>
+      <td>51065.0</td>
+      <td>6679637.0</td>
+      <td>35062.0</td>
+      <td>1323548.0</td>
+      <td>10</td>
+      <td>0.01</td>
+      <td>200</td>
+      <td>2839.824974</td>
+      <td>16.422524</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0.832115</td>
+      <td>0.592803</td>
+      <td>0.038435</td>
+      <td>0.072189</td>
+      <td>0.675471</td>
+      <td>52833.0</td>
+      <td>6678408.0</td>
+      <td>36291.0</td>
+      <td>1321780.0</td>
+      <td>100</td>
+      <td>0.10</td>
+      <td>100</td>
+      <td>7085.043512</td>
+      <td>22.288247</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0.832115</td>
+      <td>0.592803</td>
+      <td>0.038435</td>
+      <td>0.072189</td>
+      <td>0.675470</td>
+      <td>52833.0</td>
+      <td>6678408.0</td>
+      <td>36291.0</td>
+      <td>1321780.0</td>
+      <td>100</td>
+      <td>0.01</td>
+      <td>100</td>
+      <td>7128.252549</td>
+      <td>25.658511</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>0.832018</td>
+      <td>0.588459</td>
+      <td>0.038123</td>
+      <td>0.071607</td>
+      <td>0.674002</td>
+      <td>52404.0</td>
+      <td>6678050.0</td>
+      <td>36649.0</td>
+      <td>1322209.0</td>
+      <td>10</td>
+      <td>0.01</td>
+      <td>100</td>
+      <td>1414.460204</td>
+      <td>15.160113</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>0.832018</td>
+      <td>0.588459</td>
+      <td>0.038123</td>
+      <td>0.071607</td>
+      <td>0.674002</td>
+      <td>52404.0</td>
+      <td>6678050.0</td>
+      <td>36649.0</td>
+      <td>1322209.0</td>
+      <td>10</td>
+      <td>0.10</td>
+      <td>100</td>
+      <td>1448.285413</td>
+      <td>16.216231</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
-</div>
-</section>
 <hr class="docutils" />
-<section id="mejor-configuracion-y-metricas">
-<h2>🏆 4.2 Mejor Configuración y Métricas<a class="headerlink" href="#mejor-configuracion-y-metricas" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #1c1408 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #fb8500; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+  <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
+    <span style="color:#fb8500;">4.2</span> &nbsp;Mejor Configuración y Métricas
+  </h2>
+</div>
 <blockquote>
 <div><p><strong>Identificamos la mejor configuración de hiperparámetros y mostramos sus métricas detalladas: Accuracy, Precision, Recall, F1-score y ROC AUC.</strong></p>
 </div></blockquote>
 <hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">best</span> <span class="o">=</span> <span class="n">spark_results</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best</span> <span class="o">=</span> <span class="n">spark_results</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;═&quot;</span> <span class="o">*</span> <span class="mi">55</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;MEJOR MODELO SPARK — MultilayerPerceptronClassifier&quot;</span><span class="p">)</span>
@@ -1234,18 +1489,40 @@ Total: 3 × 2 × 2 = 12 modelos a entrenar
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>═══════════════════════════════════════════════════════
+MEJOR MODELO SPARK — MultilayerPerceptronClassifier
+═══════════════════════════════════════════════════════
+  Layers:      [n, 100, 2]
+  Step size:   0.01
+  Max iter:    200
+───────────────────────────────────────────────────────
+  Accuracy:    0.8324
+  Precision:   0.5884
+  Recall:      0.0450
+  F1-score:    0.0837
+  ROC AUC:     0.6848
+═══════════════════════════════════════════════════════
+  Tiempo entrenamiento: 240m 21.7s
+  Tiempo predicción:    26.27s
+═══════════════════════════════════════════════════════
+</pre></div>
 </div>
-</section>
+</div>
+</div>
 <hr class="docutils" />
-<section id="matriz-de-confusion-del-mejor-modelo">
-<h2>📊 4.3 Matriz de Confusión del Mejor Modelo<a class="headerlink" href="#matriz-de-confusion-del-mejor-modelo" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #1a0f0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #f28482; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+  <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
+    <span style="color:#f28482;">4.3</span> &nbsp;Matriz de Confusión del Mejor Modelo
+  </h2>
+</div>
 <blockquote>
 <div><p><strong>Visualizamos la matriz de confusión del mejor modelo Spark. Al entrenar sobre el dataset completo (~40M registros), los números absolutos de la matriz son significativamente mayores que en el pipeline local.</strong></p>
 </div></blockquote>
 <hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Construir matriz de confusión desde las métricas del mejor modelo</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Construir matriz de confusión desde las métricas del mejor modelo</span>
 <span class="n">cm_spark</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
     <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">best</span><span class="p">[</span><span class="s2">&quot;true_negative&quot;</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">best</span><span class="p">[</span><span class="s2">&quot;false_positive&quot;</span><span class="p">])],</span>
     <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">best</span><span class="p">[</span><span class="s2">&quot;false_negative&quot;</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">best</span><span class="p">[</span><span class="s2">&quot;true_positive&quot;</span><span class="p">])],</span>
@@ -1269,18 +1546,23 @@ Total: 3 × 2 × 2 = 12 modelos a entrenar
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="../_images/07799d6d12f105757ce65da56d50e5531d4dbf13c153d3f2ef33d7ad80a2c559.png" src="../_images/07799d6d12f105757ce65da56d50e5531d4dbf13c153d3f2ef33d7ad80a2c559.png" />
 </div>
-</section>
+</div>
 <hr class="docutils" />
-<section id="visualizacion-de-resultados-de-la-busqueda">
-<h2>📈 4.4 Visualización de Resultados de la Búsqueda<a class="headerlink" href="#visualizacion-de-resultados-de-la-busqueda" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #1a0f0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #f28482; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+  <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
+    <span style="color:#f28482;">4.4</span> &nbsp;Visualización de Resultados de la Búsqueda
+  </h2>
+</div>
 <blockquote>
 <div><p><strong>Comparamos visualmente los diferentes modelos entrenados en términos de ROC AUC y su relación con el tiempo de entrenamiento para identificar el mejor trade-off rendimiento/costo.</strong></p>
 </div></blockquote>
 <hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
 
 <span class="c1"># Gráfico 1: ROC AUC por configuración</span>
 <span class="n">top_results</span> <span class="o">=</span> <span class="n">spark_results</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -1320,35 +1602,33 @@ Total: 3 × 2 × 2 = 12 modelos a entrenar
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="../_images/84edcfeb799c463a220f24e4c561bb5c7fa8cb947159b05e4f033bcd70cd90bd.png" src="../_images/84edcfeb799c463a220f24e4c561bb5c7fa8cb947159b05e4f033bcd70cd90bd.png" />
 </div>
-</section>
+</div>
 <hr class="docutils" />
-<section id="guardado-del-mejor-modelo-y-metricas">
-<h2>💾 5.1 Guardado del Mejor Modelo y Métricas<a class="headerlink" href="#guardado-del-mejor-modelo-y-metricas" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #0c2d48 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #219ebc; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+  <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
+    <span style="color:#8ecae6;">5.1</span> &nbsp;Guardado del Mejor Modelo y Métricas
+  </h2>
+</div>
 <blockquote>
 <div><p><strong>Reentrenamos el mejor modelo y lo guardamos en <code class="docutils literal notranslate"><span class="pre">models/</span></code>. También exportamos las métricas para la comparación en el Notebook 4.</strong></p>
 </div></blockquote>
 <hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyspark.ml.classification</span><span class="w"> </span><span class="kn">import</span> <span class="n">MultilayerPerceptronClassifier</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Los CSVs se guardan con pandas (no usa Hadoop, sin error)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="n">MODELS_DIR</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">paths</span><span class="p">[</span><span class="s2">&quot;models_dir&quot;</span><span class="p">])</span>
+<span class="n">MODELS_DIR</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-<span class="c1"># Reentrenar el mejor modelo</span>
-<span class="n">best_layers</span> <span class="o">=</span> <span class="p">[</span><span class="n">num_features</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">best</span><span class="p">[</span><span class="s2">&quot;hidden_width&quot;</span><span class="p">]),</span> <span class="mi">2</span><span class="p">]</span>
-<span class="n">best_classifier</span> <span class="o">=</span> <span class="n">MultilayerPerceptronClassifier</span><span class="p">(</span>
-    <span class="n">featuresCol</span><span class="o">=</span><span class="n">feature_col</span><span class="p">,</span>
-    <span class="n">labelCol</span><span class="o">=</span><span class="n">general</span><span class="p">[</span><span class="s2">&quot;target_col&quot;</span><span class="p">],</span>
-    <span class="n">layers</span><span class="o">=</span><span class="n">best_layers</span><span class="p">,</span>
-    <span class="n">stepSize</span><span class="o">=</span><span class="n">best</span><span class="p">[</span><span class="s2">&quot;step_size&quot;</span><span class="p">],</span>
-    <span class="n">maxIter</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">best</span><span class="p">[</span><span class="s2">&quot;max_iter&quot;</span><span class="p">]),</span>
-    <span class="n">seed</span><span class="o">=</span><span class="n">general</span><span class="p">[</span><span class="s2">&quot;random_state&quot;</span><span class="p">],</span>
-<span class="p">)</span>
-<span class="n">best_model</span> <span class="o">=</span> <span class="n">best_classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_features</span><span class="p">)</span>
+<span class="c1"># Guardar tabla completa de resultados</span>
+<span class="n">spark_results</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">MODELS_DIR</span> <span class="o">/</span> <span class="s2">&quot;spark_all_results.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tabla de resultados guardada.&quot;</span><span class="p">)</span>
 
-<span class="c1"># Guardar modelo</span>
-<span class="n">model_path</span> <span class="o">=</span> <span class="n">save_spark_model</span><span class="p">(</span><span class="n">best_model</span><span class="p">,</span> <span class="n">save_path</span><span class="o">=</span><span class="n">MODELS_DIR</span><span class="p">,</span> <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;spark_best_mlp&quot;</span><span class="p">)</span>
-
-<span class="c1"># Guardar métricas para comparación</span>
+<span class="c1"># Guardar métricas del mejor modelo</span>
+<span class="n">best</span> <span class="o">=</span> <span class="n">spark_results</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">spark_metrics</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;accuracy&quot;</span><span class="p">:</span> <span class="n">best</span><span class="p">[</span><span class="s2">&quot;accuracy&quot;</span><span class="p">],</span>
     <span class="s2">&quot;precision&quot;</span><span class="p">:</span> <span class="n">best</span><span class="p">[</span><span class="s2">&quot;precision&quot;</span><span class="p">],</span>
@@ -1357,32 +1637,279 @@ Total: 3 × 2 × 2 = 12 modelos a entrenar
     <span class="s2">&quot;roc_auc&quot;</span><span class="p">:</span> <span class="n">best</span><span class="p">[</span><span class="s2">&quot;roc_auc&quot;</span><span class="p">],</span>
     <span class="s2">&quot;training_seconds&quot;</span><span class="p">:</span> <span class="n">best</span><span class="p">[</span><span class="s2">&quot;training_seconds&quot;</span><span class="p">],</span>
     <span class="s2">&quot;prediction_seconds&quot;</span><span class="p">:</span> <span class="n">best</span><span class="p">[</span><span class="s2">&quot;prediction_seconds&quot;</span><span class="p">],</span>
-    <span class="s2">&quot;dataset_size&quot;</span><span class="p">:</span> <span class="n">total_rows</span><span class="p">,</span>
     <span class="s2">&quot;hidden_width&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">best</span><span class="p">[</span><span class="s2">&quot;hidden_width&quot;</span><span class="p">]),</span>
     <span class="s2">&quot;step_size&quot;</span><span class="p">:</span> <span class="n">best</span><span class="p">[</span><span class="s2">&quot;step_size&quot;</span><span class="p">],</span>
     <span class="s2">&quot;max_iter&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">best</span><span class="p">[</span><span class="s2">&quot;max_iter&quot;</span><span class="p">]),</span>
 <span class="p">}</span>
-<span class="n">metrics_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">MODELS_DIR</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;spark_metrics.csv&quot;</span>
-<span class="n">metrics_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">spark_metrics</span><span class="p">])</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">metrics_path</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Métricas guardadas en: </span><span class="si">{</span><span class="n">metrics_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">spark_metrics</span><span class="p">])</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">MODELS_DIR</span> <span class="o">/</span> <span class="s2">&quot;spark_metrics.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Métricas del mejor modelo guardadas.&quot;</span><span class="p">)</span>
 
-<span class="c1"># Guardar tabla completa de resultados</span>
-<span class="n">spark_results</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">MODELS_DIR</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;spark_all_results.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tabla de resultados guardada.&quot;</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">spark_results</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tabla de resultados guardada.
+Métricas del mejor modelo guardadas.
+</pre></div>
 </div>
-</section>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>accuracy</th>
+      <th>precision</th>
+      <th>recall</th>
+      <th>f1</th>
+      <th>roc_auc</th>
+      <th>true_positive</th>
+      <th>true_negative</th>
+      <th>false_positive</th>
+      <th>false_negative</th>
+      <th>hidden_width</th>
+      <th>step_size</th>
+      <th>max_iter</th>
+      <th>training_seconds</th>
+      <th>prediction_seconds</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.832369</td>
+      <td>0.588358</td>
+      <td>0.045031</td>
+      <td>0.083659</td>
+      <td>0.684774</td>
+      <td>61900.0</td>
+      <td>6671391.0</td>
+      <td>43308.0</td>
+      <td>1312713.0</td>
+      <td>100</td>
+      <td>0.01</td>
+      <td>200</td>
+      <td>14421.695358</td>
+      <td>26.274801</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.832369</td>
+      <td>0.588358</td>
+      <td>0.045031</td>
+      <td>0.083659</td>
+      <td>0.684774</td>
+      <td>61900.0</td>
+      <td>6671391.0</td>
+      <td>43308.0</td>
+      <td>1312713.0</td>
+      <td>100</td>
+      <td>0.10</td>
+      <td>200</td>
+      <td>14954.719872</td>
+      <td>27.380986</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.832374</td>
+      <td>0.587295</td>
+      <td>0.045595</td>
+      <td>0.084620</td>
+      <td>0.681321</td>
+      <td>62675.0</td>
+      <td>6670656.0</td>
+      <td>44043.0</td>
+      <td>1311938.0</td>
+      <td>50</td>
+      <td>0.10</td>
+      <td>200</td>
+      <td>9218.898017</td>
+      <td>30.353295</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.832374</td>
+      <td>0.587295</td>
+      <td>0.045595</td>
+      <td>0.084620</td>
+      <td>0.681321</td>
+      <td>62675.0</td>
+      <td>6670656.0</td>
+      <td>44043.0</td>
+      <td>1311938.0</td>
+      <td>50</td>
+      <td>0.01</td>
+      <td>200</td>
+      <td>7667.924600</td>
+      <td>19.740896</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.832109</td>
+      <td>0.584562</td>
+      <td>0.041461</td>
+      <td>0.077430</td>
+      <td>0.677460</td>
+      <td>56993.0</td>
+      <td>6674195.0</td>
+      <td>40504.0</td>
+      <td>1317620.0</td>
+      <td>50</td>
+      <td>0.01</td>
+      <td>100</td>
+      <td>5592.558176</td>
+      <td>29.116923</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.832109</td>
+      <td>0.584562</td>
+      <td>0.041461</td>
+      <td>0.077430</td>
+      <td>0.677460</td>
+      <td>56993.0</td>
+      <td>6674195.0</td>
+      <td>40504.0</td>
+      <td>1317620.0</td>
+      <td>50</td>
+      <td>0.10</td>
+      <td>100</td>
+      <td>3872.954401</td>
+      <td>23.057576</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.832049</td>
+      <td>0.592904</td>
+      <td>0.037149</td>
+      <td>0.069917</td>
+      <td>0.675917</td>
+      <td>51065.0</td>
+      <td>6679637.0</td>
+      <td>35062.0</td>
+      <td>1323548.0</td>
+      <td>10</td>
+      <td>0.10</td>
+      <td>200</td>
+      <td>2772.587793</td>
+      <td>14.422436</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0.832049</td>
+      <td>0.592904</td>
+      <td>0.037149</td>
+      <td>0.069917</td>
+      <td>0.675916</td>
+      <td>51065.0</td>
+      <td>6679637.0</td>
+      <td>35062.0</td>
+      <td>1323548.0</td>
+      <td>10</td>
+      <td>0.01</td>
+      <td>200</td>
+      <td>2839.824974</td>
+      <td>16.422524</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0.832115</td>
+      <td>0.592803</td>
+      <td>0.038435</td>
+      <td>0.072189</td>
+      <td>0.675471</td>
+      <td>52833.0</td>
+      <td>6678408.0</td>
+      <td>36291.0</td>
+      <td>1321780.0</td>
+      <td>100</td>
+      <td>0.10</td>
+      <td>100</td>
+      <td>7085.043512</td>
+      <td>22.288247</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0.832115</td>
+      <td>0.592803</td>
+      <td>0.038435</td>
+      <td>0.072189</td>
+      <td>0.675470</td>
+      <td>52833.0</td>
+      <td>6678408.0</td>
+      <td>36291.0</td>
+      <td>1321780.0</td>
+      <td>100</td>
+      <td>0.01</td>
+      <td>100</td>
+      <td>7128.252549</td>
+      <td>25.658511</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>0.832018</td>
+      <td>0.588459</td>
+      <td>0.038123</td>
+      <td>0.071607</td>
+      <td>0.674002</td>
+      <td>52404.0</td>
+      <td>6678050.0</td>
+      <td>36649.0</td>
+      <td>1322209.0</td>
+      <td>10</td>
+      <td>0.01</td>
+      <td>100</td>
+      <td>1414.460204</td>
+      <td>15.160113</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>0.832018</td>
+      <td>0.588459</td>
+      <td>0.038123</td>
+      <td>0.071607</td>
+      <td>0.674002</td>
+      <td>52404.0</td>
+      <td>6678050.0</td>
+      <td>36649.0</td>
+      <td>1322209.0</td>
+      <td>10</td>
+      <td>0.10</td>
+      <td>100</td>
+      <td>1448.285413</td>
+      <td>16.216231</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
 <hr class="docutils" />
-<section id="conclusiones-del-pipeline-pyspark">
-<h2>💡 6. Conclusiones del Pipeline PySpark<a class="headerlink" href="#conclusiones-del-pipeline-pyspark" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #0c2d48 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #219ebc; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+  <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
+    <span style="color:#8ecae6;">6.</span> &nbsp;Conclusiones del Pipeline PySpark
+  </h2>
+</div>
 <blockquote>
 <div><p><strong>Resumen de los resultados del entrenamiento distribuido.</strong></p>
 </div></blockquote>
-<section id="observaciones-clave">
-<h3>Observaciones clave:<a class="headerlink" href="#observaciones-clave" title="Link to this heading">#</a></h3>
+<div style="background: linear-gradient(135deg, #0f1a0f 0%, #0f172a 100%); color:#f8fafc; padding:16px 22px; border-radius:12px; margin-bottom:6px; border-left:4px solid #90be6d; box-shadow:0 8px 20px rgba(0,0,0,0.22);">
+  <h3 style="margin:0; font-size:1.15rem; color:#e2e8f0;">
+    Observaciones clave:
+  </h3>
+</div>
 <ol class="arabic simple">
 <li><p><strong>Dataset completo</strong>: A diferencia del pipeline local, PySpark procesó los ~40M de registros completos, lo que permite al modelo capturar patrones más representativos.</p></li>
 <li><p><strong>Arquitectura óptima</strong>: La búsqueda reveló que capas ocultas más grandes (50-100 neuronas) generalmente ofrecen mejor rendimiento, pero con mayor costo computacional.</p></li>
@@ -1392,14 +1919,16 @@ Total: 3 × 2 × 2 = 12 modelos a entrenar
 <li><p><strong>Configuración de memoria</strong>: Es crítico asignar suficiente memoria al driver (8g), configurar <code class="docutils literal notranslate"><span class="pre">autoBroadcastJoinThreshold</span></code> (50m) y timeouts amplios para evitar que la JVM se desconecte durante operaciones pesadas.</p></li>
 <li><p><strong>Columnas excluidas</strong>: <code class="docutils literal notranslate"><span class="pre">device_id</span></code> (~2.6M valores únicos) y <code class="docutils literal notranslate"><span class="pre">device_ip</span></code> (~6M) se excluyeron del pipeline porque son prácticamente identificadores únicos sin valor predictivo.</p></li>
 </ol>
-</section>
-<section id="comparacion-pendiente">
-<h3>Comparación pendiente:<a class="headerlink" href="#comparacion-pendiente" title="Link to this heading">#</a></h3>
-<p>Los resultados de este notebook se compararán con scikit-learn en el <strong>Notebook 4</strong>.</p>
+<div style="background: linear-gradient(135deg, #1c1408 0%, #0f172a 100%); color:#f8fafc; padding:16px 22px; border-radius:12px; margin-bottom:6px; border-left:4px solid #ffb703; box-shadow:0 8px 20px rgba(0,0,0,0.22);">
+  <h3 style="margin:0; font-size:1.15rem; color:#e2e8f0;">
+    Comparación pendiente:
+  </h3>
+</div>
+Los resultados de este notebook se compararán con scikit-learn en el **Notebook 4**.
 <hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Liberar recursos de Spark</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Liberar recursos de Spark</span>
 <span class="n">train_features</span><span class="o">.</span><span class="n">unpersist</span><span class="p">()</span>
 <span class="n">test_features</span><span class="o">.</span><span class="n">unpersist</span><span class="p">()</span>
 <span class="n">spark</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
@@ -1407,10 +1936,12 @@ Total: 3 × 2 × 2 = 12 modelos a entrenar
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sesión de Spark finalizada.
+</pre></div>
 </div>
-</section>
-</section>
-</section>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {
@@ -1448,7 +1979,7 @@ Total: 3 × 2 × 2 = 12 modelos a entrenar
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">🧪 Notebook 2: Pipeline de Clasificación con scikit-learn</p>
+        <p class="prev-next-title">&lt;no title&gt;</p>
       </div>
     </a>
     <a class="right-next"
@@ -1456,7 +1987,7 @@ Total: 3 × 2 × 2 = 12 modelos a entrenar
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">🔬 Notebook 4: Explicabilidad con LIME y Comparación de Frameworks</p>
+        <p class="prev-next-title">&lt;no title&gt;</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1477,26 +2008,9 @@ Total: 3 × 2 × 2 = 12 modelos a entrenar
     <i class="fa-solid fa-list"></i> Contents
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contenido">📋 Contenido:</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#requisitos">⚙️ Requisitos:</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuracion-del-entorno-e-inicio-de-spark">⚙️ 0.1 Configuración del Entorno e Inicio de Spark</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#crear-sesion-spark-con-memoria-extendida">🚀 0.2 Crear Sesión Spark con Memoria Extendida</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lectura-del-dataset-completo">📥 1.1 Lectura del Dataset Completo</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-engineering-temporal-reduccion-de-cardinalidad-y-division">⏰ 2.1 Feature Engineering Temporal, Reducción de Cardinalidad y División</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#verificacion-de-cardinalidad-reducida">🔍 2.2 Verificación de Cardinalidad Reducida</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pipeline-de-preprocesamiento-spark-ml">🔧 3.1 Pipeline de Preprocesamiento Spark ML</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#entrenamiento-con-multilayerperceptronclassifier">🧠 4.1 Entrenamiento con MultilayerPerceptronClassifier</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mejor-configuracion-y-metricas">🏆 4.2 Mejor Configuración y Métricas</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matriz-de-confusion-del-mejor-modelo">📊 4.3 Matriz de Confusión del Mejor Modelo</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizacion-de-resultados-de-la-busqueda">📈 4.4 Visualización de Resultados de la Búsqueda</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#guardado-del-mejor-modelo-y-metricas">💾 5.1 Guardado del Mejor Modelo y Métricas</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones-del-pipeline-pyspark">💡 6. Conclusiones del Pipeline PySpark</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#observaciones-clave">Observaciones clave:</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparacion-pendiente">Comparación pendiente:</a></li>
+    <ul class="simple visible nav section-nav flex-column">
 </ul>
-</li>
-</ul>
+
   </nav></div>
 
 </div></div>
