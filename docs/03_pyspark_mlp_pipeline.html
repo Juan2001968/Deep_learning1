@@ -328,7 +328,9 @@
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
 </button>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -344,6 +346,25 @@
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuracion-del-entorno-e-inicio-de-spark">0.1 Configuración del Entorno e Inicio de Spark</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#crear-sesion-spark-con-memoria-extendida">0.2 Crear Sesión Spark con Memoria Extendida</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lectura-del-dataset-completo">1.1 Lectura del Dataset Completo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-engineering-temporal-reduccion-de-cardinalidad-y-division">2.1 Feature Engineering Temporal, Reducción de Cardinalidad y División</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#verificacion-de-cardinalidad-reducida">2.2 Verificación de Cardinalidad Reducida</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pipeline-de-preprocesamiento-spark-ml">3.1 Pipeline de Preprocesamiento Spark ML</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#entrenamiento-con-multilayerperceptronclassifier">4.1 Entrenamiento con MultilayerPerceptronClassifier</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mejor-configuracion-y-metricas">4.2 Mejor Configuración y Métricas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matriz-de-confusion-del-mejor-modelo">4.3 Matriz de Confusión del Mejor Modelo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizacion-de-resultados-de-la-busqueda">4.4 Visualización de Resultados de la Búsqueda</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#guardado-del-mejor-modelo-y-metricas">5.1 Guardado del Mejor Modelo y Métricas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones-del-pipeline-pyspark">6. Conclusiones del Pipeline PySpark</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -388,7 +409,8 @@
       Suficiente memoria para procesar el dataset completo (~8 GB de RAM recomendados para el driver)
     </p>
   </div>
-</div><hr class="docutils" />
+</div><section id="configuracion-del-entorno-e-inicio-de-spark">
+<h2>0.1 Configuración del Entorno e Inicio de Spark<a class="headerlink" href="#configuracion-del-entorno-e-inicio-de-spark" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #1a0f2e 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #c4b5fd; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#c4b5fd;">0.1</span> &nbsp;Configuración del Entorno e Inicio de Spark
@@ -397,7 +419,6 @@
 <blockquote>
 <div><p><strong>Importamos las dependencias, aplicamos el estilo visual oscuro y creamos la sesión de Spark con configuración de memoria extendida (8 GB driver) y timeouts amplios para evitar desconexiones de la JVM durante el procesamiento de ~40M registros.</strong></p>
 </div></blockquote>
-<hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
@@ -451,7 +472,9 @@
 </div>
 </div>
 </div>
-<hr class="docutils" />
+</section>
+<section id="crear-sesion-spark-con-memoria-extendida">
+<h2>0.2 Crear Sesión Spark con Memoria Extendida<a class="headerlink" href="#crear-sesion-spark-con-memoria-extendida" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #1a0f2e 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #c4b5fd; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#c4b5fd;">0.2</span> &nbsp;Crear Sesión Spark con Memoria Extendida
@@ -460,7 +483,6 @@
 <blockquote>
 <div><p><strong>Creamos la sesión Spark con 8 GB de memoria para el driver, 4 GB para executors, y timeouts extendidos. Esto evita el <code class="docutils literal notranslate"><span class="pre">ConnectionRefusedError</span></code> que ocurre cuando la JVM se queda sin memoria al procesar columnas de alta cardinalidad con StringIndexer.</strong></p>
 </div></blockquote>
-<hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Crear sesión Spark con memoria y timeouts configurados</span>
@@ -504,7 +526,9 @@ Spark está operativo.
 </div>
 </div>
 </div>
-<hr class="docutils" />
+</section>
+<section id="lectura-del-dataset-completo">
+<h2>1.1 Lectura del Dataset Completo<a class="headerlink" href="#lectura-del-dataset-completo" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #0c2d48 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #219ebc; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#8ecae6;">1.1</span> &nbsp;Lectura del Dataset Completo
@@ -513,7 +537,6 @@ Spark está operativo.
 <blockquote>
 <div><p><strong>Leemos el archivo comprimido <code class="docutils literal notranslate"><span class="pre">train.gz</span></code> directamente con Spark (sin descompresión manual). Reparticionamos el DataFrame para mejorar el paralelismo, ya que gzip no es un formato splittable.</strong></p>
 </div></blockquote>
-<hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t_load</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
@@ -854,7 +877,9 @@ Tiempo de carga: 611.6s
 </div>
 </div>
 </div>
-<hr class="docutils" />
+</section>
+<section id="feature-engineering-temporal-reduccion-de-cardinalidad-y-division">
+<h2>2.1 Feature Engineering Temporal, Reducción de Cardinalidad y División<a class="headerlink" href="#feature-engineering-temporal-reduccion-de-cardinalidad-y-division" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #1c1408 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #ffb703; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
  <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
   <span style="color:#ffb703;">2.1</span> &nbsp;Feature Engineering Temporal, Reducción de Cardinalidad y División
@@ -863,7 +888,6 @@ Tiempo de carga: 611.6s
 <blockquote>
 <div><p><strong>Aplicamos la misma transformación temporal que en el EDA (hora, día, franja horaria) usando funciones nativas de Spark SQL. Eliminamos <code class="docutils literal notranslate"><span class="pre">id</span></code>, <code class="docutils literal notranslate"><span class="pre">device_ip</span></code> y <code class="docutils literal notranslate"><span class="pre">device_id</span></code> (alta cardinalidad sin valor predictivo). Reducimos la cardinalidad de columnas categóricas con &gt;100 valores únicos (site_id, site_domain, app_id, app_domain, device_model, etc.) manteniendo solo los top 100 valores más frecuentes y agrupando el resto como <code class="docutils literal notranslate"><span class="pre">'OTHER'</span></code>. Esto es estándar en CTR prediction y evita la explosión de dimensionalidad. Dividimos en 80% train / 20% test.</strong></p>
 </div></blockquote>
-<hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Feature engineering temporal</span>
@@ -1033,7 +1057,9 @@ Train: 32,339,655 registros | Test: 8,089,312 registros
 </div>
 </div>
 </div>
-<hr class="docutils" />
+</section>
+<section id="verificacion-de-cardinalidad-reducida">
+<h2>2.2 Verificación de Cardinalidad Reducida<a class="headerlink" href="#verificacion-de-cardinalidad-reducida" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #1c1408 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #ffb703; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#ffb703;">2.2</span> &nbsp;Verificación de Cardinalidad Reducida
@@ -1042,7 +1068,6 @@ Train: 32,339,655 registros | Test: 8,089,312 registros
 <blockquote>
 <div><p><strong>Verificamos que la reducción de cardinalidad funcionó correctamente. Cada columna categórica de alta cardinalidad debería tener &lt;= 101 valores únicos (top 100 + ‘OTHER’). La dimensionalidad del vector de features será ~25 (índices de StringIndexer + numéricas) en lugar de cientos de miles con OneHotEncoder.</strong></p>
 </div></blockquote>
-<hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Verificar cardinalidad despues de la reduccion</span>
@@ -1087,7 +1112,9 @@ Dimensionalidad estimada del vector de features: ~15
 </div>
 </div>
 </div>
-<hr class="docutils" />
+</section>
+<section id="pipeline-de-preprocesamiento-spark-ml">
+<h2>3.1 Pipeline de Preprocesamiento Spark ML<a class="headerlink" href="#pipeline-de-preprocesamiento-spark-ml" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #0f1a0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #90be6d; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#90be6d;">3.1</span> &nbsp;Pipeline de Preprocesamiento Spark ML
@@ -1096,7 +1123,6 @@ Dimensionalidad estimada del vector de features: ~15
 <blockquote>
 <div><p><strong>Construimos el pipeline de Spark ML con StringIndexer para convertir categóricas a índices numéricos, VectorAssembler para combinar features y StandardScaler para normalización. Se eliminó OneHotEncoder para evitar la explosión de dimensionalidad (~100K+ columnas sparse) que causaba tiempos de preprocesamiento de 97+ minutos en modo local. La dimensionalidad resultante es de ~25 features (índices + numéricas) en lugar de cientos de miles.</strong></p>
 </div></blockquote>
-<hr class="docutils" />
 <div style="background-color:#1f2937; border-left:5px solid #f59e0b; color:#fcd34d; padding:14px 18px; border-radius:12px; box-shadow:0 10px 25px rgba(0,0,0,0.18);">
 <b>Nota sobre el manejo de cardinalidad</b><br>
 Las columnas categóricas se dividen en dos grupos para el preprocesamiento en Spark:
@@ -1148,7 +1174,9 @@ Tiempo de preprocesamiento: 1153.9s
 </div>
 </div>
 </div>
-<hr class="docutils" />
+</section>
+<section id="entrenamiento-con-multilayerperceptronclassifier">
+<h2>4.1 Entrenamiento con MultilayerPerceptronClassifier<a class="headerlink" href="#entrenamiento-con-multilayerperceptronclassifier" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #1c1408 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #fb8500; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#fb8500;">4.1</span> &nbsp;Entrenamiento con MultilayerPerceptronClassifier
@@ -1157,7 +1185,6 @@ Tiempo de preprocesamiento: 1153.9s
 <blockquote>
 <div><p><strong>Entrenamos múltiples configuraciones del MLP distribuido con las combinaciones requeridas: layers [n, 10, 2], [n, 50, 2], [n, 100, 2] con stepSize 0.1 y 0.01, y maxIter 100 y 200. Registramos tiempo de entrenamiento y predicción para cada combinación.</strong></p>
 </div></blockquote>
-<hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Iniciando búsqueda de hiperparámetros Spark MLP...&quot;</span><span class="p">)</span>
@@ -1454,7 +1481,9 @@ Resultados (ordenados por ROC AUC):
 </table>
 </div></div></div>
 </div>
-<hr class="docutils" />
+</section>
+<section id="mejor-configuracion-y-metricas">
+<h2>4.2 Mejor Configuración y Métricas<a class="headerlink" href="#mejor-configuracion-y-metricas" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #1c1408 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #fb8500; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#fb8500;">4.2</span> &nbsp;Mejor Configuración y Métricas
@@ -1463,7 +1492,6 @@ Resultados (ordenados por ROC AUC):
 <blockquote>
 <div><p><strong>Identificamos la mejor configuración de hiperparámetros y mostramos sus métricas detalladas: Accuracy, Precision, Recall, F1-score y ROC AUC.</strong></p>
 </div></blockquote>
-<hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best</span> <span class="o">=</span> <span class="n">spark_results</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -1508,7 +1536,9 @@ MEJOR MODELO SPARK — MultilayerPerceptronClassifier
 </div>
 </div>
 </div>
-<hr class="docutils" />
+</section>
+<section id="matriz-de-confusion-del-mejor-modelo">
+<h2>4.3 Matriz de Confusión del Mejor Modelo<a class="headerlink" href="#matriz-de-confusion-del-mejor-modelo" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #1a0f0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #f28482; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#f28482;">4.3</span> &nbsp;Matriz de Confusión del Mejor Modelo
@@ -1517,7 +1547,6 @@ MEJOR MODELO SPARK — MultilayerPerceptronClassifier
 <blockquote>
 <div><p><strong>Visualizamos la matriz de confusión del mejor modelo Spark. Al entrenar sobre el dataset completo (~40M registros), los números absolutos de la matriz son significativamente mayores que en el pipeline local.</strong></p>
 </div></blockquote>
-<hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Construir matriz de confusión desde las métricas del mejor modelo</span>
@@ -1548,7 +1577,9 @@ MEJOR MODELO SPARK — MultilayerPerceptronClassifier
 <img alt="../_images/07799d6d12f105757ce65da56d50e5531d4dbf13c153d3f2ef33d7ad80a2c559.png" src="../_images/07799d6d12f105757ce65da56d50e5531d4dbf13c153d3f2ef33d7ad80a2c559.png" />
 </div>
 </div>
-<hr class="docutils" />
+</section>
+<section id="visualizacion-de-resultados-de-la-busqueda">
+<h2>4.4 Visualización de Resultados de la Búsqueda<a class="headerlink" href="#visualizacion-de-resultados-de-la-busqueda" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #1a0f0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #f28482; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#f28482;">4.4</span> &nbsp;Visualización de Resultados de la Búsqueda
@@ -1557,7 +1588,6 @@ MEJOR MODELO SPARK — MultilayerPerceptronClassifier
 <blockquote>
 <div><p><strong>Comparamos visualmente los diferentes modelos entrenados en términos de ROC AUC y su relación con el tiempo de entrenamiento para identificar el mejor trade-off rendimiento/costo.</strong></p>
 </div></blockquote>
-<hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
@@ -1604,7 +1634,9 @@ MEJOR MODELO SPARK — MultilayerPerceptronClassifier
 <img alt="../_images/84edcfeb799c463a220f24e4c561bb5c7fa8cb947159b05e4f033bcd70cd90bd.png" src="../_images/84edcfeb799c463a220f24e4c561bb5c7fa8cb947159b05e4f033bcd70cd90bd.png" />
 </div>
 </div>
-<hr class="docutils" />
+</section>
+<section id="guardado-del-mejor-modelo-y-metricas">
+<h2>5.1 Guardado del Mejor Modelo y Métricas<a class="headerlink" href="#guardado-del-mejor-modelo-y-metricas" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #0c2d48 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #219ebc; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#8ecae6;">5.1</span> &nbsp;Guardado del Mejor Modelo y Métricas
@@ -1613,7 +1645,6 @@ MEJOR MODELO SPARK — MultilayerPerceptronClassifier
 <blockquote>
 <div><p><strong>Reentrenamos el mejor modelo y lo guardamos en <code class="docutils literal notranslate"><span class="pre">models/</span></code>. También exportamos las métricas para la comparación en el Notebook 4.</strong></p>
 </div></blockquote>
-<hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Los CSVs se guardan con pandas (no usa Hadoop, sin error)</span>
@@ -1894,7 +1925,9 @@ Métricas del mejor modelo guardadas.
 </table>
 </div></div></div>
 </div>
-<hr class="docutils" />
+</section>
+<section id="conclusiones-del-pipeline-pyspark">
+<h2>6. Conclusiones del Pipeline PySpark<a class="headerlink" href="#conclusiones-del-pipeline-pyspark" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #0c2d48 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #219ebc; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#8ecae6;">6.</span> &nbsp;Conclusiones del Pipeline PySpark
@@ -1922,9 +1955,7 @@ Métricas del mejor modelo guardadas.
     Comparación pendiente:
   </h3>
 </div>
-Los resultados de este notebook se compararán con scikit-learn en el **Notebook 4**.
-<hr class="docutils" />
-<div class="cell docutils container">
+Los resultados de este notebook se compararán con scikit-learn en el **Notebook 4**.<div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Liberar recursos de Spark</span>
 <span class="n">train_features</span><span class="o">.</span><span class="n">unpersist</span><span class="p">()</span>
@@ -1940,6 +1971,7 @@ Los resultados de este notebook se compararán con scikit-learn en el **Notebook
 </div>
 </div>
 </div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1996,6 +2028,34 @@ Los resultados de este notebook se compararán con scikit-learn en el **Notebook
             </div>
             
             
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuracion-del-entorno-e-inicio-de-spark">0.1 Configuración del Entorno e Inicio de Spark</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#crear-sesion-spark-con-memoria-extendida">0.2 Crear Sesión Spark con Memoria Extendida</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lectura-del-dataset-completo">1.1 Lectura del Dataset Completo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-engineering-temporal-reduccion-de-cardinalidad-y-division">2.1 Feature Engineering Temporal, Reducción de Cardinalidad y División</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#verificacion-de-cardinalidad-reducida">2.2 Verificación de Cardinalidad Reducida</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pipeline-de-preprocesamiento-spark-ml">3.1 Pipeline de Preprocesamiento Spark ML</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#entrenamiento-con-multilayerperceptronclassifier">4.1 Entrenamiento con MultilayerPerceptronClassifier</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mejor-configuracion-y-metricas">4.2 Mejor Configuración y Métricas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matriz-de-confusion-del-mejor-modelo">4.3 Matriz de Confusión del Mejor Modelo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizacion-de-resultados-de-la-busqueda">4.4 Visualización de Resultados de la Búsqueda</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#guardado-del-mejor-modelo-y-metricas">5.1 Guardado del Mejor Modelo y Métricas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones-del-pipeline-pyspark">6. Conclusiones del Pipeline PySpark</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

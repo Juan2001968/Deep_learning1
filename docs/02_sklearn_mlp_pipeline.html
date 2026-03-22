@@ -328,7 +328,9 @@
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
 </button>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -344,6 +346,24 @@
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuracion-del-entorno">0.1 Configuración del Entorno</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#muestreo-de-1-000-000-de-registros">1.1 Muestreo de 1,000,000 de Registros</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#seleccion-de-variables-y-preparacion-del-dataset-de-modelado">2.1 Selección de Variables y Preparación del Dataset de Modelado</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#construccion-del-pipeline-y-gridsearchcv">3.1 Construcción del Pipeline y GridSearchCV</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mejores-hiperparametros-encontrados">3.2 Mejores Hiperparámetros Encontrados</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluacion-del-mejor-modelo-en-el-conjunto-de-prueba">4.1 Evaluación del Mejor Modelo en el Conjunto de Prueba</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matriz-de-confusion">4.2 Matriz de Confusión</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#curva-roc">4.3 Curva ROC</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#guardado-del-mejor-modelo">5.1 Guardado del Mejor Modelo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#guardado-de-metricas-y-datos-para-comparacion">5.2 Guardado de Métricas y Datos para Comparación</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones-del-pipeline-scikit-learn">6. Conclusiones del Pipeline scikit-learn</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -386,7 +406,8 @@
       Notebook 1 ejecutado previamente (para contexto, no dependencia técnica)
     </p>
   </div>
-</div><hr class="docutils" />
+</div><section id="configuracion-del-entorno">
+<h2>0.1 Configuración del Entorno<a class="headerlink" href="#configuracion-del-entorno" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #1a0f2e 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #c4b5fd; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#c4b5fd;">0.1</span> &nbsp;Configuración del Entorno
@@ -395,7 +416,6 @@
 <blockquote>
 <div><p><strong>Importamos las librerías necesarias y aplicamos el estilo visual oscuro profesional consistente con todo el proyecto.</strong></p>
 </div></blockquote>
-<hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
@@ -461,7 +481,9 @@ Random state: 42
 </div>
 </div>
 </div>
-<hr class="docutils" />
+</section>
+<section id="muestreo-de-1-000-000-de-registros">
+<h2>1.1 Muestreo de 1,000,000 de Registros<a class="headerlink" href="#muestreo-de-1-000-000-de-registros" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #0c2d48 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #219ebc; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#8ecae6;">1.1</span> &nbsp;Muestreo de 1,000,000 de Registros
@@ -470,7 +492,6 @@ Random state: 42
 <blockquote>
 <div><p><strong>Creamos una muestra estratificada de 1M de registros usando <code class="docutils literal notranslate"><span class="pre">df.sample(n=1000000,</span> <span class="pre">random_state=42)</span></code>. La muestra se cachea en formato Parquet para reutilización eficiente. Excluimos <code class="docutils literal notranslate"><span class="pre">id</span></code>, <code class="docutils literal notranslate"><span class="pre">device_id</span></code> y <code class="docutils literal notranslate"><span class="pre">device_ip</span></code> por su alta cardinalidad sin valor predictivo.</strong></p>
 </div></blockquote>
-<hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Columnas necesarias para el pipeline sklearn (excluir id, device_id, device_ip)</span>
@@ -587,7 +608,9 @@ Memoria aproximada: 114.49 MB
 </table>
 </div></div></div>
 </div>
-<hr class="docutils" />
+</section>
+<section id="seleccion-de-variables-y-preparacion-del-dataset-de-modelado">
+<h2>2.1 Selección de Variables y Preparación del Dataset de Modelado<a class="headerlink" href="#seleccion-de-variables-y-preparacion-del-dataset-de-modelado" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #1c1408 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #ffb703; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#ffb703;">2.1</span> &nbsp;Selección de Variables y Preparación del Dataset de Modelado
@@ -596,7 +619,6 @@ Memoria aproximada: 114.49 MB
 <blockquote>
 <div><p><strong>Seleccionamos las variables relevantes y separamos features (X) del target (y). Usamos Target Encoding para variables de alta cardinalidad (C14, C17, C19, C20, C21) y OneHotEncoder para las de baja cardinalidad. Las variables numéricas derivadas se escalan con StandardScaler.</strong></p>
 </div></blockquote>
-<hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">selected_cols</span> <span class="o">=</span> <span class="n">feature_cfg</span><span class="p">[</span><span class="s2">&quot;sklearn_categorical&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">feature_cfg</span><span class="p">[</span><span class="s2">&quot;sklearn_numeric&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">TARGET_COL</span><span class="p">]</span>
@@ -634,7 +656,9 @@ Balance en train: 0.1698 | Balance en test: 0.1698
 </div>
 </div>
 </div>
-<hr class="docutils" />
+</section>
+<section id="construccion-del-pipeline-y-gridsearchcv">
+<h2>3.1 Construcción del Pipeline y GridSearchCV<a class="headerlink" href="#construccion-del-pipeline-y-gridsearchcv" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #0f1a0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #90be6d; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#90be6d;">3.1</span> &nbsp;Construcción del Pipeline y GridSearchCV
@@ -643,7 +667,6 @@ Balance en train: 0.1698 | Balance en test: 0.1698
 <blockquote>
 <div><p><strong>Construimos un pipeline que integra el preprocesamiento (Target Encoding + OneHot + StandardScaler) con el MLPClassifier. Ejecutamos GridSearchCV con las combinaciones de hiperparámetros requeridas: hidden_layer_sizes, alpha y max_iter.</strong></p>
 </div></blockquote>
-<hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Construir pipeline con Target Encoding para alta cardinalidad</span>
@@ -713,7 +736,9 @@ Tiempo total de entrenamiento: 12m 8.6s
 </div>
 </div>
 </div>
-<hr class="docutils" />
+</section>
+<section id="mejores-hiperparametros-encontrados">
+<h2>3.2 Mejores Hiperparámetros Encontrados<a class="headerlink" href="#mejores-hiperparametros-encontrados" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #0f1a0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #90be6d; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#90be6d;">3.2</span> &nbsp;Mejores Hiperparámetros Encontrados
@@ -722,7 +747,6 @@ Tiempo total de entrenamiento: 12m 8.6s
 <blockquote>
 <div><p><strong>Revisamos los resultados de la validación cruzada para identificar la mejor combinación de hiperparámetros y entender el trade-off entre complejidad del modelo y rendimiento.</strong></p>
 </div></blockquote>
-<hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mejores hiperparámetros</span>
@@ -853,7 +877,9 @@ Ranking de combinaciones (top 10):
 </table>
 </div></div></div>
 </div>
-<hr class="docutils" />
+</section>
+<section id="evaluacion-del-mejor-modelo-en-el-conjunto-de-prueba">
+<h2>4.1 Evaluación del Mejor Modelo en el Conjunto de Prueba<a class="headerlink" href="#evaluacion-del-mejor-modelo-en-el-conjunto-de-prueba" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #1a0f0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #f28482; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#f28482;">4.1</span> &nbsp;Evaluación del Mejor Modelo en el Conjunto de Prueba
@@ -862,7 +888,6 @@ Ranking de combinaciones (top 10):
 <blockquote>
 <div><p><strong>Evaluamos el mejor modelo encontrado por GridSearchCV sobre el conjunto de prueba (20% de la muestra). Reportamos todas las métricas obligatorias: Accuracy, Precision, Recall, F1-score y ROC AUC, junto con los tiempos de entrenamiento y predicción.</strong></p>
 </div></blockquote>
-<hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Predicción y medición de tiempo</span>
@@ -976,7 +1001,9 @@ MÉTRICAS DEL MEJOR MODELO (scikit-learn)
 </table>
 </div></div></div>
 </div>
-<hr class="docutils" />
+</section>
+<section id="matriz-de-confusion">
+<h2>4.2 Matriz de Confusión<a class="headerlink" href="#matriz-de-confusion" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #1a0f0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #f28482; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#f28482;">4.2</span> &nbsp;Matriz de Confusión
@@ -985,7 +1012,6 @@ MÉTRICAS DEL MEJOR MODELO (scikit-learn)
 <blockquote>
 <div><p><strong>La matriz de confusión muestra la distribución de aciertos y errores del clasificador. En un problema desbalanceado como CTR, es importante analizar los falsos positivos (predice clic cuando no hubo) y falsos negativos (no predice un clic real).</strong></p>
 </div></blockquote>
-<hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig_cm</span> <span class="o">=</span> <span class="n">plot_confusion_matrix</span><span class="p">(</span>
@@ -1000,7 +1026,9 @@ MÉTRICAS DEL MEJOR MODELO (scikit-learn)
 <img alt="../_images/349479197a799322fee0732247cf456a81035f7856547854558c5d9cabb1bc12.png" src="../_images/349479197a799322fee0732247cf456a81035f7856547854558c5d9cabb1bc12.png" />
 </div>
 </div>
-<hr class="docutils" />
+</section>
+<section id="curva-roc">
+<h2>4.3 Curva ROC<a class="headerlink" href="#curva-roc" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #1a0f0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #f28482; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#f28482;">4.3</span> &nbsp;Curva ROC
@@ -1009,7 +1037,6 @@ MÉTRICAS DEL MEJOR MODELO (scikit-learn)
 <blockquote>
 <div><p><strong>La curva ROC visualiza el trade-off entre la tasa de verdaderos positivos (sensibilidad) y la tasa de falsos positivos a diferentes umbrales de clasificación. El área bajo la curva (AUC) resume la capacidad discriminativa del modelo.</strong></p>
 </div></blockquote>
-<hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig_roc</span> <span class="o">=</span> <span class="n">plot_roc_curve</span><span class="p">(</span>
@@ -1025,7 +1052,9 @@ MÉTRICAS DEL MEJOR MODELO (scikit-learn)
 <img alt="../_images/60a3ec7ef6303e13713d35fb47914c4b955299d19560397ebbd3fe445749b23c.png" src="../_images/60a3ec7ef6303e13713d35fb47914c4b955299d19560397ebbd3fe445749b23c.png" />
 </div>
 </div>
-<hr class="docutils" />
+</section>
+<section id="guardado-del-mejor-modelo">
+<h2>5.1 Guardado del Mejor Modelo<a class="headerlink" href="#guardado-del-mejor-modelo" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #1c1408 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #fb8500; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#fb8500;">5.1</span> &nbsp;Guardado del Mejor Modelo
@@ -1034,7 +1063,6 @@ MÉTRICAS DEL MEJOR MODELO (scikit-learn)
 <blockquote>
 <div><p><strong>Guardamos el mejor modelo encontrado por GridSearchCV en el directorio <code class="docutils literal notranslate"><span class="pre">models/</span></code> para su reutilización en el notebook de explicabilidad (LIME) y en la comparación final.</strong></p>
 </div></blockquote>
-<hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_path</span> <span class="o">=</span> <span class="n">save_sklearn_model</span><span class="p">(</span>
@@ -1059,7 +1087,9 @@ Mejores hiperparámetros del modelo guardado:
 </div>
 </div>
 </div>
-<hr class="docutils" />
+</section>
+<section id="guardado-de-metricas-y-datos-para-comparacion">
+<h2>5.2 Guardado de Métricas y Datos para Comparación<a class="headerlink" href="#guardado-de-metricas-y-datos-para-comparacion" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #1c1408 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #fb8500; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#fb8500;">5.2</span> &nbsp;Guardado de Métricas y Datos para Comparación
@@ -1068,7 +1098,6 @@ Mejores hiperparámetros del modelo guardado:
 <blockquote>
 <div><p><strong>Guardamos las métricas, predicciones y datos de test en formato parquet para poder cargarlos en el Notebook 4 y realizar la comparación con PySpark sin necesidad de re-entrenar.</strong></p>
 </div></blockquote>
-<hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Guardar métricas como CSV</span>
@@ -1097,7 +1126,9 @@ Predicciones guardadas en: C:\Users\juana\Deep_learning1-main\models\sklearn_pre
 </div>
 </div>
 </div>
-<hr class="docutils" />
+</section>
+<section id="conclusiones-del-pipeline-scikit-learn">
+<h2>6. Conclusiones del Pipeline scikit-learn<a class="headerlink" href="#conclusiones-del-pipeline-scikit-learn" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #0c2d48 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #219ebc; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#8ecae6;">6.</span> &nbsp;Conclusiones del Pipeline scikit-learn
@@ -1118,7 +1149,7 @@ Predicciones guardadas en: C:\Users\juana\Deep_learning1-main\models\sklearn_pre
 <li><p><strong>Tiempo de entrenamiento</strong>: El pipeline local sobre 1M de registros es manejable en una máquina individual, a diferencia del dataset completo (~40M) que requiere PySpark.</p></li>
 <li><p><strong>Modelo guardado</strong>: El mejor modelo se guardó en <code class="docutils literal notranslate"><span class="pre">models/sklearn_best_mlp.joblib</span></code> para reutilización en LIME (Notebook 4).</p></li>
 </ol>
-<hr class="docutils" />
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1175,6 +1206,33 @@ Predicciones guardadas en: C:\Users\juana\Deep_learning1-main\models\sklearn_pre
             </div>
             
             
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuracion-del-entorno">0.1 Configuración del Entorno</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#muestreo-de-1-000-000-de-registros">1.1 Muestreo de 1,000,000 de Registros</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#seleccion-de-variables-y-preparacion-del-dataset-de-modelado">2.1 Selección de Variables y Preparación del Dataset de Modelado</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#construccion-del-pipeline-y-gridsearchcv">3.1 Construcción del Pipeline y GridSearchCV</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mejores-hiperparametros-encontrados">3.2 Mejores Hiperparámetros Encontrados</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluacion-del-mejor-modelo-en-el-conjunto-de-prueba">4.1 Evaluación del Mejor Modelo en el Conjunto de Prueba</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matriz-de-confusion">4.2 Matriz de Confusión</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#curva-roc">4.3 Curva ROC</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#guardado-del-mejor-modelo">5.1 Guardado del Mejor Modelo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#guardado-de-metricas-y-datos-para-comparacion">5.2 Guardado de Métricas y Datos para Comparación</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones-del-pipeline-scikit-learn">6. Conclusiones del Pipeline scikit-learn</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

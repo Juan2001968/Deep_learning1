@@ -327,7 +327,9 @@
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
 </button>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -343,6 +345,25 @@
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#notebook-roadmap">Notebook roadmap</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reload-the-local-sample">1. Reload the local sample</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fit-a-local-model-for-explanation">2. Fit a local model for explanation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-a-lime-explanation-for-a-high-confidence-click-prediction">3. Generate a LIME explanation for a high-confidence click prediction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#explicacion-lime-falso-negativo">2.3 Explicación LIME — Falso Negativo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpret-the-explanation">4. Interpret the explanation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#framework-comparison-summary">5. Framework comparison summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tabla-comparativa-de-metricas">3.1 Tabla Comparativa de Métricas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#curvas-roc-superpuestas">3.2 Curvas ROC Superpuestas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparacion-de-tiempos-de-computo">3.3 Comparación de Tiempos de Cómputo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reflexion-critica">4. Reflexión Crítica</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion-final-del-proyecto">Conclusión Final del Proyecto</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -384,7 +405,9 @@
       Librerías: scikit-learn, lime, pandas, matplotlib, seaborn
     </p>
   </div>
-</div><div style="background: linear-gradient(135deg, #1a0f2e 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #c4b5fd; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+</div><section id="notebook-roadmap">
+<h2>Notebook roadmap<a class="headerlink" href="#notebook-roadmap" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #1a0f2e 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #c4b5fd; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0 0 12px 0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     Notebook roadmap
   </h2>
@@ -449,6 +472,9 @@
 </div>
 </div>
 </div>
+</section>
+<section id="reload-the-local-sample">
+<h2>1. Reload the local sample<a class="headerlink" href="#reload-the-local-sample" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #0c2d48 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #219ebc; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#8ecae6;">1.</span> &nbsp;Reload the local sample
@@ -492,6 +518,9 @@ Test set: 199,999 registros
 </div>
 </div>
 </div>
+</section>
+<section id="fit-a-local-model-for-explanation">
+<h2>2. Fit a local model for explanation<a class="headerlink" href="#fit-a-local-model-for-explanation" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #1c1408 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #ffb703; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#ffb703;">2.</span> &nbsp;Fit a local model for explanation
@@ -531,6 +560,9 @@ Total de errores de clasificación: 33,491 / 199,999 (16.75%)
 </div>
 </div>
 </div>
+</section>
+<section id="generate-a-lime-explanation-for-a-high-confidence-click-prediction">
+<h2>3. Generate a LIME explanation for a high-confidence click prediction<a class="headerlink" href="#generate-a-lime-explanation-for-a-high-confidence-click-prediction" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #0f1a0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #90be6d; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#90be6d;">3.</span> &nbsp;Generate a LIME explanation for a high-confidence click prediction
@@ -673,6 +705,9 @@ Features más influyentes en la decisión errónea:
 <img alt="../_images/2b713605a0cc43cf0fee7fded894d1287dee180aed4136ceec452907e607e913.png" src="../_images/2b713605a0cc43cf0fee7fded894d1287dee180aed4136ceec452907e607e913.png" />
 </div>
 </div>
+</section>
+<section id="explicacion-lime-falso-negativo">
+<h2>2.3 Explicación LIME — Falso Negativo<a class="headerlink" href="#explicacion-lime-falso-negativo" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #1c1408 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #ffb703; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#ffb703;">2.3</span> &nbsp;Explicación LIME — Falso Negativo
@@ -807,6 +842,9 @@ Features más influyentes en la decisión errónea:
 <img alt="../_images/61bb43b8ad0e7bdcc0662adf3d524aee7987056acffad9301f253a4e5aeeba05.png" src="../_images/61bb43b8ad0e7bdcc0662adf3d524aee7987056acffad9301f253a4e5aeeba05.png" />
 </div>
 </div>
+</section>
+<section id="interpret-the-explanation">
+<h2>4. Interpret the explanation<a class="headerlink" href="#interpret-the-explanation" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #1c1408 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #fb8500; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#fb8500;">4.</span> &nbsp;Interpret the explanation
@@ -1053,6 +1091,9 @@ Features más influyentes en la decisión errónea:
 </table>
 </div></div></div>
 </div>
+</section>
+<section id="framework-comparison-summary">
+<h2>5. Framework comparison summary<a class="headerlink" href="#framework-comparison-summary" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #1a0f0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #f28482; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#f28482;">5.</span> &nbsp;Framework comparison summary
@@ -1062,7 +1103,10 @@ Features más influyentes en la decisión errónea:
   <p style="margin:0; color:#94a3b8; font-size:0.92rem; line-height:1.7;">
     The final report should not stop at metrics. It should also explain why each framework is useful in practice.
   </p>
-</div><div style="background: linear-gradient(135deg, #0f1a0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #90be6d; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+</div></section>
+<section id="tabla-comparativa-de-metricas">
+<h2>3.1 Tabla Comparativa de Métricas<a class="headerlink" href="#tabla-comparativa-de-metricas" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #0f1a0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #90be6d; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#90be6d;">3.1</span> &nbsp;Tabla Comparativa de Métricas
   </h2>
@@ -1183,6 +1227,9 @@ COMPARACIÓN: scikit-learn vs PySpark
 </table>
 </div></div></div>
 </div>
+</section>
+<section id="curvas-roc-superpuestas">
+<h2>3.2 Curvas ROC Superpuestas<a class="headerlink" href="#curvas-roc-superpuestas" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #0f1a0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #90be6d; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#90be6d;">3.2</span> &nbsp;Curvas ROC Superpuestas
@@ -1239,6 +1286,9 @@ COMPARACIÓN: scikit-learn vs PySpark
 <img alt="../_images/caa70eda6a1aedb598df46885030736d1fde60e7cc389bd2b6121e5fa2caf5cf.png" src="../_images/caa70eda6a1aedb598df46885030736d1fde60e7cc389bd2b6121e5fa2caf5cf.png" />
 </div>
 </div>
+</section>
+<section id="comparacion-de-tiempos-de-computo">
+<h2>3.3 Comparación de Tiempos de Cómputo<a class="headerlink" href="#comparacion-de-tiempos-de-computo" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #0f1a0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #90be6d; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#90be6d;">3.3</span> &nbsp;Comparación de Tiempos de Cómputo
@@ -1288,6 +1338,9 @@ COMPARACIÓN: scikit-learn vs PySpark
 </div>
 </div>
 </div>
+</section>
+<section id="reflexion-critica">
+<h2>4. Reflexión Crítica<a class="headerlink" href="#reflexion-critica" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #1a0f0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #f28482; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#f28482;">4.</span> &nbsp;Reflexión Crítica
@@ -1359,6 +1412,9 @@ COMPARACIÓN: scikit-learn vs PySpark
 <li><p><strong>Mejora iterativa</strong>: Identificar features que podrían mejorarse o añadirse basándose en los errores.</p></li>
 </ol>
 <p>En nuestro caso, LIME reveló qué combinaciones de features categóricas (site, app, dispositivo) y temporales confunden al modelo, proporcionando insights accionables para mejorar el pipeline de features.</p>
+</section>
+<section id="conclusion-final-del-proyecto">
+<h2>Conclusión Final del Proyecto<a class="headerlink" href="#conclusion-final-del-proyecto" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #0c2d48 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #219ebc; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     Conclusión Final del Proyecto
@@ -1369,6 +1425,7 @@ COMPARACIÓN: scikit-learn vs PySpark
     Este proyecto demostró un flujo de trabajo completo de clasificación CTR, desde el análisis exploratorio hasta la explicabilidad local, comparando dos paradigmas de implementación. La combinación de scikit-learn para prototipado rápido e interpretabilidad, con PySpark para escalabilidad a datos masivos, representa un enfoque pragmático y realista para problemas de Machine Learning en producción.
   </p>
 </div></section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1415,6 +1472,34 @@ COMPARACIÓN: scikit-learn vs PySpark
             </div>
             
             
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#notebook-roadmap">Notebook roadmap</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reload-the-local-sample">1. Reload the local sample</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fit-a-local-model-for-explanation">2. Fit a local model for explanation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-a-lime-explanation-for-a-high-confidence-click-prediction">3. Generate a LIME explanation for a high-confidence click prediction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#explicacion-lime-falso-negativo">2.3 Explicación LIME — Falso Negativo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpret-the-explanation">4. Interpret the explanation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#framework-comparison-summary">5. Framework comparison summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tabla-comparativa-de-metricas">3.1 Tabla Comparativa de Métricas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#curvas-roc-superpuestas">3.2 Curvas ROC Superpuestas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparacion-de-tiempos-de-computo">3.3 Comparación de Tiempos de Cómputo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reflexion-critica">4. Reflexión Crítica</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion-final-del-proyecto">Conclusión Final del Proyecto</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
