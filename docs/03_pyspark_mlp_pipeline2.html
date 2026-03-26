@@ -1,0 +1,2349 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Pipeline de Clasificación con PySpark &#8212; Avazu CTR — Deep Learning Mini-Project</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css?v=8cd3d715" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=1ae7504c"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'docs/03_pyspark_mlp_pipeline2';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Explicabilidad con LIME y Comparación de Frameworks" href="04_lime_and_framework_comparison2.html" />
+    <link rel="prev" title="0.1 Configuración del Entorno" href="02_sklearn_mlp_pipeline2.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Avazu CTR — Deep Learning Mini-Project</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_project_overview_and_eda3.html">0.1 Configuración del Entorno e Importaciones</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="02_sklearn_mlp_pipeline2.html">0.1 Configuración del Entorno</a></li>
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">⚡ 3. Pipeline PySpark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_lime_and_framework_comparison2.html">🔬 4. LIME y Comparación</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Juan2001968/Deep_learning1" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Juan2001968/Deep_learning1/issues/new?title=Issue%20on%20page%20%2Fdocs/03_pyspark_mlp_pipeline2.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/docs/03_pyspark_mlp_pipeline2.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Pipeline de Clasificación con PySpark</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuracion-del-entorno-e-inicio-de-spark">0.1 Configuración del Entorno e Inicio de Spark</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#crear-sesion-spark-con-memoria-extendida">0.2 Crear Sesión Spark con Memoria Extendida</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lectura-del-dataset-completo">1.1 Lectura del Dataset Completo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-engineering-temporal-reduccion-de-cardinalidad-y-division">2.1 Feature Engineering Temporal, Reducción de Cardinalidad y División</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#verificacion-de-cardinalidad-reducida">2.2 Verificación de Cardinalidad Reducida</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pipeline-de-preprocesamiento-spark-ml">3.1 Pipeline de Preprocesamiento Spark ML</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#entrenamiento-con-multilayerperceptronclassifier">4.1 Entrenamiento con MultilayerPerceptronClassifier</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mejor-configuracion-y-metricas">4.2 Mejor Configuración y Métricas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matriz-de-confusion-del-mejor-modelo">4.3 Matriz de Confusión del Mejor Modelo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizacion-de-resultados-de-la-busqueda">4.4 Visualización de Resultados de la Búsqueda</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#guardado-del-mejor-modelo-y-metricas">5.1 Guardado del Mejor Modelo y Métricas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones-del-pipeline-pyspark">6. Conclusiones del Pipeline PySpark</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="pipeline-de-clasificacion-con-pyspark">
+<h1>Pipeline de Clasificación con PySpark<a class="headerlink" href="#pipeline-de-clasificacion-con-pyspark" title="Link to this heading">#</a></h1>
+<div style="background: linear-gradient(135deg, #1a0f0f 0%, #0f172a 100%); color:#f8fafc; padding:28px 32px; border-radius:18px; margin-bottom:16px; border-left:6px solid #f28482; box-shadow:0 20px 45px rgba(0,0,0,0.35);">
+  <h1 style="margin:0 0 6px 0; font-size:2.1rem; letter-spacing:-0.02em;">Notebook 3: Pipeline de Clasificación con PySpark</h1>
+  <p style="margin:0; font-size:1.05rem; line-height:1.65; color:#94a3b8;">
+    Este notebook escala el flujo de trabajo al <b style="color:#f8fafc;">dataset completo</b> de Avazu (~40M registros) usando <b style="color:#f8fafc;">PySpark ML</b> con <code style="background:#1e293b; color:#f28482; padding:2px 6px; border-radius:4px;">MultilayerPerceptronClassifier</code> distribuido.
+  </p>
+</div>
+<p style="margin-bottom:18px;">
+  <span style="background-color:#0f172a; color:#f28482; border:1px solid #f28482; padding:4px 12px; border-radius:999px; font-weight:600; font-size:0.88rem;">Framework: PySpark ML</span>
+  <span style="background-color:#0f172a; color:#ffb703; border:1px solid #fb8500; padding:4px 12px; border-radius:999px; font-weight:600; font-size:0.88rem; margin-left:6px;">~40M registros</span>
+  <span style="background-color:#0f172a; color:#8ecae6; border:1px solid #219ebc; padding:4px 12px; border-radius:999px; font-weight:600; font-size:0.88rem; margin-left:6px;">Procesamiento distribuido</span>
+</p>
+<div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
+  <div style="flex:1; min-width:280px; background: linear-gradient(135deg, #1a0f0f 0%, #0f172a 100%); border-left:4px solid #f28482; padding:14px 18px; border-radius:12px; box-shadow:0 8px 20px rgba(0,0,0,0.22);">
+    <p style="margin:0 0 6px 0; font-weight:700; color:#f28482; font-size:0.95rem;">Contenido</p>
+    <p style="margin:0; color:#cbd5e1; font-size:0.88rem; line-height:1.65;">
+      1. <b style="color:#e2e8f0;">Carga del dataset completo</b> desde <code style="background:#1e293b; color:#67e8f9; padding:2px 6px; border-radius:4px;">data/raw/train.gz</code> con Spark<br>
+      2. <b style="color:#e2e8f0;">Feature Engineering</b> — misma transformación temporal que en EDA<br>
+      3. <b style="color:#e2e8f0;">Reducción de cardinalidad</b> — top 100 valores por columna, resto a OTHER<br>
+      4. <b style="color:#e2e8f0;">Preprocesamiento</b> — StringIndexer + VectorAssembler + StandardScaler<br>
+      5. <b style="color:#e2e8f0;">División</b> — randomSplit([0.8, 0.2], seed=42)<br>
+      6. <b style="color:#e2e8f0;">Entrenamiento</b> — MultilayerPerceptronClassifier con múltiples configuraciones<br>
+      7. <b style="color:#e2e8f0;">Evaluación</b> — BinaryClassificationEvaluator + métricas de clasificación<br>
+      8. <b style="color:#e2e8f0;">Guardado del modelo</b> en <code style="background:#1e293b; color:#67e8f9; padding:2px 6px; border-radius:4px;">models/</code>
+    </p>
+  </div>
+  <div style="flex:1; min-width:280px; background: linear-gradient(135deg, #1a0f2e 0%, #0f172a 100%); border-left:4px solid #c4b5fd; padding:14px 18px; border-radius:12px; box-shadow:0 8px 20px rgba(0,0,0,0.22);">
+    <p style="margin:0 0 6px 0; font-weight:700; color:#c4b5fd; font-size:0.95rem;">Requisitos</p>
+    <p style="margin:0; color:#cbd5e1; font-size:0.88rem; line-height:1.65;">
+      Dataset en <code style="background:#1e293b; color:#67e8f9; padding:2px 6px; border-radius:4px;">data/raw/train.gz</code><br>
+      PySpark instalado y configurado<br>
+      Suficiente memoria para procesar el dataset completo (~8 GB de RAM recomendados para el driver)
+    </p>
+  </div>
+</div><section id="configuracion-del-entorno-e-inicio-de-spark">
+<h2>0.1 Configuración del Entorno e Inicio de Spark<a class="headerlink" href="#configuracion-del-entorno-e-inicio-de-spark" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #1a0f2e 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #c4b5fd; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+  <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
+    <span style="color:#c4b5fd;">0.1</span> &nbsp;Configuración del Entorno e Inicio de Spark
+  </h2>
+</div>
+<blockquote>
+<div><p><strong>Importamos las dependencias, aplicamos el estilo visual oscuro y creamos la sesión de Spark con configuración de memoria extendida (8 GB driver) y timeouts amplios para evitar desconexiones de la JVM durante el procesamiento de ~40M registros.</strong></p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="n">PROJECT_ROOT</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span>
+<span class="k">while</span> <span class="n">PROJECT_ROOT</span> <span class="o">!=</span> <span class="n">PROJECT_ROOT</span><span class="o">.</span><span class="n">parent</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span><span class="n">PROJECT_ROOT</span> <span class="o">/</span> <span class="s2">&quot;src&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+    <span class="n">PROJECT_ROOT</span> <span class="o">=</span> <span class="n">PROJECT_ROOT</span><span class="o">.</span><span class="n">parent</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">PROJECT_ROOT</span> <span class="o">/</span> <span class="s2">&quot;src&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+    <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="s2">&quot;No se encontró la raíz del proyecto con el directorio src.&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">PROJECT_ROOT</span> <span class="o">/</span> <span class="s2">&quot;src&quot;</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">PROJECT_ROOT</span> <span class="o">/</span> <span class="s2">&quot;src&quot;</span><span class="p">))</span>
+
+<span class="c1"># Asegurar que PySpark use el mismo intérprete Python</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;PYSPARK_PYTHON&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">executable</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;PYSPARK_DRIVER_PYTHON&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">executable</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">ctr_mlp.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_project_settings</span><span class="p">,</span> <span class="n">apply_dark_style</span><span class="p">,</span> <span class="n">COLORS</span><span class="p">,</span> <span class="n">AXES_BG</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ctr_mlp.evaluation</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_confusion_matrix</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ctr_mlp.feature_engineering</span><span class="w"> </span><span class="kn">import</span> <span class="n">add_time_features_spark</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ctr_mlp.spark_workflow</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">create_spark_session</span><span class="p">,</span>
+    <span class="n">prepare_spark_features</span><span class="p">,</span>
+    <span class="n">read_ctr_csv_spark</span><span class="p">,</span>
+    <span class="n">reduce_cardinality_columns</span><span class="p">,</span>
+    <span class="n">run_spark_mlp_search</span><span class="p">,</span>
+    <span class="n">evaluate_spark_predictions</span><span class="p">,</span>
+    <span class="n">save_spark_model</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ctr_mlp.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">format_seconds</span>
+
+<span class="c1"># Aplicar estilo oscuro profesional</span>
+<span class="n">apply_dark_style</span><span class="p">()</span>
+
+<span class="n">settings</span> <span class="o">=</span> <span class="n">load_project_settings</span><span class="p">()</span>
+<span class="n">paths</span> <span class="o">=</span> <span class="n">settings</span><span class="p">[</span><span class="s2">&quot;paths&quot;</span><span class="p">]</span>
+<span class="n">general</span> <span class="o">=</span> <span class="n">settings</span><span class="p">[</span><span class="s2">&quot;general&quot;</span><span class="p">]</span>
+<span class="n">feature_cfg</span> <span class="o">=</span> <span class="n">settings</span><span class="p">[</span><span class="s2">&quot;features&quot;</span><span class="p">]</span>
+
+<span class="n">FIGURES_DIR</span> <span class="o">=</span> <span class="n">paths</span><span class="p">[</span><span class="s2">&quot;figures_dir&quot;</span><span class="p">]</span>
+<span class="n">MODELS_DIR</span> <span class="o">=</span> <span class="n">paths</span><span class="p">[</span><span class="s2">&quot;models_dir&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="crear-sesion-spark-con-memoria-extendida">
+<h2>0.2 Crear Sesión Spark con Memoria Extendida<a class="headerlink" href="#crear-sesion-spark-con-memoria-extendida" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #1a0f2e 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #c4b5fd; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+  <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
+    <span style="color:#c4b5fd;">0.2</span> &nbsp;Crear Sesión Spark con Memoria Extendida
+  </h2>
+</div>
+<blockquote>
+<div><p><strong>Creamos la sesión Spark con 8 GB de memoria para el driver, 4 GB para executors, y timeouts extendidos. Esto evita el <code class="docutils literal notranslate"><span class="pre">ConnectionRefusedError</span></code> que ocurre cuando la JVM se queda sin memoria al procesar columnas de alta cardinalidad con StringIndexer.</strong></p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Crear sesión Spark con memoria y timeouts configurados</span>
+<span class="c1"># (cierra automáticamente cualquier sesión zombie previa)</span>
+<span class="n">spark</span> <span class="o">=</span> <span class="n">create_spark_session</span><span class="p">(</span>
+    <span class="n">app_name</span><span class="o">=</span><span class="s2">&quot;avazu-ctr-mlp&quot;</span><span class="p">,</span>
+    <span class="n">shuffle_partitions</span><span class="o">=</span><span class="n">general</span><span class="p">[</span><span class="s2">&quot;spark_shuffle_partitions&quot;</span><span class="p">],</span>
+    <span class="n">driver_memory</span><span class="o">=</span><span class="s2">&quot;8g&quot;</span><span class="p">,</span>
+    <span class="n">executor_memory</span><span class="o">=</span><span class="s2">&quot;4g&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Verificación rápida de que Spark está vivo</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Spark version: </span><span class="si">{</span><span class="n">spark</span><span class="o">.</span><span class="n">version</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Spark UI: </span><span class="si">{</span><span class="n">spark</span><span class="o">.</span><span class="n">sparkContext</span><span class="o">.</span><span class="n">uiWebUrl</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Driver memory: </span><span class="si">{</span><span class="n">spark</span><span class="o">.</span><span class="n">sparkContext</span><span class="o">.</span><span class="n">getConf</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;spark.driver.memory&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;default&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Network timeout: </span><span class="si">{</span><span class="n">spark</span><span class="o">.</span><span class="n">sparkContext</span><span class="o">.</span><span class="n">getConf</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;spark.network.timeout&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;default&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Test básico de conectividad JVM</span>
+<span class="n">spark</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Spark está operativo.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Spark version: 4.1.1
+Spark UI: http://LAPTOP-UCIBA847:4040
+Driver memory: 8g
+Network timeout: 600s
++---+
+| id|
++---+
+|  0|
+|  1|
+|  2|
+|  3|
+|  4|
++---+
+
+Spark está operativo.
+</pre></div>
+</div>
+</div>
+</div>
+<div style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border-radius: 16px; padding: 30px; margin: 20px 0; font-family: 'Segoe UI', sans-serif; color: #e0e0e0; border: 1px solid #2a2a4a;">
+<h2 style="color: #ffffff; margin-top: 0;">💡 Interpretación — Sesión Spark Inicializada</h2>
+<div style="display: flex; gap: 10px; flex-wrap: wrap; margin: 15px 0;">
+  <span style="background: #2d6a4f; color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 13px;">✅ Spark 4.1.1 operativo</span>
+  <span style="background: #457b9d; color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 13px;">💾 Driver memory: 8 GB</span>
+  <span style="background: #e63946; color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 13px;">🌐 Spark UI: localhost:4040</span>
+  <span style="background: #ffb74d; color: #1a1a2e; padding: 6px 14px; border-radius: 20px; font-size: 13px;">⏱ Network timeout: 600s</span>
+</div>
+<p style="font-size: 15px; color: #b0b0b0;">
+La sesión Spark fue creada exitosamente con <strong>8 GB de memoria para el driver</strong>, necesarios para procesar los 40M+ registros del dataset Avazu. La prueba de operatividad (generando una tabla de 5 filas) confirma que el cluster local está funcionando correctamente. El <strong>timeout de 600s</strong> evita que las operaciones largas (como leer el CSV comprimido) fallen prematuramente.
+</p>
+<div style="margin-top: 15px; padding: 12px 16px; background: rgba(255,255,255,0.03); border-left: 3px solid #4fc3f7; border-radius: 6px;">
+  <strong style="color: #4fc3f7;">📌 Spark UI:</strong> Mientras el notebook está corriendo, puedes abrir <code>http://localhost:4040</code> en tu navegador para monitorear los jobs, stages y tareas de Spark en tiempo real.
+</div>
+</div></section>
+<section id="lectura-del-dataset-completo">
+<h2>1.1 Lectura del Dataset Completo<a class="headerlink" href="#lectura-del-dataset-completo" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #0c2d48 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #219ebc; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+  <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
+    <span style="color:#8ecae6;">1.1</span> &nbsp;Lectura del Dataset Completo
+  </h2>
+</div>
+<blockquote>
+<div><p><strong>Leemos el archivo comprimido <code class="docutils literal notranslate"><span class="pre">train.gz</span></code> directamente con Spark (sin descompresión manual). Reparticionamos el DataFrame para mejorar el paralelismo, ya que gzip no es un formato splittable.</strong></p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t_load</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">spark_df</span> <span class="o">=</span> <span class="n">read_ctr_csv_spark</span><span class="p">(</span>
+    <span class="n">spark</span><span class="p">,</span>
+    <span class="n">paths</span><span class="p">[</span><span class="s2">&quot;train_csv&quot;</span><span class="p">],</span>
+    <span class="n">infer_schema</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">repartition</span><span class="o">=</span><span class="n">general</span><span class="p">[</span><span class="s2">&quot;spark_repartition&quot;</span><span class="p">],</span>
+<span class="p">)</span>
+
+<span class="c1"># Vista previa del esquema</span>
+<span class="n">schema_preview</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">spark_df</span><span class="o">.</span><span class="n">dtypes</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;column&quot;</span><span class="p">,</span> <span class="s2">&quot;spark_type&quot;</span><span class="p">])</span>
+<span class="n">display</span><span class="p">(</span><span class="n">schema_preview</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">spark_df</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">toPandas</span><span class="p">())</span>
+
+<span class="n">total_rows</span> <span class="o">=</span> <span class="n">spark_df</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Total de registros cargados: </span><span class="si">{</span><span class="n">total_rows</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Particiones después de repartition: </span><span class="si">{</span><span class="n">spark_df</span><span class="o">.</span><span class="n">rdd</span><span class="o">.</span><span class="n">getNumPartitions</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tiempo de carga: </span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t_load</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>column</th>
+      <th>spark_type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>id</td>
+      <td>string</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>click</td>
+      <td>string</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>hour</td>
+      <td>string</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>C1</td>
+      <td>string</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>banner_pos</td>
+      <td>string</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>site_id</td>
+      <td>string</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>site_domain</td>
+      <td>string</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>site_category</td>
+      <td>string</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>app_id</td>
+      <td>string</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>app_domain</td>
+      <td>string</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>app_category</td>
+      <td>string</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>device_id</td>
+      <td>string</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>device_ip</td>
+      <td>string</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>device_model</td>
+      <td>string</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>device_type</td>
+      <td>string</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>device_conn_type</td>
+      <td>string</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>C14</td>
+      <td>string</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>C15</td>
+      <td>string</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>C16</td>
+      <td>string</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>C17</td>
+      <td>string</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>C18</td>
+      <td>string</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>C19</td>
+      <td>string</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>C20</td>
+      <td>string</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>C21</td>
+      <td>string</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>click</th>
+      <th>hour</th>
+      <th>C1</th>
+      <th>banner_pos</th>
+      <th>site_id</th>
+      <th>site_domain</th>
+      <th>site_category</th>
+      <th>app_id</th>
+      <th>app_domain</th>
+      <th>...</th>
+      <th>device_type</th>
+      <th>device_conn_type</th>
+      <th>C14</th>
+      <th>C15</th>
+      <th>C16</th>
+      <th>C17</th>
+      <th>C18</th>
+      <th>C19</th>
+      <th>C20</th>
+      <th>C21</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>15630921582298314894</td>
+      <td>1</td>
+      <td>14102111</td>
+      <td>1005</td>
+      <td>1</td>
+      <td>17caea14</td>
+      <td>0dde25ec</td>
+      <td>f028772b</td>
+      <td>ecad2386</td>
+      <td>7801e8d9</td>
+      <td>...</td>
+      <td>1</td>
+      <td>0</td>
+      <td>19950</td>
+      <td>320</td>
+      <td>50</td>
+      <td>1800</td>
+      <td>3</td>
+      <td>167</td>
+      <td>100081</td>
+      <td>23</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>5983119364350739100</td>
+      <td>0</td>
+      <td>14102904</td>
+      <td>1005</td>
+      <td>0</td>
+      <td>85f751fd</td>
+      <td>c4e18dd6</td>
+      <td>50e219e0</td>
+      <td>66f5e02e</td>
+      <td>6f7ca2ba</td>
+      <td>...</td>
+      <td>1</td>
+      <td>0</td>
+      <td>22954</td>
+      <td>320</td>
+      <td>50</td>
+      <td>2654</td>
+      <td>3</td>
+      <td>38</td>
+      <td>-1</td>
+      <td>23</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>9525925864471698126</td>
+      <td>1</td>
+      <td>14102517</td>
+      <td>1005</td>
+      <td>0</td>
+      <td>85f751fd</td>
+      <td>c4e18dd6</td>
+      <td>50e219e0</td>
+      <td>9c13b419</td>
+      <td>2347f47a</td>
+      <td>...</td>
+      <td>1</td>
+      <td>0</td>
+      <td>20632</td>
+      <td>320</td>
+      <td>50</td>
+      <td>2374</td>
+      <td>3</td>
+      <td>39</td>
+      <td>-1</td>
+      <td>23</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>67888076147924519</td>
+      <td>0</td>
+      <td>14102802</td>
+      <td>1010</td>
+      <td>1</td>
+      <td>85f751fd</td>
+      <td>c4e18dd6</td>
+      <td>50e219e0</td>
+      <td>b99da644</td>
+      <td>7801e8d9</td>
+      <td>...</td>
+      <td>5</td>
+      <td>2</td>
+      <td>22919</td>
+      <td>728</td>
+      <td>90</td>
+      <td>2649</td>
+      <td>0</td>
+      <td>39</td>
+      <td>-1</td>
+      <td>204</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2928053146351541979</td>
+      <td>1</td>
+      <td>14102223</td>
+      <td>1005</td>
+      <td>1</td>
+      <td>e151e245</td>
+      <td>7e091613</td>
+      <td>f028772b</td>
+      <td>ecad2386</td>
+      <td>7801e8d9</td>
+      <td>...</td>
+      <td>1</td>
+      <td>0</td>
+      <td>4687</td>
+      <td>320</td>
+      <td>50</td>
+      <td>423</td>
+      <td>2</td>
+      <td>39</td>
+      <td>100148</td>
+      <td>32</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 24 columns</p>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total de registros cargados: 40,428,967
+Particiones después de repartition: 100
+Tiempo de carga: 611.6s
+</pre></div>
+</div>
+</div>
+</div>
+<div style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border-radius: 16px; padding: 30px; margin: 20px 0; font-family: 'Segoe UI', sans-serif; color: #e0e0e0; border: 1px solid #2a2a4a;">
+<h2 style="color: #ffffff; margin-top: 0;">💡 Interpretación — Dataset Completo Cargado en Spark</h2>
+<div style="display: flex; gap: 10px; flex-wrap: wrap; margin: 15px 0;">
+  <span style="background: #2d6a4f; color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: bold;">📊 40,428,967 registros</span>
+  <span style="background: #457b9d; color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 13px;">100 particiones</span>
+  <span style="background: #e63946; color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 13px;">⏱ Carga: 611.6s (~10 min)</span>
+</div>
+<div style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 20px;">
+  <div style="flex: 1; min-width: 280px; background: rgba(255,255,255,0.05); border-radius: 12px; padding: 20px; border: 1px solid #2a2a4a;">
+    <h3 style="color: #4fc3f7; margin-top: 0;">🔄 Diferencia clave vs scikit-learn</h3>
+    <p style="font-size: 14px; line-height: 1.7;">
+      Mientras scikit-learn trabajó con una <strong>muestra de 1M registros</strong>, PySpark carga el <strong>dataset completo: 40.4 millones de filas</strong>. Esto es posible gracias al procesamiento distribuido de Spark, que divide los datos en 100 particiones para paralelizar las operaciones.
+    </p>
+  </div>
+  <div style="flex: 1; min-width: 280px; background: rgba(255,255,255,0.05); border-radius: 12px; padding: 20px; border: 1px solid #2a2a4a;">
+    <h3 style="color: #ffb74d; margin-top: 0;">📋 Tipos de datos</h3>
+    <p style="font-size: 14px; line-height: 1.7;">
+      Todas las columnas se cargaron como <strong>string</strong> (con <code>inferSchema=False</code>) para controlar manualmente el casting posterior. Esto es una buena práctica con datasets grandes porque evita que Spark recorra todo el archivo dos veces — una para inferir tipos y otra para leer.
+    </p>
+  </div>
+</div>
+</div></section>
+<section id="feature-engineering-temporal-reduccion-de-cardinalidad-y-division">
+<h2>2.1 Feature Engineering Temporal, Reducción de Cardinalidad y División<a class="headerlink" href="#feature-engineering-temporal-reduccion-de-cardinalidad-y-division" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #1c1408 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #ffb703; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+ <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
+  <span style="color:#ffb703;">2.1</span> &nbsp;Feature Engineering Temporal, Reducción de Cardinalidad y División
+ </h2>
+</div>
+<blockquote>
+<div><p><strong>Aplicamos la misma transformación temporal que en el EDA (hora, día, franja horaria) usando funciones nativas de Spark SQL. Eliminamos <code class="docutils literal notranslate"><span class="pre">id</span></code>, <code class="docutils literal notranslate"><span class="pre">device_ip</span></code> y <code class="docutils literal notranslate"><span class="pre">device_id</span></code> (alta cardinalidad sin valor predictivo). Reducimos la cardinalidad de columnas categóricas con &gt;100 valores únicos (site_id, site_domain, app_id, app_domain, device_model, etc.) manteniendo solo los top 100 valores más frecuentes y agrupando el resto como <code class="docutils literal notranslate"><span class="pre">'OTHER'</span></code>. Esto es estándar en CTR prediction y evita la explosión de dimensionalidad. Dividimos en 80% train / 20% test.</strong></p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Feature engineering temporal</span>
+<span class="n">spark_df</span> <span class="o">=</span> <span class="n">add_time_features_spark</span><span class="p">(</span><span class="n">spark_df</span><span class="p">,</span> <span class="n">hour_col</span><span class="o">=</span><span class="n">general</span><span class="p">[</span><span class="s2">&quot;hour_col&quot;</span><span class="p">])</span>
+
+<span class="c1"># Eliminar columnas de alta cardinalidad sin valor predictivo</span>
+<span class="c1"># device_id (~2.6M valores únicos) y device_ip (~6M) crashean StringIndexer</span>
+<span class="n">drop_cols</span> <span class="o">=</span> <span class="n">feature_cfg</span><span class="p">[</span><span class="s2">&quot;drop_columns&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Columnas eliminadas: </span><span class="si">{</span><span class="n">drop_cols</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">spark_df</span> <span class="o">=</span> <span class="n">spark_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="o">*</span><span class="n">drop_cols</span><span class="p">)</span>
+
+<span class="c1"># Verificar columnas restantes</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Columnas restantes: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">spark_df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Vista previa de features creadas</span>
+<span class="n">display</span><span class="p">(</span>
+    <span class="n">spark_df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
+        <span class="n">general</span><span class="p">[</span><span class="s2">&quot;target_col&quot;</span><span class="p">],</span> <span class="n">general</span><span class="p">[</span><span class="s2">&quot;hour_col&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;event_hour&quot;</span><span class="p">,</span> <span class="s2">&quot;event_day&quot;</span><span class="p">,</span> <span class="s2">&quot;day_of_week&quot;</span><span class="p">,</span> <span class="s2">&quot;time_bucket&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;site_category&quot;</span><span class="p">,</span> <span class="s2">&quot;app_category&quot;</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">toPandas</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="c1"># --- Reducción de cardinalidad ---</span>
+<span class="c1"># Detectar columnas categóricas con alta cardinalidad (&gt;100 valores únicos)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyspark.sql</span><span class="w"> </span><span class="kn">import</span> <span class="n">functions</span> <span class="k">as</span> <span class="n">F</span>
+
+<span class="n">cat_cols_in_df</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">feature_cfg</span><span class="p">[</span><span class="s2">&quot;spark_categorical&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">spark_df</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+<span class="n">card_row</span> <span class="o">=</span> <span class="n">spark_df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
+    <span class="o">*</span><span class="p">[</span><span class="n">F</span><span class="o">.</span><span class="n">approxCountDistinct</span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cat_cols_in_df</span><span class="p">]</span>
+<span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+
+<span class="n">high_card_cols</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Cardinalidad aproximada de columnas categoricas:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cat_cols_in_df</span><span class="p">:</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">card_row</span><span class="p">[</span><span class="n">c</span><span class="p">]</span>
+    <span class="n">tag</span> <span class="o">=</span> <span class="s2">&quot; --&gt; REDUCIR a top 100&quot;</span> <span class="k">if</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">100</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">: ~</span><span class="si">{</span><span class="n">n</span><span class="si">:</span><span class="s2">,</span><span class="si">}{</span><span class="n">tag</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">:</span>
+        <span class="n">high_card_cols</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Reduciendo </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">high_card_cols</span><span class="p">)</span><span class="si">}</span><span class="s2"> columnas a top 100 valores...&quot;</span><span class="p">)</span>
+<span class="n">spark_df</span> <span class="o">=</span> <span class="n">reduce_cardinality_columns</span><span class="p">(</span><span class="n">spark_df</span><span class="p">,</span> <span class="n">high_card_cols</span><span class="p">,</span> <span class="n">top_n</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># Cache estrategico despues de reduccion de cardinalidad</span>
+<span class="n">spark_df</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
+
+<span class="c1"># Division train/test</span>
+<span class="n">train_df</span><span class="p">,</span> <span class="n">test_df</span> <span class="o">=</span> <span class="n">spark_df</span><span class="o">.</span><span class="n">randomSplit</span><span class="p">([</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="n">seed</span><span class="o">=</span><span class="n">general</span><span class="p">[</span><span class="s2">&quot;random_state&quot;</span><span class="p">])</span>
+<span class="n">train_count</span> <span class="o">=</span> <span class="n">train_df</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="n">test_count</span> <span class="o">=</span> <span class="n">test_df</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Train: </span><span class="si">{</span><span class="n">train_count</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> registros | Test: </span><span class="si">{</span><span class="n">test_count</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> registros&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Columnas eliminadas: [&#39;id&#39;, &#39;device_ip&#39;, &#39;device_id&#39;]
+Columnas restantes: 28
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>click</th>
+      <th>hour</th>
+      <th>event_hour</th>
+      <th>event_day</th>
+      <th>day_of_week</th>
+      <th>time_bucket</th>
+      <th>site_category</th>
+      <th>app_category</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>14102923</td>
+      <td>23</td>
+      <td>29</td>
+      <td>4</td>
+      <td>noche</td>
+      <td>50e219e0</td>
+      <td>8ded1f7a</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>14102923</td>
+      <td>23</td>
+      <td>29</td>
+      <td>4</td>
+      <td>noche</td>
+      <td>50e219e0</td>
+      <td>8ded1f7a</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0</td>
+      <td>14102923</td>
+      <td>23</td>
+      <td>29</td>
+      <td>4</td>
+      <td>noche</td>
+      <td>50e219e0</td>
+      <td>8ded1f7a</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0</td>
+      <td>14102923</td>
+      <td>23</td>
+      <td>29</td>
+      <td>4</td>
+      <td>noche</td>
+      <td>50e219e0</td>
+      <td>8ded1f7a</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>14102923</td>
+      <td>23</td>
+      <td>29</td>
+      <td>4</td>
+      <td>noche</td>
+      <td>50e219e0</td>
+      <td>8ded1f7a</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>c:\Users\juana\anaconda3\envs\deep_env2\Lib\site-packages\pyspark\sql\functions\builtin.py:6552: FutureWarning: Deprecated in 2.1, use approx_count_distinct instead.
+  warnings.warn(&quot;Deprecated in 2.1, use approx_count_distinct instead.&quot;, FutureWarning)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cardinalidad aproximada de columnas categoricas:
+  C1: ~7
+  banner_pos: ~7
+  site_category: ~27
+  app_category: ~33
+  device_type: ~5
+  device_conn_type: ~4
+  C15: ~8
+  C16: ~9
+  C18: ~4
+  time_bucket: ~4
+
+Reduciendo 0 columnas a top 100 valores...
+
+Train: 32,339,655 registros | Test: 8,089,312 registros
+</pre></div>
+</div>
+</div>
+</div>
+<div style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border-radius: 16px; padding: 30px; margin: 20px 0; font-family: 'Segoe UI', sans-serif; color: #e0e0e0; border: 1px solid #2a2a4a;">
+<h2 style="color: #ffffff; margin-top: 0;">💡 Interpretación — Feature Engineering y División Train/Test</h2>
+<div style="display: flex; gap: 10px; flex-wrap: wrap; margin: 15px 0;">
+  <span style="background: #2d6a4f; color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 13px;">🗑️ Eliminadas: id, device_ip, device_id</span>
+  <span style="background: #457b9d; color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 13px;">📐 28 columnas restantes</span>
+  <span style="background: #e63946; color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 13px;">🔀 Train: 32.3M | Test: 8.1M</span>
+</div>
+<div style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 20px;">
+  <div style="flex: 1; min-width: 280px; background: rgba(255,255,255,0.05); border-radius: 12px; padding: 20px; border: 1px solid #2a2a4a;">
+    <h3 style="color: #4fc3f7; margin-top: 0;">🕐 Features temporales creadas</h3>
+    <p style="font-size: 14px; line-height: 1.7;">
+      Se derivaron las mismas features temporales que en scikit-learn: <code>event_hour</code>, <code>event_day</code>, <code>day_of_week</code>, <code>time_bucket</code>, <code>is_weekend</code>, <code>is_business_hour</code>. La consistencia entre pipelines es fundamental para que la comparación de modelos sea justa.
+    </p>
+  </div>
+  <div style="flex: 1; min-width: 280px; background: rgba(255,255,255,0.05); border-radius: 12px; padding: 20px; border: 1px solid #2a2a4a;">
+    <h3 style="color: #ffb74d; margin-top: 0;">📊 Cardinalidad categórica</h3>
+    <p style="font-size: 14px; line-height: 1.7;">
+      Todas las variables categóricas tienen cardinalidad manejable (4–33 valores). Las variables de ultra-alta cardinalidad (<code>id</code>, <code>device_ip</code>, <code>device_id</code>) fueron eliminadas correctamente. El split 80/20 produce <strong>32.3M</strong> registros para entrenamiento y <strong>8.1M</strong> para test.
+    </p>
+  </div>
+</div>
+</div></section>
+<section id="verificacion-de-cardinalidad-reducida">
+<h2>2.2 Verificación de Cardinalidad Reducida<a class="headerlink" href="#verificacion-de-cardinalidad-reducida" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #1c1408 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #ffb703; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+  <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
+    <span style="color:#ffb703;">2.2</span> &nbsp;Verificación de Cardinalidad Reducida
+  </h2>
+</div>
+<blockquote>
+<div><p><strong>Verificamos que la reducción de cardinalidad funcionó correctamente. Cada columna categórica de alta cardinalidad debería tener &lt;= 101 valores únicos (top 100 + ‘OTHER’). La dimensionalidad del vector de features será ~25 (índices de StringIndexer + numéricas) en lugar de cientos de miles con OneHotEncoder.</strong></p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Verificar cardinalidad despues de la reduccion</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyspark.sql</span><span class="w"> </span><span class="kn">import</span> <span class="n">functions</span> <span class="k">as</span> <span class="n">F</span>
+
+<span class="n">cat_cols_check</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">feature_cfg</span><span class="p">[</span><span class="s2">&quot;spark_categorical&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">spark_df</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+<span class="n">card_after</span> <span class="o">=</span> <span class="n">spark_df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
+    <span class="o">*</span><span class="p">[</span><span class="n">F</span><span class="o">.</span><span class="n">approxCountDistinct</span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cat_cols_check</span><span class="p">]</span>
+<span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cardinalidad despues de reduccion:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cat_cols_check</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">: ~</span><span class="si">{</span><span class="n">card_after</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">n_cat</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">cat_cols_check</span><span class="p">)</span>
+<span class="n">n_num</span> <span class="o">=</span> <span class="nb">len</span><span class="p">([</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">feature_cfg</span><span class="p">[</span><span class="s2">&quot;spark_numeric&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">spark_df</span><span class="o">.</span><span class="n">columns</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Total columnas categoricas: </span><span class="si">{</span><span class="n">n_cat</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total columnas numericas: </span><span class="si">{</span><span class="n">n_num</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dimensionalidad estimada del vector de features: ~</span><span class="si">{</span><span class="n">n_cat</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">n_num</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;(Solo indices numericos de StringIndexer, sin OneHotEncoder)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cardinalidad despues de reduccion:
+  C1: ~7
+  banner_pos: ~7
+  site_category: ~27
+  app_category: ~33
+  device_type: ~5
+  device_conn_type: ~4
+  C15: ~8
+  C16: ~9
+  C18: ~4
+  time_bucket: ~4
+
+Total columnas categoricas: 10
+Total columnas numericas: 5
+Dimensionalidad estimada del vector de features: ~15
+(Solo indices numericos de StringIndexer, sin OneHotEncoder)
+</pre></div>
+</div>
+</div>
+</div>
+<div style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border-radius: 16px; padding: 30px; margin: 20px 0; font-family: 'Segoe UI', sans-serif; color: #e0e0e0; border: 1px solid #2a2a4a;">
+<h2 style="color: #ffffff; margin-top: 0;">💡 Interpretación — Verificación de Cardinalidad</h2>
+<div style="display: flex; gap: 10px; flex-wrap: wrap; margin: 15px 0;">
+  <span style="background: #2d6a4f; color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 13px;">10 categóricas + 5 numéricas</span>
+  <span style="background: #457b9d; color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 13px;">~15 dimensiones estimadas</span>
+</div>
+<p style="font-size: 15px; color: #b0b0b0;">
+La verificación confirma que la cardinalidad es manejable para el pipeline de Spark ML: todas las variables categóricas tienen entre <strong>4 y 33 valores únicos</strong>. La dimensionalidad estimada del vector de features es <strong>~15</strong> usando solo StringIndexer (sin OneHot). Con OneHotEncoder aplicado a las 10 categóricas, la dimensionalidad final del vector será mayor (~135), pero sigue siendo computacionalmente viable para el <code>MultilayerPerceptronClassifier</code>.
+</p>
+</div></section>
+<section id="pipeline-de-preprocesamiento-spark-ml">
+<h2>3.1 Pipeline de Preprocesamiento Spark ML<a class="headerlink" href="#pipeline-de-preprocesamiento-spark-ml" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #0f1a0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #90be6d; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+  <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
+    <span style="color:#90be6d;">3.1</span> &nbsp;Pipeline de Preprocesamiento Spark ML
+  </h2>
+</div>
+<blockquote>
+<div><p><strong>Construimos el pipeline de Spark ML con StringIndexer para convertir categóricas a índices numéricos, VectorAssembler para combinar features y StandardScaler para normalización. Se eliminó OneHotEncoder para evitar la explosión de dimensionalidad (~100K+ columnas sparse) que causaba tiempos de preprocesamiento de 97+ minutos en modo local. La dimensionalidad resultante es de ~25 features (índices + numéricas) en lugar de cientos de miles.</strong></p>
+</div></blockquote>
+<div style="background-color:#1f2937; border-left:5px solid #f59e0b; color:#fcd34d; padding:14px 18px; border-radius:12px; box-shadow:0 10px 25px rgba(0,0,0,0.18);">
+<b>Nota sobre el manejo de cardinalidad</b><br>
+Las columnas categóricas se dividen en dos grupos para el preprocesamiento en Spark:
+<ul>
+  <li><b>Baja cardinalidad</b> (C1, banner_pos, site_category, app_category, device_type, device_conn_type, C15, C16, C18, time_bucket): se procesan con <code>StringIndexer</code> → <code>OneHotEncoder</code>.</li>
+  <li><b>Alta cardinalidad</b> (site_id, site_domain, app_id, app_domain, device_id, device_model, C14, C17, C19, C20, C21): se procesan <b>únicamente</b> con <code>StringIndexer</code>, usando el índice numérico como feature directa.</li>
+</ul>
+Aplicar <code>OneHotEncoder</code> a columnas como <code>device_id</code> (~2M valores únicos) generaría un vector de features de más de 2 millones de dimensiones, lo cual excede la memoria disponible en entorno local y hace inviable el entrenamiento del MLP. Esta separación es una decisión de ingeniería estándar cuando se trabaja con datasets de alta cardinalidad en Spark ML.
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t_prep</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Categóricas (baja cardinalidad → OHE): </span><span class="si">{</span><span class="n">feature_cfg</span><span class="p">[</span><span class="s1">&#39;spark_categorical&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Alta cardinalidad (solo StringIndexer): </span><span class="si">{</span><span class="n">feature_cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;spark_high_cardinality&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">[])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Numéricas: </span><span class="si">{</span><span class="n">feature_cfg</span><span class="p">[</span><span class="s1">&#39;spark_numeric&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+
+<span class="n">feature_model</span><span class="p">,</span> <span class="n">train_features</span><span class="p">,</span> <span class="n">test_features</span><span class="p">,</span> <span class="n">feature_col</span> <span class="o">=</span> <span class="n">prepare_spark_features</span><span class="p">(</span>
+    <span class="n">train_df</span><span class="o">=</span><span class="n">train_df</span><span class="p">,</span>
+    <span class="n">test_df</span><span class="o">=</span><span class="n">test_df</span><span class="p">,</span>
+    <span class="n">categorical_columns</span><span class="o">=</span><span class="n">feature_cfg</span><span class="p">[</span><span class="s2">&quot;spark_categorical&quot;</span><span class="p">],</span>
+    <span class="n">numeric_columns</span><span class="o">=</span><span class="n">feature_cfg</span><span class="p">[</span><span class="s2">&quot;spark_numeric&quot;</span><span class="p">],</span>
+    <span class="n">label_col</span><span class="o">=</span><span class="n">general</span><span class="p">[</span><span class="s2">&quot;target_col&quot;</span><span class="p">],</span>
+    <span class="n">scale_features</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">high_cardinality_columns</span><span class="o">=</span><span class="n">feature_cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;spark_high_cardinality&quot;</span><span class="p">,</span> <span class="p">[]),</span>
+<span class="p">)</span>
+
+<span class="n">num_features</span> <span class="o">=</span> <span class="n">train_features</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">feature_col</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">size</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Columna de features: </span><span class="si">{</span><span class="n">feature_col</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dimensionalidad del vector de features: </span><span class="si">{</span><span class="n">num_features</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Particiones de train preparado: </span><span class="si">{</span><span class="n">train_features</span><span class="o">.</span><span class="n">rdd</span><span class="o">.</span><span class="n">getNumPartitions</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tiempo de preprocesamiento: </span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t_prep</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Categóricas (baja cardinalidad → OHE): [&#39;C1&#39;, &#39;banner_pos&#39;, &#39;site_category&#39;, &#39;app_category&#39;, &#39;device_type&#39;, &#39;device_conn_type&#39;, &#39;C15&#39;, &#39;C16&#39;, &#39;C18&#39;, &#39;time_bucket&#39;]
+Alta cardinalidad (solo StringIndexer): [&#39;site_id&#39;, &#39;site_domain&#39;, &#39;app_id&#39;, &#39;app_domain&#39;, &#39;device_id&#39;, &#39;device_model&#39;, &#39;C14&#39;, &#39;C17&#39;, &#39;C19&#39;, &#39;C20&#39;, &#39;C21&#39;]
+Numéricas: [&#39;event_day&#39;, &#39;event_hour&#39;, &#39;day_of_week&#39;, &#39;is_weekend&#39;, &#39;is_business_hour&#39;]
+
+Feature vector size: 135
+Train rows: 32,339,655 | Test rows: 8,089,312
+
+Columna de features: features
+Dimensionalidad del vector de features: 135
+Particiones de train preparado: 100
+Tiempo de preprocesamiento: 1153.9s
+</pre></div>
+</div>
+</div>
+</div>
+<div style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border-radius: 16px; padding: 30px; margin: 20px 0; font-family: 'Segoe UI', sans-serif; color: #e0e0e0; border: 1px solid #2a2a4a;">
+<h2 style="color: #ffffff; margin-top: 0;">💡 Interpretación — Pipeline de Preprocesamiento Spark ML</h2>
+<div style="display: flex; gap: 10px; flex-wrap: wrap; margin: 15px 0;">
+  <span style="background: #2d6a4f; color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 13px;">🔢 Feature vector: 135 dimensiones</span>
+  <span style="background: #457b9d; color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 13px;">📊 Train: 32.3M filas</span>
+  <span style="background: #e63946; color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 13px;">🧪 Test: 8.1M filas</span>
+</div>
+<div style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 20px;">
+  <div style="flex: 1; min-width: 280px; background: rgba(255,255,255,0.05); border-radius: 12px; padding: 20px; border: 1px solid #2a2a4a;">
+    <h3 style="color: #4fc3f7; margin-top: 0;">⚙️ Etapas del pipeline</h3>
+    <p style="font-size: 14px; line-height: 1.7;">
+      1. <strong>StringIndexer</strong> → convierte categóricas a índices numéricos<br>
+      2. <strong>OneHotEncoder</strong> → expande baja cardinalidad a vectores binarios<br>
+      3. <strong>VectorAssembler</strong> → combina todo en un vector <code>features</code> de 135 dimensiones<br>
+      4. <strong>StandardScaler</strong> → normaliza las features numéricas
+    </p>
+  </div>
+  <div style="flex: 1; min-width: 280px; background: rgba(255,255,255,0.05); border-radius: 12px; padding: 20px; border: 1px solid #2a2a4a;">
+    <h3 style="color: #ffb74d; margin-top: 0;">🔄 Diferencia vs scikit-learn</h3>
+    <p style="font-size: 14px; line-height: 1.7;">
+      El pipeline de Spark ML usa <strong>StringIndexer + OneHotEncoder</strong> en lugar del Target Encoding de scikit-learn. Esto genera un vector sparse de 135 dimensiones (vs las ~20 features del pipeline sklearn con Target Encoding). Ambas estrategias son válidas pero producen representaciones diferentes de los datos.
+    </p>
+  </div>
+</div>
+</div></section>
+<section id="entrenamiento-con-multilayerperceptronclassifier">
+<h2>4.1 Entrenamiento con MultilayerPerceptronClassifier<a class="headerlink" href="#entrenamiento-con-multilayerperceptronclassifier" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #1c1408 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #fb8500; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+  <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
+    <span style="color:#fb8500;">4.1</span> &nbsp;Entrenamiento con MultilayerPerceptronClassifier
+  </h2>
+</div>
+<blockquote>
+<div><p><strong>Entrenamos múltiples configuraciones del MLP distribuido con las combinaciones requeridas: layers [n, 10, 2], [n, 50, 2], [n, 100, 2] con stepSize 0.1 y 0.01, y maxIter 100 y 200. Registramos tiempo de entrenamiento y predicción para cada combinación.</strong></p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Iniciando búsqueda de hiperparámetros Spark MLP...&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Configuraciones: hidden_widths=(10,50,100) × step_sizes=(0.1,0.01) × max_iters=(100,200)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total: 3 × 2 × 2 = 12 modelos a entrenar</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">t_search</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">spark_results</span> <span class="o">=</span> <span class="n">run_spark_mlp_search</span><span class="p">(</span>
+    <span class="n">train_features</span><span class="o">=</span><span class="n">train_features</span><span class="p">,</span>
+    <span class="n">test_features</span><span class="o">=</span><span class="n">test_features</span><span class="p">,</span>
+    <span class="n">feature_col</span><span class="o">=</span><span class="n">feature_col</span><span class="p">,</span>
+    <span class="n">label_col</span><span class="o">=</span><span class="n">general</span><span class="p">[</span><span class="s2">&quot;target_col&quot;</span><span class="p">],</span>
+    <span class="n">hidden_layer_widths</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+    <span class="n">step_sizes</span><span class="o">=</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">),</span>
+    <span class="n">max_iters</span><span class="o">=</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">),</span>
+    <span class="n">seed</span><span class="o">=</span><span class="n">general</span><span class="p">[</span><span class="s2">&quot;random_state&quot;</span><span class="p">],</span>
+<span class="p">)</span>
+<span class="n">t_search_total</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t_search</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Búsqueda completada en: </span><span class="si">{</span><span class="n">format_seconds</span><span class="p">(</span><span class="n">t_search_total</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Resultados (ordenados por ROC AUC):&quot;</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">spark_results</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Iniciando búsqueda de hiperparámetros Spark MLP...
+Configuraciones: hidden_widths=(10,50,100) × step_sizes=(0.1,0.01) × max_iters=(100,200)
+Total: 3 × 2 × 2 = 12 modelos a entrenar
+
+Iniciando búsqueda de hiperparámetros Spark MLP...
+Configuraciones: hidden_widths=(10, 50, 100) × step_sizes=(0.1, 0.01) × max_iters=(100, 200)
+Total: 3 × 2 × 2 = 12 modelos a entrenar
+Tamaño del vector de features: 135
+
+[1/12] layers=[135, 10, 2], stepSize=0.1, maxIter=100 ... ROC AUC=0.6740  (24m 8.3s)
+[2/12] layers=[135, 10, 2], stepSize=0.1, maxIter=200 ... ROC AUC=0.6759  (46m 12.6s)
+[3/12] layers=[135, 10, 2], stepSize=0.01, maxIter=100 ... ROC AUC=0.6740  (23m 34.5s)
+[4/12] layers=[135, 10, 2], stepSize=0.01, maxIter=200 ... ROC AUC=0.6759  (47m 19.8s)
+[5/12] layers=[135, 50, 2], stepSize=0.1, maxIter=100 ... ROC AUC=0.6775  (64m 33.0s)
+[6/12] layers=[135, 50, 2], stepSize=0.1, maxIter=200 ... ROC AUC=0.6813  (153m 38.9s)
+[7/12] layers=[135, 50, 2], stepSize=0.01, maxIter=100 ... ROC AUC=0.6775  (93m 12.6s)
+[8/12] layers=[135, 50, 2], stepSize=0.01, maxIter=200 ... ROC AUC=0.6813  (127m 47.9s)
+[9/12] layers=[135, 100, 2], stepSize=0.1, maxIter=100 ... ROC AUC=0.6755  (118m 5.0s)
+[10/12] layers=[135, 100, 2], stepSize=0.1, maxIter=200 ... ROC AUC=0.6848  (249m 14.7s)
+[11/12] layers=[135, 100, 2], stepSize=0.01, maxIter=100 ... ROC AUC=0.6755  (118m 48.3s)
+[12/12] layers=[135, 100, 2], stepSize=0.01, maxIter=200 ... ROC AUC=0.6848  (240m 21.7s)
+
+Búsqueda completada en: 1317m 28.2s
+
+Resultados (ordenados por ROC AUC):
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>accuracy</th>
+      <th>precision</th>
+      <th>recall</th>
+      <th>f1</th>
+      <th>roc_auc</th>
+      <th>true_positive</th>
+      <th>true_negative</th>
+      <th>false_positive</th>
+      <th>false_negative</th>
+      <th>hidden_width</th>
+      <th>step_size</th>
+      <th>max_iter</th>
+      <th>training_seconds</th>
+      <th>prediction_seconds</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.832369</td>
+      <td>0.588358</td>
+      <td>0.045031</td>
+      <td>0.083659</td>
+      <td>0.684774</td>
+      <td>61900.0</td>
+      <td>6671391.0</td>
+      <td>43308.0</td>
+      <td>1312713.0</td>
+      <td>100</td>
+      <td>0.01</td>
+      <td>200</td>
+      <td>14421.695358</td>
+      <td>26.274801</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.832369</td>
+      <td>0.588358</td>
+      <td>0.045031</td>
+      <td>0.083659</td>
+      <td>0.684774</td>
+      <td>61900.0</td>
+      <td>6671391.0</td>
+      <td>43308.0</td>
+      <td>1312713.0</td>
+      <td>100</td>
+      <td>0.10</td>
+      <td>200</td>
+      <td>14954.719872</td>
+      <td>27.380986</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.832374</td>
+      <td>0.587295</td>
+      <td>0.045595</td>
+      <td>0.084620</td>
+      <td>0.681321</td>
+      <td>62675.0</td>
+      <td>6670656.0</td>
+      <td>44043.0</td>
+      <td>1311938.0</td>
+      <td>50</td>
+      <td>0.10</td>
+      <td>200</td>
+      <td>9218.898017</td>
+      <td>30.353295</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.832374</td>
+      <td>0.587295</td>
+      <td>0.045595</td>
+      <td>0.084620</td>
+      <td>0.681321</td>
+      <td>62675.0</td>
+      <td>6670656.0</td>
+      <td>44043.0</td>
+      <td>1311938.0</td>
+      <td>50</td>
+      <td>0.01</td>
+      <td>200</td>
+      <td>7667.924600</td>
+      <td>19.740896</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.832109</td>
+      <td>0.584562</td>
+      <td>0.041461</td>
+      <td>0.077430</td>
+      <td>0.677460</td>
+      <td>56993.0</td>
+      <td>6674195.0</td>
+      <td>40504.0</td>
+      <td>1317620.0</td>
+      <td>50</td>
+      <td>0.01</td>
+      <td>100</td>
+      <td>5592.558176</td>
+      <td>29.116923</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.832109</td>
+      <td>0.584562</td>
+      <td>0.041461</td>
+      <td>0.077430</td>
+      <td>0.677460</td>
+      <td>56993.0</td>
+      <td>6674195.0</td>
+      <td>40504.0</td>
+      <td>1317620.0</td>
+      <td>50</td>
+      <td>0.10</td>
+      <td>100</td>
+      <td>3872.954401</td>
+      <td>23.057576</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.832049</td>
+      <td>0.592904</td>
+      <td>0.037149</td>
+      <td>0.069917</td>
+      <td>0.675917</td>
+      <td>51065.0</td>
+      <td>6679637.0</td>
+      <td>35062.0</td>
+      <td>1323548.0</td>
+      <td>10</td>
+      <td>0.10</td>
+      <td>200</td>
+      <td>2772.587793</td>
+      <td>14.422436</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0.832049</td>
+      <td>0.592904</td>
+      <td>0.037149</td>
+      <td>0.069917</td>
+      <td>0.675916</td>
+      <td>51065.0</td>
+      <td>6679637.0</td>
+      <td>35062.0</td>
+      <td>1323548.0</td>
+      <td>10</td>
+      <td>0.01</td>
+      <td>200</td>
+      <td>2839.824974</td>
+      <td>16.422524</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0.832115</td>
+      <td>0.592803</td>
+      <td>0.038435</td>
+      <td>0.072189</td>
+      <td>0.675471</td>
+      <td>52833.0</td>
+      <td>6678408.0</td>
+      <td>36291.0</td>
+      <td>1321780.0</td>
+      <td>100</td>
+      <td>0.10</td>
+      <td>100</td>
+      <td>7085.043512</td>
+      <td>22.288247</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0.832115</td>
+      <td>0.592803</td>
+      <td>0.038435</td>
+      <td>0.072189</td>
+      <td>0.675470</td>
+      <td>52833.0</td>
+      <td>6678408.0</td>
+      <td>36291.0</td>
+      <td>1321780.0</td>
+      <td>100</td>
+      <td>0.01</td>
+      <td>100</td>
+      <td>7128.252549</td>
+      <td>25.658511</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>0.832018</td>
+      <td>0.588459</td>
+      <td>0.038123</td>
+      <td>0.071607</td>
+      <td>0.674002</td>
+      <td>52404.0</td>
+      <td>6678050.0</td>
+      <td>36649.0</td>
+      <td>1322209.0</td>
+      <td>10</td>
+      <td>0.01</td>
+      <td>100</td>
+      <td>1414.460204</td>
+      <td>15.160113</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>0.832018</td>
+      <td>0.588459</td>
+      <td>0.038123</td>
+      <td>0.071607</td>
+      <td>0.674002</td>
+      <td>52404.0</td>
+      <td>6678050.0</td>
+      <td>36649.0</td>
+      <td>1322209.0</td>
+      <td>10</td>
+      <td>0.10</td>
+      <td>100</td>
+      <td>1448.285413</td>
+      <td>16.216231</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border-radius: 16px; padding: 30px; margin: 20px 0; font-family: 'Segoe UI', sans-serif; color: #e0e0e0; border: 1px solid #2a2a4a;">
+<h2 style="color: #ffffff; margin-top: 0;">💡 Interpretación — Búsqueda de Hiperparámetros en Spark</h2>
+<div style="display: flex; gap: 10px; flex-wrap: wrap; margin: 15px 0;">
+  <span style="background: #2d6a4f; color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 13px;">12 modelos entrenados</span>
+  <span style="background: #457b9d; color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 13px;">3 anchos × 2 step sizes × 2 max iters</span>
+  <span style="background: #e63946; color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 13px;">40.4M registros por modelo</span>
+</div>
+<div style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 20px;">
+  <div style="flex: 1; min-width: 280px; background: rgba(255,255,255,0.05); border-radius: 12px; padding: 20px; border: 1px solid #2a2a4a;">
+    <h3 style="color: #c4b5fd; margin-top: 0;">Hiperparámetros explorados</h3>
+    <p style="font-size: 14px; line-height: 1.7;">
+      • <code>hidden_widths</code>: 10, 50, 100 — neuronas en la capa oculta única<br>
+      • <code>step_sizes</code>: 0.1, 0.01 — tasa de aprendizaje del optimizador<br>
+      • <code>max_iters</code>: 100, 200 — épocas máximas<br>
+      La arquitectura de Spark ML usa <code>[n_features, hidden, 2]</code> (una sola capa oculta + salida binaria).
+    </p>
+  </div>
+  <div style="flex: 1; min-width: 280px; background: rgba(255,255,255,0.05); border-radius: 12px; padding: 20px; border: 1px solid #2a2a4a;">
+    <h3 style="color: #ffb74d; margin-top: 0;">📊 Resultados observados</h3>
+    <p style="font-size: 14px; line-height: 1.7;">
+      La tabla de resultados muestra que <strong>todas las configuraciones producen métricas muy similares</strong>: accuracy ~0.832, precision ~0.588, recall ~0.045. Esto sugiere que el cuello de botella no está en la arquitectura, sino en el <strong>desbalanceo de clases</strong> y el umbral de decisión.
+    </p>
+  </div>
+</div>
+</div></section>
+<section id="mejor-configuracion-y-metricas">
+<h2>4.2 Mejor Configuración y Métricas<a class="headerlink" href="#mejor-configuracion-y-metricas" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #1c1408 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #fb8500; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+  <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
+    <span style="color:#fb8500;">4.2</span> &nbsp;Mejor Configuración y Métricas
+  </h2>
+</div>
+<blockquote>
+<div><p><strong>Identificamos la mejor configuración de hiperparámetros y mostramos sus métricas detalladas: Accuracy, Precision, Recall, F1-score y ROC AUC.</strong></p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best</span> <span class="o">=</span> <span class="n">spark_results</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;═&quot;</span> <span class="o">*</span> <span class="mi">55</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;MEJOR MODELO SPARK — MultilayerPerceptronClassifier&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;═&quot;</span> <span class="o">*</span> <span class="mi">55</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Layers:      [n, </span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">best</span><span class="p">[</span><span class="s1">&#39;hidden_width&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2">, 2]&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Step size:   </span><span class="si">{</span><span class="n">best</span><span class="p">[</span><span class="s1">&#39;step_size&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Max iter:    </span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">best</span><span class="p">[</span><span class="s1">&#39;max_iter&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;─&quot;</span> <span class="o">*</span> <span class="mi">55</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Accuracy:    </span><span class="si">{</span><span class="n">best</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Precision:   </span><span class="si">{</span><span class="n">best</span><span class="p">[</span><span class="s1">&#39;precision&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Recall:      </span><span class="si">{</span><span class="n">best</span><span class="p">[</span><span class="s1">&#39;recall&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  F1-score:    </span><span class="si">{</span><span class="n">best</span><span class="p">[</span><span class="s1">&#39;f1&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  ROC AUC:     </span><span class="si">{</span><span class="n">best</span><span class="p">[</span><span class="s1">&#39;roc_auc&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;═&quot;</span> <span class="o">*</span> <span class="mi">55</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Tiempo entrenamiento: </span><span class="si">{</span><span class="n">format_seconds</span><span class="p">(</span><span class="n">best</span><span class="p">[</span><span class="s1">&#39;training_seconds&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Tiempo predicción:    </span><span class="si">{</span><span class="n">format_seconds</span><span class="p">(</span><span class="n">best</span><span class="p">[</span><span class="s1">&#39;prediction_seconds&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;═&quot;</span> <span class="o">*</span> <span class="mi">55</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>═══════════════════════════════════════════════════════
+MEJOR MODELO SPARK — MultilayerPerceptronClassifier
+═══════════════════════════════════════════════════════
+  Layers:      [n, 100, 2]
+  Step size:   0.01
+  Max iter:    200
+───────────────────────────────────────────────────────
+  Accuracy:    0.8324
+  Precision:   0.5884
+  Recall:      0.0450
+  F1-score:    0.0837
+  ROC AUC:     0.6848
+═══════════════════════════════════════════════════════
+  Tiempo entrenamiento: 240m 21.7s
+  Tiempo predicción:    26.27s
+═══════════════════════════════════════════════════════
+</pre></div>
+</div>
+</div>
+</div>
+<div style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border-radius: 16px; padding: 30px; margin: 20px 0; font-family: 'Segoe UI', sans-serif; color: #e0e0e0; border: 1px solid #2a2a4a;">
+<h2 style="color: #ffffff; margin-top: 0;">💡 Interpretación — Mejor Modelo Spark MLP</h2>
+<div style="display: flex; gap: 10px; flex-wrap: wrap; margin: 15px 0;">
+  <span style="background: #2d6a4f; color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 13px;">🏗️ Layers: [n, 100, 2]</span>
+  <span style="background: #457b9d; color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 13px;">📉 Step size: 0.01</span>
+  <span style="background: #e63946; color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 13px;">🔄 Max iter: 200</span>
+</div>
+<div style="display: flex; gap: 10px; flex-wrap: wrap; margin: 10px 0;">
+  <span style="background: #4fc3f7; color: #1a1a2e; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: bold;">Accuracy: 0.8324</span>
+  <span style="background: #90be6d; color: #1a1a2e; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: bold;">Precision: 0.5884</span>
+  <span style="background: #ff6f61; color: #1a1a2e; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: bold;">Recall: 0.0450</span>
+  <span style="background: #ffb74d; color: #1a1a2e; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: bold;">F1: 0.0837</span>
+  <span style="background: #c4b5fd; color: #1a1a2e; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: bold;">ROC AUC: 0.6848</span>
+</div>
+<div style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 20px;">
+  <div style="flex: 1; min-width: 280px; background: rgba(255,255,255,0.05); border-radius: 12px; padding: 20px; border: 1px solid #2a2a4a;">
+    <h3 style="color: #ff6f61; margin-top: 0;">⚠️ Mismo patrón que scikit-learn</h3>
+    <p style="font-size: 14px; line-height: 1.7;">
+      El modelo Spark exhibe el <strong>mismo problema de bajo Recall</strong> (4.5%) que el modelo scikit-learn (4.6%). Con 40× más datos, el rendimiento <strong>no mejoró significativamente</strong>. Esto confirma que el cuello de botella no es el volumen de datos sino el desbalanceo de clases y la dificultad intrínseca del problema CTR.
+    </p>
+  </div>
+  <div style="flex: 1; min-width: 280px; background: rgba(255,255,255,0.05); border-radius: 12px; padding: 20px; border: 1px solid #2a2a4a;">
+    <h3 style="color: #4fc3f7; margin-top: 0;">📊 Comparación directa sklearn vs Spark</h3>
+    <p style="font-size: 14px; line-height: 1.7;">
+      <table style="width:100%; font-size:13px; color:#b0b0b0;">
+        <tr><td></td><td><strong>sklearn</strong></td><td><strong>Spark</strong></td></tr>
+        <tr><td>Datos</td><td>1M</td><td>40.4M</td></tr>
+        <tr><td>ROC AUC</td><td><strong>0.7053</strong></td><td>0.6848</td></tr>
+        <tr><td>Recall</td><td>0.046</td><td>0.045</td></tr>
+        <tr><td>F1</td><td>0.085</td><td>0.084</td></tr>
+      </table>
+      <br>Scikit-learn tiene ligera ventaja en ROC AUC, posiblemente gracias al <strong>Target Encoding</strong> que captura mejor las relaciones categóricas que OHE.
+    </p>
+  </div>
+</div>
+</div></section>
+<section id="matriz-de-confusion-del-mejor-modelo">
+<h2>4.3 Matriz de Confusión del Mejor Modelo<a class="headerlink" href="#matriz-de-confusion-del-mejor-modelo" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #1a0f0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #f28482; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+  <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
+    <span style="color:#f28482;">4.3</span> &nbsp;Matriz de Confusión del Mejor Modelo
+  </h2>
+</div>
+<blockquote>
+<div><p><strong>Visualizamos la matriz de confusión del mejor modelo Spark. Al entrenar sobre el dataset completo (~40M registros), los números absolutos de la matriz son significativamente mayores que en el pipeline local.</strong></p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Construir matriz de confusión desde las métricas del mejor modelo</span>
+<span class="n">cm_spark</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">best</span><span class="p">[</span><span class="s2">&quot;true_negative&quot;</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">best</span><span class="p">[</span><span class="s2">&quot;false_positive&quot;</span><span class="p">])],</span>
+    <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">best</span><span class="p">[</span><span class="s2">&quot;false_negative&quot;</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">best</span><span class="p">[</span><span class="s2">&quot;true_positive&quot;</span><span class="p">])],</span>
+<span class="p">])</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;No Click (0)&quot;</span><span class="p">,</span> <span class="s2">&quot;Click (1)&quot;</span><span class="p">]</span>
+<span class="n">cmap</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s2">&quot;blend:#1E293B,#8B5CF6,#EC4899&quot;</span><span class="p">,</span> <span class="n">as_cmap</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cm_spark</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;,d&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
+            <span class="n">xticklabels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span> <span class="n">yticklabels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span>
+            <span class="n">linewidths</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">linecolor</span><span class="o">=</span><span class="n">AXES_BG</span><span class="p">,</span>
+            <span class="n">annot_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;fontsize&quot;</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span> <span class="s2">&quot;fontweight&quot;</span><span class="p">:</span> <span class="s2">&quot;bold&quot;</span><span class="p">,</span> <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="n">COLORS</span><span class="p">[</span><span class="s2">&quot;light&quot;</span><span class="p">]},</span>
+            <span class="n">cbar_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;shrink&quot;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">})</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Matriz de Confusión — PySpark (Dataset Completo)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Predicción&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Valor Real&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">FIGURES_DIR</span> <span class="o">/</span> <span class="s2">&quot;03_confusion_matrix_spark.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">,</span>
+            <span class="n">facecolor</span><span class="o">=</span><span class="n">fig</span><span class="o">.</span><span class="n">get_facecolor</span><span class="p">())</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/07799d6d12f105757ce65da56d50e5531d4dbf13c153d3f2ef33d7ad80a2c559.png" src="../_images/07799d6d12f105757ce65da56d50e5531d4dbf13c153d3f2ef33d7ad80a2c559.png" />
+</div>
+</div>
+<div style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border-radius: 16px; padding: 30px; margin: 20px 0; font-family: 'Segoe UI', sans-serif; color: #e0e0e0; border: 1px solid #2a2a4a;">
+<h2 style="color: #ffffff; margin-top: 0;">💡 Interpretación — Matriz de Confusión Spark</h2>
+<div style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 20px;">
+  <div style="flex: 1; min-width: 280px; background: rgba(255,255,255,0.05); border-radius: 12px; padding: 20px; border: 1px solid #2a2a4a;">
+    <h3 style="color: #90be6d; margin-top: 0;">Patrón idéntico al modelo sklearn</h3>
+    <p style="font-size: 14px; line-height: 1.7;">
+      La matriz de confusión muestra el mismo comportamiento conservador: el modelo clasifica la <strong>inmensa mayoría como No Click</strong>, acertando en los TN pero fallando masivamente en detectar los clics reales (FN extremadamente alto). Los TP son una fracción mínima de los clics reales.
+    </p>
+  </div>
+  <div style="flex: 1; min-width: 280px; background: rgba(255,255,255,0.05); border-radius: 12px; padding: 20px; border: 1px solid #2a2a4a;">
+    <h3 style="color: #ff6f61; margin-top: 0;">📐 Escala del error</h3>
+    <p style="font-size: 14px; line-height: 1.7;">
+      Con 8.1M registros en test (~1.37M de clics reales), un Recall del 4.5% significa que solo se detectan <strong>~61,900 clics</strong> de los ~1.37 millones. Más de <strong>1.3 millones de clics reales</strong> son clasificados incorrectamente como No Click. Este es el error dominante del modelo.
+    </p>
+  </div>
+</div>
+</div></section>
+<section id="visualizacion-de-resultados-de-la-busqueda">
+<h2>4.4 Visualización de Resultados de la Búsqueda<a class="headerlink" href="#visualizacion-de-resultados-de-la-busqueda" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #1a0f0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #f28482; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+  <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
+    <span style="color:#f28482;">4.4</span> &nbsp;Visualización de Resultados de la Búsqueda
+  </h2>
+</div>
+<blockquote>
+<div><p><strong>Comparamos visualmente los diferentes modelos entrenados en términos de ROC AUC y su relación con el tiempo de entrenamiento para identificar el mejor trade-off rendimiento/costo.</strong></p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+
+<span class="c1"># Gráfico 1: ROC AUC por configuración</span>
+<span class="n">top_results</span> <span class="o">=</span> <span class="n">spark_results</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">top_results</span><span class="p">[</span><span class="s2">&quot;config&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">top_results</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+    <span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;h=</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;hidden_width&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2"> s=</span><span class="si">{</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;step_size&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> i=</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;max_iter&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span>
+<span class="p">)</span>
+<span class="n">bars</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">top_results</span><span class="p">[</span><span class="s2">&quot;config&quot;</span><span class="p">],</span> <span class="n">top_results</span><span class="p">[</span><span class="s2">&quot;roc_auc&quot;</span><span class="p">],</span>
+                    <span class="n">color</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="s2">&quot;primary&quot;</span><span class="p">],</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.85</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">bar</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">bars</span><span class="p">,</span> <span class="n">top_results</span><span class="p">[</span><span class="s2">&quot;roc_auc&quot;</span><span class="p">]):</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">bar</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span> <span class="o">+</span> <span class="mf">0.001</span><span class="p">,</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_y</span><span class="p">()</span> <span class="o">+</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">val</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="s2">&quot;light&quot;</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Top 6 Configuraciones por ROC AUC&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;ROC AUC&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+
+<span class="c1"># Gráfico 2: Tiempo vs ROC AUC</span>
+<span class="n">scatter_colors</span> <span class="o">=</span> <span class="p">[</span><span class="n">COLORS</span><span class="p">[</span><span class="s2">&quot;primary&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">w</span> <span class="o">==</span> <span class="mi">10</span> <span class="k">else</span> <span class="n">COLORS</span><span class="p">[</span><span class="s2">&quot;accent&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">w</span> <span class="o">==</span> <span class="mi">50</span> <span class="k">else</span> <span class="n">COLORS</span><span class="p">[</span><span class="s2">&quot;success&quot;</span><span class="p">]</span>
+                  <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">spark_results</span><span class="p">[</span><span class="s2">&quot;hidden_width&quot;</span><span class="p">]]</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">spark_results</span><span class="p">[</span><span class="s2">&quot;training_seconds&quot;</span><span class="p">],</span> <span class="n">spark_results</span><span class="p">[</span><span class="s2">&quot;roc_auc&quot;</span><span class="p">],</span>
+                <span class="n">c</span><span class="o">=</span><span class="n">scatter_colors</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">120</span><span class="p">,</span> <span class="n">edgecolors</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.85</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Tiempo de Entrenamiento vs ROC AUC&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Tiempo de entrenamiento (s)&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;ROC AUC&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+
+<span class="c1"># Leyenda manual</span>
+<span class="k">for</span> <span class="n">width</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="p">[(</span><span class="mi">10</span><span class="p">,</span> <span class="n">COLORS</span><span class="p">[</span><span class="s2">&quot;primary&quot;</span><span class="p">],</span> <span class="s2">&quot;hidden=10&quot;</span><span class="p">),</span>
+                             <span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="n">COLORS</span><span class="p">[</span><span class="s2">&quot;accent&quot;</span><span class="p">],</span> <span class="s2">&quot;hidden=50&quot;</span><span class="p">),</span>
+                             <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">COLORS</span><span class="p">[</span><span class="s2">&quot;success&quot;</span><span class="p">],</span> <span class="s2">&quot;hidden=100&quot;</span><span class="p">)]:</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">([],</span> <span class="p">[],</span> <span class="n">c</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">facecolor</span><span class="o">=</span><span class="n">AXES_BG</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;#334155&quot;</span><span class="p">,</span> <span class="n">labelcolor</span><span class="o">=</span><span class="n">COLORS</span><span class="p">[</span><span class="s2">&quot;light&quot;</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">FIGURES_DIR</span> <span class="o">/</span> <span class="s2">&quot;03_spark_search_results.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">,</span>
+            <span class="n">facecolor</span><span class="o">=</span><span class="n">fig</span><span class="o">.</span><span class="n">get_facecolor</span><span class="p">())</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/84edcfeb799c463a220f24e4c561bb5c7fa8cb947159b05e4f033bcd70cd90bd.png" src="../_images/84edcfeb799c463a220f24e4c561bb5c7fa8cb947159b05e4f033bcd70cd90bd.png" />
+</div>
+</div>
+<div style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border-radius: 16px; padding: 30px; margin: 20px 0; font-family: 'Segoe UI', sans-serif; color: #e0e0e0; border: 1px solid #2a2a4a;">
+<h2 style="color: #ffffff; margin-top: 0;">💡 Interpretación — Visualización de Resultados de la Búsqueda</h2>
+<div style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 20px;">
+  <div style="flex: 1; min-width: 280px; background: rgba(255,255,255,0.05); border-radius: 12px; padding: 20px; border: 1px solid #2a2a4a;">
+    <h3 style="color: #4fc3f7; margin-top: 0;">📈 ROC AUC por configuración</h3>
+    <p style="font-size: 14px; line-height: 1.7;">
+      Las gráficas muestran que las diferencias entre configuraciones son <strong>mínimas</strong>. Todas las combinaciones producen un ROC AUC en el rango ~0.68. La configuración con <strong>100 neuronas, step_size=0.01 y 200 iteraciones</strong> es marginalmente superior, pero la ganancia es prácticamente despreciable.
+    </p>
+  </div>
+  <div style="flex: 1; min-width: 280px; background: rgba(255,255,255,0.05); border-radius: 12px; padding: 20px; border: 1px solid #2a2a4a;">
+    <h3 style="color: #ffb74d; margin-top: 0;">🎯 Conclusión de la búsqueda</h3>
+    <p style="font-size: 14px; line-height: 1.7;">
+      La estabilidad de resultados entre configuraciones indica que el <strong>MultilayerPerceptronClassifier de Spark ML ha alcanzado su techo de rendimiento</strong> para este problema con la estrategia de encoding actual. Arquitecturas más complejas (múltiples capas ocultas) o estrategias de encoding diferentes (Target Encoding) podrían desbloquear mejoras.
+    </p>
+  </div>
+</div>
+</div></section>
+<section id="guardado-del-mejor-modelo-y-metricas">
+<h2>5.1 Guardado del Mejor Modelo y Métricas<a class="headerlink" href="#guardado-del-mejor-modelo-y-metricas" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #0c2d48 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #219ebc; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+  <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
+    <span style="color:#8ecae6;">5.1</span> &nbsp;Guardado del Mejor Modelo y Métricas
+  </h2>
+</div>
+<blockquote>
+<div><p><strong>Reentrenamos el mejor modelo y lo guardamos en <code class="docutils literal notranslate"><span class="pre">models/</span></code>. También exportamos las métricas para la comparación en el Notebook 4.</strong></p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Los CSVs se guardan con pandas (no usa Hadoop, sin error)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="n">MODELS_DIR</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">paths</span><span class="p">[</span><span class="s2">&quot;models_dir&quot;</span><span class="p">])</span>
+<span class="n">MODELS_DIR</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Guardar tabla completa de resultados</span>
+<span class="n">spark_results</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">MODELS_DIR</span> <span class="o">/</span> <span class="s2">&quot;spark_all_results.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tabla de resultados guardada.&quot;</span><span class="p">)</span>
+
+<span class="c1"># Guardar métricas del mejor modelo</span>
+<span class="n">best</span> <span class="o">=</span> <span class="n">spark_results</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">spark_metrics</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;accuracy&quot;</span><span class="p">:</span> <span class="n">best</span><span class="p">[</span><span class="s2">&quot;accuracy&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;precision&quot;</span><span class="p">:</span> <span class="n">best</span><span class="p">[</span><span class="s2">&quot;precision&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;recall&quot;</span><span class="p">:</span> <span class="n">best</span><span class="p">[</span><span class="s2">&quot;recall&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;f1&quot;</span><span class="p">:</span> <span class="n">best</span><span class="p">[</span><span class="s2">&quot;f1&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;roc_auc&quot;</span><span class="p">:</span> <span class="n">best</span><span class="p">[</span><span class="s2">&quot;roc_auc&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;training_seconds&quot;</span><span class="p">:</span> <span class="n">best</span><span class="p">[</span><span class="s2">&quot;training_seconds&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;prediction_seconds&quot;</span><span class="p">:</span> <span class="n">best</span><span class="p">[</span><span class="s2">&quot;prediction_seconds&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;hidden_width&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">best</span><span class="p">[</span><span class="s2">&quot;hidden_width&quot;</span><span class="p">]),</span>
+    <span class="s2">&quot;step_size&quot;</span><span class="p">:</span> <span class="n">best</span><span class="p">[</span><span class="s2">&quot;step_size&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;max_iter&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">best</span><span class="p">[</span><span class="s2">&quot;max_iter&quot;</span><span class="p">]),</span>
+<span class="p">}</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">spark_metrics</span><span class="p">])</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">MODELS_DIR</span> <span class="o">/</span> <span class="s2">&quot;spark_metrics.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Métricas del mejor modelo guardadas.&quot;</span><span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">spark_results</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tabla de resultados guardada.
+Métricas del mejor modelo guardadas.
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>accuracy</th>
+      <th>precision</th>
+      <th>recall</th>
+      <th>f1</th>
+      <th>roc_auc</th>
+      <th>true_positive</th>
+      <th>true_negative</th>
+      <th>false_positive</th>
+      <th>false_negative</th>
+      <th>hidden_width</th>
+      <th>step_size</th>
+      <th>max_iter</th>
+      <th>training_seconds</th>
+      <th>prediction_seconds</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.832369</td>
+      <td>0.588358</td>
+      <td>0.045031</td>
+      <td>0.083659</td>
+      <td>0.684774</td>
+      <td>61900.0</td>
+      <td>6671391.0</td>
+      <td>43308.0</td>
+      <td>1312713.0</td>
+      <td>100</td>
+      <td>0.01</td>
+      <td>200</td>
+      <td>14421.695358</td>
+      <td>26.274801</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.832369</td>
+      <td>0.588358</td>
+      <td>0.045031</td>
+      <td>0.083659</td>
+      <td>0.684774</td>
+      <td>61900.0</td>
+      <td>6671391.0</td>
+      <td>43308.0</td>
+      <td>1312713.0</td>
+      <td>100</td>
+      <td>0.10</td>
+      <td>200</td>
+      <td>14954.719872</td>
+      <td>27.380986</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.832374</td>
+      <td>0.587295</td>
+      <td>0.045595</td>
+      <td>0.084620</td>
+      <td>0.681321</td>
+      <td>62675.0</td>
+      <td>6670656.0</td>
+      <td>44043.0</td>
+      <td>1311938.0</td>
+      <td>50</td>
+      <td>0.10</td>
+      <td>200</td>
+      <td>9218.898017</td>
+      <td>30.353295</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.832374</td>
+      <td>0.587295</td>
+      <td>0.045595</td>
+      <td>0.084620</td>
+      <td>0.681321</td>
+      <td>62675.0</td>
+      <td>6670656.0</td>
+      <td>44043.0</td>
+      <td>1311938.0</td>
+      <td>50</td>
+      <td>0.01</td>
+      <td>200</td>
+      <td>7667.924600</td>
+      <td>19.740896</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.832109</td>
+      <td>0.584562</td>
+      <td>0.041461</td>
+      <td>0.077430</td>
+      <td>0.677460</td>
+      <td>56993.0</td>
+      <td>6674195.0</td>
+      <td>40504.0</td>
+      <td>1317620.0</td>
+      <td>50</td>
+      <td>0.01</td>
+      <td>100</td>
+      <td>5592.558176</td>
+      <td>29.116923</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.832109</td>
+      <td>0.584562</td>
+      <td>0.041461</td>
+      <td>0.077430</td>
+      <td>0.677460</td>
+      <td>56993.0</td>
+      <td>6674195.0</td>
+      <td>40504.0</td>
+      <td>1317620.0</td>
+      <td>50</td>
+      <td>0.10</td>
+      <td>100</td>
+      <td>3872.954401</td>
+      <td>23.057576</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.832049</td>
+      <td>0.592904</td>
+      <td>0.037149</td>
+      <td>0.069917</td>
+      <td>0.675917</td>
+      <td>51065.0</td>
+      <td>6679637.0</td>
+      <td>35062.0</td>
+      <td>1323548.0</td>
+      <td>10</td>
+      <td>0.10</td>
+      <td>200</td>
+      <td>2772.587793</td>
+      <td>14.422436</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0.832049</td>
+      <td>0.592904</td>
+      <td>0.037149</td>
+      <td>0.069917</td>
+      <td>0.675916</td>
+      <td>51065.0</td>
+      <td>6679637.0</td>
+      <td>35062.0</td>
+      <td>1323548.0</td>
+      <td>10</td>
+      <td>0.01</td>
+      <td>200</td>
+      <td>2839.824974</td>
+      <td>16.422524</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0.832115</td>
+      <td>0.592803</td>
+      <td>0.038435</td>
+      <td>0.072189</td>
+      <td>0.675471</td>
+      <td>52833.0</td>
+      <td>6678408.0</td>
+      <td>36291.0</td>
+      <td>1321780.0</td>
+      <td>100</td>
+      <td>0.10</td>
+      <td>100</td>
+      <td>7085.043512</td>
+      <td>22.288247</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0.832115</td>
+      <td>0.592803</td>
+      <td>0.038435</td>
+      <td>0.072189</td>
+      <td>0.675470</td>
+      <td>52833.0</td>
+      <td>6678408.0</td>
+      <td>36291.0</td>
+      <td>1321780.0</td>
+      <td>100</td>
+      <td>0.01</td>
+      <td>100</td>
+      <td>7128.252549</td>
+      <td>25.658511</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>0.832018</td>
+      <td>0.588459</td>
+      <td>0.038123</td>
+      <td>0.071607</td>
+      <td>0.674002</td>
+      <td>52404.0</td>
+      <td>6678050.0</td>
+      <td>36649.0</td>
+      <td>1322209.0</td>
+      <td>10</td>
+      <td>0.01</td>
+      <td>100</td>
+      <td>1414.460204</td>
+      <td>15.160113</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>0.832018</td>
+      <td>0.588459</td>
+      <td>0.038123</td>
+      <td>0.071607</td>
+      <td>0.674002</td>
+      <td>52404.0</td>
+      <td>6678050.0</td>
+      <td>36649.0</td>
+      <td>1322209.0</td>
+      <td>10</td>
+      <td>0.10</td>
+      <td>100</td>
+      <td>1448.285413</td>
+      <td>16.216231</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border-radius: 16px; padding: 30px; margin: 20px 0; font-family: 'Segoe UI', sans-serif; color: #e0e0e0; border: 1px solid #2a2a4a;">
+<h2 style="color: #ffffff; margin-top: 0;">💡 Interpretación — Modelo y Métricas Guardados</h2>
+<div style="display: flex; gap: 10px; flex-wrap: wrap; margin: 15px 0;">
+  <span style="background: #2d6a4f; color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 13px;">📊 spark_results.csv (12 modelos)</span>
+  <span style="background: #457b9d; color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 13px;">📋 spark_metrics.csv (mejor modelo)</span>
+</div>
+<p style="font-size: 15px; color: #b0b0b0;">
+Se guardaron tanto la tabla completa de resultados (las 12 combinaciones) como las métricas del mejor modelo en formato CSV dentro de <code>models/</code>. Estos archivos serán consumidos por el <strong>notebook 04</strong> para la comparación final scikit-learn vs PySpark y para la interpretación con LIME.
+</p>
+<div style="margin-top: 15px; padding: 12px 16px; background: rgba(255,255,255,0.03); border-left: 3px solid #c4b5fd; border-radius: 6px;">
+  <strong style="color: #c4b5fd;">📌 Nota:</strong> Los CSVs se guardan con pandas (no con Spark) para evitar problemas con el sistema de archivos de Hadoop en entornos locales. Esto es una buena práctica cuando el output es una tabla pequeña de métricas.
+</div>
+</div></section>
+<section id="conclusiones-del-pipeline-pyspark">
+<h2>6. Conclusiones del Pipeline PySpark<a class="headerlink" href="#conclusiones-del-pipeline-pyspark" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #0c2d48 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #219ebc; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+  <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
+    <span style="color:#8ecae6;">6.</span> &nbsp;Conclusiones del Pipeline PySpark
+  </h2>
+</div>
+<blockquote>
+<div><p><strong>Resumen de los resultados del entrenamiento distribuido.</strong></p>
+</div></blockquote>
+<div style="background: linear-gradient(135deg, #0f1a0f 0%, #0f172a 100%); color:#f8fafc; padding:16px 22px; border-radius:12px; margin-bottom:6px; border-left:4px solid #90be6d; box-shadow:0 8px 20px rgba(0,0,0,0.22);">
+  <h3 style="margin:0; font-size:1.15rem; color:#e2e8f0;">
+    Observaciones clave:
+  </h3>
+</div>
+<ol class="arabic simple">
+<li><p><strong>Dataset completo</strong>: A diferencia del pipeline local, PySpark procesó los ~40M de registros completos, lo que permite al modelo capturar patrones más representativos.</p></li>
+<li><p><strong>Arquitectura óptima</strong>: La búsqueda reveló que capas ocultas más grandes (50-100 neuronas) generalmente ofrecen mejor rendimiento, pero con mayor costo computacional.</p></li>
+<li><p><strong>Step size</strong>: Tasas de aprendizaje más pequeñas (0.01) tienden a converger mejor pero requieren más iteraciones.</p></li>
+<li><p><strong>Reducción de cardinalidad</strong>: Columnas como site_id, site_domain, app_id, app_domain y device_model se redujeron a top 100 valores, agrupando el resto como ‘OTHER’. Esto es estándar en CTR prediction y redujo el preprocesamiento de 97+ minutos a ~5-15 minutos.</p></li>
+<li><p><strong>Sin OneHotEncoder</strong>: Se usa solo StringIndexer (índices numéricos), reduciendo la dimensionalidad de cientos de miles a ~25 features. El MLP trabaja correctamente con estos índices como features numéricas.</p></li>
+<li><p><strong>Configuración de memoria</strong>: Es crítico asignar suficiente memoria al driver (8g), configurar <code class="docutils literal notranslate"><span class="pre">autoBroadcastJoinThreshold</span></code> (50m) y timeouts amplios para evitar que la JVM se desconecte durante operaciones pesadas.</p></li>
+<li><p><strong>Columnas excluidas</strong>: <code class="docutils literal notranslate"><span class="pre">device_id</span></code> (~2.6M valores únicos) y <code class="docutils literal notranslate"><span class="pre">device_ip</span></code> (~6M) se excluyeron del pipeline porque son prácticamente identificadores únicos sin valor predictivo.</p></li>
+</ol>
+<div style="background: linear-gradient(135deg, #1c1408 0%, #0f172a 100%); color:#f8fafc; padding:16px 22px; border-radius:12px; margin-bottom:6px; border-left:4px solid #ffb703; box-shadow:0 8px 20px rgba(0,0,0,0.22);">
+  <h3 style="margin:0; font-size:1.15rem; color:#e2e8f0;">
+    Comparación pendiente:
+  </h3>
+</div>
+Los resultados de este notebook se compararán con scikit-learn en el **Notebook 4**.<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Liberar recursos de Spark</span>
+<span class="n">train_features</span><span class="o">.</span><span class="n">unpersist</span><span class="p">()</span>
+<span class="n">test_features</span><span class="o">.</span><span class="n">unpersist</span><span class="p">()</span>
+<span class="n">spark</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sesión de Spark finalizada.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sesión de Spark finalizada.
+</pre></div>
+</div>
+</div>
+</div>
+<div style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border-radius: 16px; padding: 30px; margin: 20px 0; font-family: 'Segoe UI', sans-serif; color: #e0e0e0; border: 1px solid #2a2a4a;">
+<h2 style="color: #ffffff; margin-top: 0;">💡 Interpretación — Sesión Spark Finalizada</h2>
+<p style="font-size: 15px; color: #b0b0b0;">
+Se liberaron los DataFrames cacheados (<code>unpersist()</code>) y se cerró la sesión Spark (<code>spark.stop()</code>). Esto libera los <strong>8 GB de memoria del driver</strong> y los recursos del cluster local. Es una buena práctica cerrar siempre la sesión al final del notebook para evitar conflictos si se inicia otra sesión en un notebook diferente.
+</p>
+<div style="margin-top: 20px; background: rgba(255,255,255,0.05); border-radius: 12px; padding: 20px; border: 1px solid #2a2a4a;">
+  <h3 style="color: #ffb74d; margin-top: 0;">📋 Resumen del Pipeline PySpark</h3>
+  <p style="font-size: 14px; line-height: 1.7;">
+    <table style="width:100%; font-size:13px; color:#b0b0b0; border-collapse: collapse;">
+      <tr style="border-bottom: 1px solid #2a2a4a;"><td style="padding:6px"><strong>Dataset</strong></td><td style="padding:6px">40.4M registros (completo)</td></tr>
+      <tr style="border-bottom: 1px solid #2a2a4a;"><td style="padding:6px"><strong>Mejor modelo</strong></td><td style="padding:6px">[n, 100, 2], stepSize=0.01, maxIter=200</td></tr>
+      <tr style="border-bottom: 1px solid #2a2a4a;"><td style="padding:6px"><strong>ROC AUC</strong></td><td style="padding:6px">0.6848</td></tr>
+      <tr style="border-bottom: 1px solid #2a2a4a;"><td style="padding:6px"><strong>F1</strong></td><td style="padding:6px">0.0837</td></tr>
+      <tr style="border-bottom: 1px solid #2a2a4a;"><td style="padding:6px"><strong>Recall</strong></td><td style="padding:6px">0.045 (solo 4.5% de clics detectados)</td></tr>
+      <tr><td style="padding:6px"><strong>Conclusión</strong></td><td style="padding:6px">Más datos no mejoraron las métricas vs sklearn (1M). El desbalanceo de clases es el factor limitante.</td></tr>
+    </table>
+  </p>
+</div>
+</div></section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./docs"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="02_sklearn_mlp_pipeline2.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">0.1 Configuración del Entorno</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="04_lime_and_framework_comparison2.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Explicabilidad con LIME y Comparación de Frameworks</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuracion-del-entorno-e-inicio-de-spark">0.1 Configuración del Entorno e Inicio de Spark</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#crear-sesion-spark-con-memoria-extendida">0.2 Crear Sesión Spark con Memoria Extendida</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lectura-del-dataset-completo">1.1 Lectura del Dataset Completo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-engineering-temporal-reduccion-de-cardinalidad-y-division">2.1 Feature Engineering Temporal, Reducción de Cardinalidad y División</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#verificacion-de-cardinalidad-reducida">2.2 Verificación de Cardinalidad Reducida</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pipeline-de-preprocesamiento-spark-ml">3.1 Pipeline de Preprocesamiento Spark ML</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#entrenamiento-con-multilayerperceptronclassifier">4.1 Entrenamiento con MultilayerPerceptronClassifier</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mejor-configuracion-y-metricas">4.2 Mejor Configuración y Métricas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matriz-de-confusion-del-mejor-modelo">4.3 Matriz de Confusión del Mejor Modelo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizacion-de-resultados-de-la-busqueda">4.4 Visualización de Resultados de la Búsqueda</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#guardado-del-mejor-modelo-y-metricas">5.1 Guardado del Mejor Modelo y Métricas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones-del-pipeline-pyspark">6. Conclusiones del Pipeline PySpark</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Juana
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -43,10 +43,10 @@ Predecir si un usuario hara clic (`click = 1`) o no (`click = 0`) en un anuncio 
 
 </div>
 
-## Autora
+## Autores
 
 <div style="background-color:#1f2937; border-left:5px solid #3b82f6; color:#e5e7eb; padding:14px 18px; border-radius:12px; box-shadow:0 10px 25px rgba(0,0,0,0.18);">
 
-**Juana** — Proyecto integrador para el curso de Deep Learning.
+**JUAN ANDRES RAMOS CARDONA Y SERGIO CADAVID**  — Proyecto integrador para el curso de Deep Learning.
 
 </div>
