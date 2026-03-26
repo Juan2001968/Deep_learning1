@@ -1,11 +1,11 @@
 format: jb-book
 root: intro
 chapters:
-  - file: docs/01_project_overview_and_eda
+  - file: docs/01_project_overview_and_eda3
     title: "📊 1. Exploración de Datos (EDA)"
-  - file: docs/02_sklearn_mlp_pipeline
+  - file: docs/02_sklearn_mlp_pipeline2
     title: "🧪 2. Pipeline scikit-learn"
-  - file: docs/03_pyspark_mlp_pipeline
+  - file: docs/03_pyspark_mlp_pipeline2
     title: "⚡ 3. Pipeline PySpark"
-  - file: docs/04_lime_and_framework_comparison
+  - file: docs/04_lime_and_framework_comparison2
     title: "🔬 4. LIME y Comparación"
