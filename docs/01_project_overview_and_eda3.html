@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>0.1 Configuración del Entorno e Importaciones &#8212; Avazu CTR — Deep Learning Mini-Project</title>
+    <title>Avazu CTR Project Overview and Exploratory Data Analysis &#8212; Avazu CTR — Deep Learning Mini-Project</title>
   
   
   
@@ -63,7 +63,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'docs/01_project_overview_and_eda3';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="0.1 Configuración del Entorno" href="02_sklearn_mlp_pipeline2.html" />
+    <link rel="next" title="Pipeline de Clasificación con scikit-learn" href="02_sklearn_mlp_pipeline2.html" />
     <link rel="prev" title="Avazu CTR — Proyecto Integrador de Deep Learning" href="../intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -155,38 +155,8 @@
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">0.1 Configuración del Entorno e Importaciones</a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<li class="toctree-l1"><a class="reference internal" href="02_sklearn_mlp_pipeline2.html">0.1 Configuración del Entorno</a></li>
-
-
-
-
-
-
-
-
-
-
-
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">📊 1. Exploración de Datos (EDA)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_sklearn_mlp_pipeline2.html">🧪 2. Pipeline scikit-learn</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03_pyspark_mlp_pipeline2.html">⚡ 3. Pipeline PySpark</a></li>
 <li class="toctree-l1"><a class="reference internal" href="04_lime_and_framework_comparison2.html">🔬 4. LIME y Comparación</a></li>
 </ul>
@@ -371,7 +341,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>0.1 Configuración del Entorno e Importaciones</h1>
+    <h1>Avazu CTR Project Overview and Exploratory Data Analysis</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -381,28 +351,27 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">0.1 Configuración del Entorno e Importaciones</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#carga-del-dataset">1.1 Carga del Dataset</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#inspeccion-basica-del-dataset">1.2 Inspección Básica del Dataset</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#verificacion-de-valores-faltantes">1.3 Verificación de Valores Faltantes</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#distribucion-de-la-variable-target-click">1.4 Distribución de la Variable Target (click)</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#cardinalidad-de-variables-categoricas">1.5 Cardinalidad de Variables Categóricas</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-engineering-temporal">1.6 Feature Engineering Temporal</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#histogramas-de-variables-numericas-derivadas">2.1 Histogramas de Variables Numéricas Derivadas</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#frecuencia-de-las-principales-variables-categoricas">2.2 Frecuencia de las Principales Variables Categóricas</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#distribucion-de-clics-por-hora-del-dia">2.3 Distribución de Clics por Hora del Día</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#matriz-de-correlacion-para-variables-numericas">2.4 Matriz de Correlación para Variables Numéricas</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ctr-por-franja-horaria">2.5 CTR por Franja Horaria</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ctr-por-tipo-de-dispositivo-device-type">2.6 CTR por Tipo de Dispositivo (device_type)</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ctr-por-posicion-del-banner-banner-pos">2.7 CTR por Posición del Banner (banner_pos)</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ctr-por-tipo-de-conexion-device-conn-type">2.8 CTR por Tipo de Conexión (device_conn_type)</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#top-10-site-id-por-volumen-y-su-ctr">2.9 Top 10 site_id por Volumen y su CTR</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#top-10-app-id-por-volumen-y-su-ctr">2.10 Top 10 app_id por Volumen y su CTR</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#distribucion-de-registros-por-dia">2.11 Distribución de Registros por Día</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#dashboard-resumen-del-dataset">2.12 Dashboard Resumen del Dataset</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones-del-eda">3. Conclusiones del EDA</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuracion-del-entorno-e-importaciones">0.1 Configuración del Entorno e Importaciones</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#carga-del-dataset">1.1 Carga del Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inspeccion-basica-del-dataset">1.2 Inspección Básica del Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#verificacion-de-valores-faltantes">1.3 Verificación de Valores Faltantes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distribucion-de-la-variable-target-click">1.4 Distribución de la Variable Target (click)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cardinalidad-de-variables-categoricas">1.5 Cardinalidad de Variables Categóricas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-engineering-temporal">1.6 Feature Engineering Temporal</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#histogramas-de-variables-numericas-derivadas">2.1 Histogramas de Variables Numéricas Derivadas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#frecuencia-de-las-principales-variables-categoricas">2.2 Frecuencia de las Principales Variables Categóricas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distribucion-de-clics-por-hora-del-dia">2.3 Distribución de Clics por Hora del Día</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matriz-de-correlacion-para-variables-numericas">2.4 Matriz de Correlación para Variables Numéricas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ctr-por-franja-horaria">2.5 CTR por Franja Horaria</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ctr-por-tipo-de-dispositivo-device-type">2.6 CTR por Tipo de Dispositivo (device_type)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ctr-por-posicion-del-banner-banner-pos">2.7 CTR por Posición del Banner (banner_pos)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ctr-por-tipo-de-conexion-device-conn-type">2.8 CTR por Tipo de Conexión (device_conn_type)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#top-10-site-id-por-volumen-y-su-ctr">2.9 Top 10 site_id por Volumen y su CTR</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#top-10-app-id-por-volumen-y-su-ctr">2.10 Top 10 app_id por Volumen y su CTR</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distribucion-de-registros-por-dia">2.11 Distribución de Registros por Día</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dashboard-resumen-del-dataset">2.12 Dashboard Resumen del Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones-del-eda">3. Conclusiones del EDA</a></li>
 </ul>
-
             </nav>
         </div>
     </div>
@@ -413,14 +382,13 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <div style="background: linear-gradient(135deg, #0c2d48 0%, #0f172a 100%); color:#f8fafc; padding:28px 32px; border-radius:18px; margin-bottom:12px; border-left:6px solid #219ebc; box-shadow:0 18px 40px rgba(0,0,0,0.35); border:1px solid rgba(33,158,188,0.15);">
+  <section class="tex2jax_ignore mathjax_ignore" id="avazu-ctr-project-overview-and-exploratory-data-analysis">
+<h1>Avazu CTR Project Overview and Exploratory Data Analysis<a class="headerlink" href="#avazu-ctr-project-overview-and-exploratory-data-analysis" title="Link to this heading">#</a></h1>
+<div style="background: linear-gradient(135deg, #0c2d48 0%, #0f172a 100%); color:#f8fafc; padding:28px 32px; border-radius:18px; margin-bottom:12px; border-left:6px solid #219ebc; box-shadow:0 18px 40px rgba(0,0,0,0.35); border:1px solid rgba(33,158,188,0.15);">
   <h1 style="margin:0; font-size:2rem; letter-spacing:-0.02em; color:#f8fafc;">
-    Avazu CTR Project Overview and Exploratory Data Analysis
+    Este notebook realiza el análisis exploratorio completo del dataset Avazu (40M registros de impresiones publicitarias móviles) para entender la estructura, distribución y patrones de clics antes del modelado.
   </h1>
 </div>
-<blockquote>
-<div><p>Este notebook realiza el <strong>análisis exploratorio completo</strong> del dataset Avazu (~40M registros de impresiones publicitarias móviles) para entender la estructura, distribución y patrones de clics antes del modelado.</p>
-</div></blockquote>
 <div style="background: linear-gradient(135deg, #0c2d48 0%, #0f172a 100%); color:#f8fafc; padding:16px 22px; border-radius:12px; margin-bottom:6px; border-left:4px solid #219ebc; box-shadow:0 8px 20px rgba(0,0,0,0.22);">
   <h3 style="margin:0; font-size:1.15rem; color:#e2e8f0;">
     Contenido
@@ -446,7 +414,7 @@
 <li><p>Entorno: <code class="docutils literal notranslate"><span class="pre">deep_env</span></code> con las dependencias del proyecto</p></li>
 </ul>
 <section id="configuracion-del-entorno-e-importaciones">
-<h1>0.1 Configuración del Entorno e Importaciones<a class="headerlink" href="#configuracion-del-entorno-e-importaciones" title="Link to this heading">#</a></h1>
+<h2>0.1 Configuración del Entorno e Importaciones<a class="headerlink" href="#configuracion-del-entorno-e-importaciones" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #1a0f2e 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #c4b5fd; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#c4b5fd;">0.1</span> &nbsp;Configuración del Entorno e Importaciones
@@ -526,7 +494,7 @@ El entorno fue configurado exitosamente: se localizó la raíz del proyecto (con
 </p>
 </div></section>
 <section id="carga-del-dataset">
-<h1>1.1 Carga del Dataset<a class="headerlink" href="#carga-del-dataset" title="Link to this heading">#</a></h1>
+<h2>1.1 Carga del Dataset<a class="headerlink" href="#carga-del-dataset" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #0c2d48 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #219ebc; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#8ecae6;">1.1</span> &nbsp;Carga del Dataset
@@ -565,7 +533,7 @@ Se cargó un <strong>preview de 150,000 filas</strong> directamente desde el arc
 </p>
 </div></section>
 <section id="inspeccion-basica-del-dataset">
-<h1>1.2 Inspección Básica del Dataset<a class="headerlink" href="#inspeccion-basica-del-dataset" title="Link to this heading">#</a></h1>
+<h2>1.2 Inspección Básica del Dataset<a class="headerlink" href="#inspeccion-basica-del-dataset" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #0c2d48 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #219ebc; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#8ecae6;">1.2</span> &nbsp;Inspección Básica del Dataset
@@ -1351,7 +1319,7 @@ memory usage: 30.1 MB
 </div>
 </div></section>
 <section id="verificacion-de-valores-faltantes">
-<h1>1.3 Verificación de Valores Faltantes<a class="headerlink" href="#verificacion-de-valores-faltantes" title="Link to this heading">#</a></h1>
+<h2>1.3 Verificación de Valores Faltantes<a class="headerlink" href="#verificacion-de-valores-faltantes" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #0c2d48 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #219ebc; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#8ecae6;">1.3</span> &nbsp;Verificación de Valores Faltantes
@@ -1545,7 +1513,7 @@ Todas las columnas tienen <strong>missing_rate = 0.0</strong>, confirmado tanto 
 </div>
 </div></section>
 <section id="distribucion-de-la-variable-target-click">
-<h1>1.4 Distribución de la Variable Target (click)<a class="headerlink" href="#distribucion-de-la-variable-target-click" title="Link to this heading">#</a></h1>
+<h2>1.4 Distribución de la Variable Target (click)<a class="headerlink" href="#distribucion-de-la-variable-target-click" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #0c2d48 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #219ebc; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#8ecae6;">1.4</span> &nbsp;Distribución de la Variable Target (<code>click</code>)
@@ -1662,7 +1630,7 @@ CTR global: 16.98%
 </div>
 </div></section>
 <section id="cardinalidad-de-variables-categoricas">
-<h1>1.5 Cardinalidad de Variables Categóricas<a class="headerlink" href="#cardinalidad-de-variables-categoricas" title="Link to this heading">#</a></h1>
+<h2>1.5 Cardinalidad de Variables Categóricas<a class="headerlink" href="#cardinalidad-de-variables-categoricas" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #0f1a0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #90be6d; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#90be6d;">1.5</span> &nbsp;Cardinalidad de Variables Categóricas
@@ -1851,7 +1819,7 @@ CTR global: 16.98%
 </div>
 </div></section>
 <section id="feature-engineering-temporal">
-<h1>1.6 Feature Engineering Temporal<a class="headerlink" href="#feature-engineering-temporal" title="Link to this heading">#</a></h1>
+<h2>1.6 Feature Engineering Temporal<a class="headerlink" href="#feature-engineering-temporal" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #1a0f2e 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #c4b5fd; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#c4b5fd;">1.6</span> &nbsp;Feature Engineering Temporal
@@ -2051,7 +2019,7 @@ A partir de la columna <code>hour</code> (formato YYMMDDHH), se derivaron <stron
 </div>
 </div></section>
 <section id="histogramas-de-variables-numericas-derivadas">
-<h1>2.1 Histogramas de Variables Numéricas Derivadas<a class="headerlink" href="#histogramas-de-variables-numericas-derivadas" title="Link to this heading">#</a></h1>
+<h2>2.1 Histogramas de Variables Numéricas Derivadas<a class="headerlink" href="#histogramas-de-variables-numericas-derivadas" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #0c2d48 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #219ebc; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#8ecae6;">2.1</span> &nbsp;Histogramas de Variables Numéricas Derivadas
@@ -2096,7 +2064,7 @@ A partir de la columna <code>hour</code> (formato YYMMDDHH), se derivaron <stron
 </div>
 </div></section>
 <section id="frecuencia-de-las-principales-variables-categoricas">
-<h1>2.2 Frecuencia de las Principales Variables Categóricas<a class="headerlink" href="#frecuencia-de-las-principales-variables-categoricas" title="Link to this heading">#</a></h1>
+<h2>2.2 Frecuencia de las Principales Variables Categóricas<a class="headerlink" href="#frecuencia-de-las-principales-variables-categoricas" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #0f1a0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #90be6d; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#90be6d;">2.2</span> &nbsp;Frecuencia de las Principales Variables Categóricas
@@ -2148,7 +2116,7 @@ Los 5 gráficos confirman un patrón consistente: las variables categóricas sig
 </div>
 </div></section>
 <section id="distribucion-de-clics-por-hora-del-dia">
-<h1>2.3 Distribución de Clics por Hora del Día<a class="headerlink" href="#distribucion-de-clics-por-hora-del-dia" title="Link to this heading">#</a></h1>
+<h2>2.3 Distribución de Clics por Hora del Día<a class="headerlink" href="#distribucion-de-clics-por-hora-del-dia" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #1a0f2e 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #c4b5fd; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#c4b5fd;">2.3</span> &nbsp;Distribución de Clics por Hora del Día
@@ -2192,7 +2160,7 @@ La gráfica muestra la <strong>tasa de clics (CTR) normalizada</strong> por hora
 </div>
 </div></section>
 <section id="matriz-de-correlacion-para-variables-numericas">
-<h1>2.4 Matriz de Correlación para Variables Numéricas<a class="headerlink" href="#matriz-de-correlacion-para-variables-numericas" title="Link to this heading">#</a></h1>
+<h2>2.4 Matriz de Correlación para Variables Numéricas<a class="headerlink" href="#matriz-de-correlacion-para-variables-numericas" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #0c2d48 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #219ebc; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#8ecae6;">2.4</span> &nbsp;Matriz de Correlación para Variables Numéricas
@@ -2235,7 +2203,7 @@ La gráfica muestra la <strong>tasa de clics (CTR) normalizada</strong> por hora
 </div>
 </div></section>
 <section id="ctr-por-franja-horaria">
-<h1>2.5 CTR por Franja Horaria<a class="headerlink" href="#ctr-por-franja-horaria" title="Link to this heading">#</a></h1>
+<h2>2.5 CTR por Franja Horaria<a class="headerlink" href="#ctr-por-franja-horaria" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #1a0f2e 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #c4b5fd; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#c4b5fd;">2.5</span> &nbsp;CTR por Franja Horaria
@@ -2268,7 +2236,7 @@ El análisis por franjas horarias (Madrugada, Mañana, Tarde, Noche) agrega la g
 </div>
 </div></section>
 <section id="ctr-por-tipo-de-dispositivo-device-type">
-<h1>2.6 CTR por Tipo de Dispositivo (device_type)<a class="headerlink" href="#ctr-por-tipo-de-dispositivo-device-type" title="Link to this heading">#</a></h1>
+<h2>2.6 CTR por Tipo de Dispositivo (device_type)<a class="headerlink" href="#ctr-por-tipo-de-dispositivo-device-type" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #0f1a0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #90be6d; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#90be6d;">2.6</span> &nbsp;CTR por Tipo de Dispositivo (<code>device_type</code>)
@@ -2298,7 +2266,7 @@ El tipo de dispositivo influye en la propensión al clic. Aunque el <strong>devi
 </p>
 </div></section>
 <section id="ctr-por-posicion-del-banner-banner-pos">
-<h1>2.7 CTR por Posición del Banner (banner_pos)<a class="headerlink" href="#ctr-por-posicion-del-banner-banner-pos" title="Link to this heading">#</a></h1>
+<h2>2.7 CTR por Posición del Banner (banner_pos)<a class="headerlink" href="#ctr-por-posicion-del-banner-banner-pos" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #0f1a0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #90be6d; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#90be6d;">2.7</span> &nbsp;CTR por Posición del Banner (<code>banner_pos</code>)
@@ -2328,7 +2296,7 @@ La posición del banner es un factor clásico en publicidad digital. <code>banne
 </p>
 </div></section>
 <section id="ctr-por-tipo-de-conexion-device-conn-type">
-<h1>2.8 CTR por Tipo de Conexión (device_conn_type)<a class="headerlink" href="#ctr-por-tipo-de-conexion-device-conn-type" title="Link to this heading">#</a></h1>
+<h2>2.8 CTR por Tipo de Conexión (device_conn_type)<a class="headerlink" href="#ctr-por-tipo-de-conexion-device-conn-type" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #0f1a0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #90be6d; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#90be6d;">2.8</span> &nbsp;CTR por Tipo de Conexión (<code>device_conn_type</code>)
@@ -2361,7 +2329,7 @@ El tipo de conexión del dispositivo (<code>device_conn_type</code>) puede influ
 </div>
 </div></section>
 <section id="top-10-site-id-por-volumen-y-su-ctr">
-<h1>2.9 Top 10 site_id por Volumen y su CTR<a class="headerlink" href="#top-10-site-id-por-volumen-y-su-ctr" title="Link to this heading">#</a></h1>
+<h2>2.9 Top 10 site_id por Volumen y su CTR<a class="headerlink" href="#top-10-site-id-por-volumen-y-su-ctr" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #0f1a0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #90be6d; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#90be6d;">2.9</span> &nbsp;Top 10 <code>site_id</code> por Volumen y su CTR
@@ -2394,7 +2362,7 @@ La gráfica combina <strong>volumen de impresiones</strong> con <strong>CTR</str
 </div>
 </div></section>
 <section id="top-10-app-id-por-volumen-y-su-ctr">
-<h1>2.10 Top 10 app_id por Volumen y su CTR<a class="headerlink" href="#top-10-app-id-por-volumen-y-su-ctr" title="Link to this heading">#</a></h1>
+<h2>2.10 Top 10 app_id por Volumen y su CTR<a class="headerlink" href="#top-10-app-id-por-volumen-y-su-ctr" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #0f1a0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #90be6d; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#90be6d;">2.10</span> &nbsp;Top 10 <code>app_id</code> por Volumen y su CTR
@@ -2424,7 +2392,7 @@ Similar al análisis de <code>site_id</code>, los top apps muestran que <strong>
 </p>
 </div></section>
 <section id="distribucion-de-registros-por-dia">
-<h1>2.11 Distribución de Registros por Día<a class="headerlink" href="#distribucion-de-registros-por-dia" title="Link to this heading">#</a></h1>
+<h2>2.11 Distribución de Registros por Día<a class="headerlink" href="#distribucion-de-registros-por-dia" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #1a0f2e 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #c4b5fd; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#c4b5fd;">2.11</span> &nbsp;Distribución de Registros por Día
@@ -2457,7 +2425,7 @@ La gráfica muestra el volumen diario de impresiones durante el período cubiert
 </div>
 </div></section>
 <section id="dashboard-resumen-del-dataset">
-<h1>2.12 Dashboard Resumen del Dataset<a class="headerlink" href="#dashboard-resumen-del-dataset" title="Link to this heading">#</a></h1>
+<h2>2.12 Dashboard Resumen del Dataset<a class="headerlink" href="#dashboard-resumen-del-dataset" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #0c2d48 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #219ebc; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#8ecae6;">2.12</span> &nbsp;Dashboard Resumen del Dataset
@@ -2509,7 +2477,7 @@ El dashboard consolida los hallazgos principales del EDA en una <strong>vista un
 </div>
 </div></section>
 <section id="conclusiones-del-eda">
-<h1>3. Conclusiones del EDA<a class="headerlink" href="#conclusiones-del-eda" title="Link to this heading">#</a></h1>
+<h2>3. Conclusiones del EDA<a class="headerlink" href="#conclusiones-del-eda" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #0f1a0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #90be6d; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
     <span style="color:#90be6d;">3.</span> &nbsp;Conclusiones del EDA
@@ -2540,6 +2508,7 @@ El dashboard consolida los hallazgos principales del EDA en una <strong>vista un
 - Aplicar **Target Encoding** para variables de alta cardinalidad.
 - Incluir **features temporales** (hora, día, franja) como predictores.
 - Excluir `id`, `device_id` y `device_ip` por alta cardinalidad sin valor predictivo.</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -2585,7 +2554,7 @@ El dashboard consolida los hallazgos principales del EDA en una <strong>vista un
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">0.1 Configuración del Entorno</p>
+        <p class="prev-next-title">Pipeline de Clasificación con scikit-learn</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -2607,28 +2576,27 @@ El dashboard consolida los hallazgos principales del EDA en una <strong>vista un
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">0.1 Configuración del Entorno e Importaciones</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#carga-del-dataset">1.1 Carga del Dataset</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#inspeccion-basica-del-dataset">1.2 Inspección Básica del Dataset</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#verificacion-de-valores-faltantes">1.3 Verificación de Valores Faltantes</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#distribucion-de-la-variable-target-click">1.4 Distribución de la Variable Target (click)</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#cardinalidad-de-variables-categoricas">1.5 Cardinalidad de Variables Categóricas</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-engineering-temporal">1.6 Feature Engineering Temporal</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#histogramas-de-variables-numericas-derivadas">2.1 Histogramas de Variables Numéricas Derivadas</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#frecuencia-de-las-principales-variables-categoricas">2.2 Frecuencia de las Principales Variables Categóricas</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#distribucion-de-clics-por-hora-del-dia">2.3 Distribución de Clics por Hora del Día</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#matriz-de-correlacion-para-variables-numericas">2.4 Matriz de Correlación para Variables Numéricas</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ctr-por-franja-horaria">2.5 CTR por Franja Horaria</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ctr-por-tipo-de-dispositivo-device-type">2.6 CTR por Tipo de Dispositivo (device_type)</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ctr-por-posicion-del-banner-banner-pos">2.7 CTR por Posición del Banner (banner_pos)</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ctr-por-tipo-de-conexion-device-conn-type">2.8 CTR por Tipo de Conexión (device_conn_type)</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#top-10-site-id-por-volumen-y-su-ctr">2.9 Top 10 site_id por Volumen y su CTR</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#top-10-app-id-por-volumen-y-su-ctr">2.10 Top 10 app_id por Volumen y su CTR</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#distribucion-de-registros-por-dia">2.11 Distribución de Registros por Día</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#dashboard-resumen-del-dataset">2.12 Dashboard Resumen del Dataset</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones-del-eda">3. Conclusiones del EDA</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuracion-del-entorno-e-importaciones">0.1 Configuración del Entorno e Importaciones</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#carga-del-dataset">1.1 Carga del Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inspeccion-basica-del-dataset">1.2 Inspección Básica del Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#verificacion-de-valores-faltantes">1.3 Verificación de Valores Faltantes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distribucion-de-la-variable-target-click">1.4 Distribución de la Variable Target (click)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cardinalidad-de-variables-categoricas">1.5 Cardinalidad de Variables Categóricas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-engineering-temporal">1.6 Feature Engineering Temporal</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#histogramas-de-variables-numericas-derivadas">2.1 Histogramas de Variables Numéricas Derivadas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#frecuencia-de-las-principales-variables-categoricas">2.2 Frecuencia de las Principales Variables Categóricas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distribucion-de-clics-por-hora-del-dia">2.3 Distribución de Clics por Hora del Día</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matriz-de-correlacion-para-variables-numericas">2.4 Matriz de Correlación para Variables Numéricas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ctr-por-franja-horaria">2.5 CTR por Franja Horaria</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ctr-por-tipo-de-dispositivo-device-type">2.6 CTR por Tipo de Dispositivo (device_type)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ctr-por-posicion-del-banner-banner-pos">2.7 CTR por Posición del Banner (banner_pos)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ctr-por-tipo-de-conexion-device-conn-type">2.8 CTR por Tipo de Conexión (device_conn_type)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#top-10-site-id-por-volumen-y-su-ctr">2.9 Top 10 site_id por Volumen y su CTR</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#top-10-app-id-por-volumen-y-su-ctr">2.10 Top 10 app_id por Volumen y su CTR</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distribucion-de-registros-por-dia">2.11 Distribución de Registros por Día</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dashboard-resumen-del-dataset">2.12 Dashboard Resumen del Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones-del-eda">3. Conclusiones del EDA</a></li>
 </ul>
-
   </nav></div>
 
 </div></div>

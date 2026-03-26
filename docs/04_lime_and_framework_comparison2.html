@@ -154,38 +154,8 @@
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="01_project_overview_and_eda3.html">0.1 Configuración del Entorno e Importaciones</a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<li class="toctree-l1"><a class="reference internal" href="02_sklearn_mlp_pipeline2.html">0.1 Configuración del Entorno</a></li>
-
-
-
-
-
-
-
-
-
-
-
+<li class="toctree-l1"><a class="reference internal" href="01_project_overview_and_eda3.html">📊 1. Exploración de Datos (EDA)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_sklearn_mlp_pipeline2.html">🧪 2. Pipeline scikit-learn</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03_pyspark_mlp_pipeline2.html">⚡ 3. Pipeline PySpark</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">🔬 4. LIME y Comparación</a></li>
 </ul>
@@ -357,7 +327,9 @@
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
 </button>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -373,6 +345,24 @@
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reload-the-sample">1. Reload the sample</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fit-a-local-model-for-explanation">2. Fit a local model for explanation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-a-lime-explanation-for-a-high-confidence-click-prediction">3. Generate a LIME explanation for a high-confidence click prediction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grafico-de-explicacion-lime-falso-positivo">4. Gráfico de explicación LIME (falso positivo)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#explicacion-lime-falso-negativo">5. Explicación LIME — Falso Negativo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grafico-de-explicacion-lime-falso-negativo">6. Gráfico de explicación LIME (falso negativo)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpret-the-explanation">7. Interpret the explanation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tabla-comparativa-de-metricas">8. Tabla Comparativa de Métricas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#curvas-roc-superpuestas">9. Curvas ROC Superpuestas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparacion-de-tiempos-de-computo">10. Comparación de Tiempos de Cómputo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reflexion-critica">11. reflexion critica</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -385,7 +375,6 @@
   <section class="tex2jax_ignore mathjax_ignore" id="explicabilidad-con-lime-y-comparacion-de-frameworks">
 <h1>Explicabilidad con LIME y Comparación de Frameworks<a class="headerlink" href="#explicabilidad-con-lime-y-comparacion-de-frameworks" title="Link to this heading">#</a></h1>
 <div style="background: linear-gradient(135deg, #1a0f2e 0%, #0f172a 100%); color:#f8fafc; padding:28px 32px; border-radius:18px; margin-bottom:16px; border-left:6px solid #c4b5fd; box-shadow:0 20px 45px rgba(0,0,0,0.35);">
-  <h1 style="margin:0 0 6px 0; font-size:2.1rem; letter-spacing:-0.02em;">Notebook 4: Explicabilidad con LIME y Comparación de Frameworks</h1>
   <p style="margin:0; font-size:1.05rem; line-height:1.65; color:#94a3b8;">
     Este notebook explica predicciones individuales del modelo MLP con <b style="color:#f8fafc;">LIME</b> y consolida la <b style="color:#f8fafc;">comparación final</b> entre scikit-learn y PySpark.
   </p>
@@ -479,16 +468,14 @@
 </div>
 </div>
 </div>
+<section id="reload-the-sample">
+<h2>1. Reload the sample<a class="headerlink" href="#reload-the-sample" title="Link to this heading">#</a></h2>
 <div style="background: linear-gradient(135deg, #0c2d48 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #219ebc; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
-    <span style="color:#8ecae6;">1.</span> &nbsp;Reload the local sample
+    <span style="color:#8ecae6;"> &nbsp;This notebook uses the same sampled dataset as the scikit-learn workflow. If the sample does not exist yet, it is regenerated from the compressed source file.
   </h2>
 </div>
-<div style="background-color:rgba(14,30,46,0.5); border-left:3px solid rgba(33,158,188,0.3); padding:10px 16px; border-radius:0 8px 8px 0; margin-top:4px;">
-  <p style="margin:0; color:#94a3b8; font-size:0.92rem; line-height:1.7;">
-    This notebook uses the same sampled dataset as the scikit-learn workflow. If the sample does not exist yet, it is regenerated from the compressed source file.
-  </p>
-</div><div class="cell docutils container">
+<div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Cargar modelo guardado</span>
 <span class="n">model_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">MODELS_DIR</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;sklearn_best_mlp.joblib&quot;</span>
@@ -532,16 +519,15 @@ Test set: 199,999 registros
 <p style="font-size: 15px; color: #b0b0b0;">
 Se cargó exitosamente el modelo entrenado en el notebook 02 (MLPClassifier con arquitectura <strong>(100, 50)</strong>) y se reconstruyó el mismo split train/test para garantizar que las explicaciones LIME sean coherentes con las métricas reportadas previamente. El test set de ~200K registros proporciona suficientes instancias para encontrar ejemplos de falsos positivos y falsos negativos que analizar.
 </p>
-</div><div style="background: linear-gradient(135deg, #1c1408 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #ffb703; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+</div></section>
+<section id="fit-a-local-model-for-explanation">
+<h2>2. Fit a local model for explanation<a class="headerlink" href="#fit-a-local-model-for-explanation" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #1c1408 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #ffb703; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
-    <span style="color:#ffb703;">2.</span> &nbsp;Fit a local model for explanation
+    <span style="color:#ffb703;">LIME explains one model at a time, so we rebuild a compact local pipeline here using the same feature set as notebook 02.
   </h2>
 </div>
-<div style="background-color:rgba(28,20,8,0.5); border-left:3px solid rgba(255,183,3,0.3); padding:10px 16px; border-radius:0 8px 8px 0; margin-top:4px;">
-  <p style="margin:0; color:#94a3b8; font-size:0.92rem; line-height:1.7;">
-    LIME explains one model at a time, so we rebuild a compact local pipeline here using the same feature set as notebook 02.
-  </p>
-</div><div class="cell docutils container">
+<div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Encontrar instancias mal clasificadas</span>
 <span class="n">errors</span> <span class="o">=</span> <span class="n">find_misclassified_instances</span><span class="p">(</span>
@@ -592,16 +578,15 @@ Total de errores de clasificación: 33,491 / 199,999 (16.75%)
     </p>
   </div>
 </div>
-</div><div style="background: linear-gradient(135deg, #0f1a0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #90be6d; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+</div></section>
+<section id="generate-a-lime-explanation-for-a-high-confidence-click-prediction">
+<h2>3. Generate a LIME explanation for a high-confidence click prediction<a class="headerlink" href="#generate-a-lime-explanation-for-a-high-confidence-click-prediction" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #0f1a0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #90be6d; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
-    <span style="color:#90be6d;">3.</span> &nbsp;Generate a LIME explanation for a high-confidence click prediction
+    <span style="color:#90be6d;">We select a test example with a relatively high predicted click probability so the explanation is easier to discuss in the report.
   </h2>
 </div>
-<div style="background-color:rgba(15,26,15,0.5); border-left:3px solid rgba(144,190,109,0.3); padding:10px 16px; border-radius:0 8px 8px 0; margin-top:4px;">
-  <p style="margin:0; color:#94a3b8; font-size:0.92rem; line-height:1.7;">
-    We select a test example with a relatively high predicted click probability so the explanation is easier to discuss in the report.
-  </p>
-</div><div class="cell docutils container">
+<div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Construir explicador LIME</span>
 <span class="n">lime_artifacts</span> <span class="o">=</span> <span class="n">build_lime_explainer_from_pipeline</span><span class="p">(</span>
@@ -741,10 +726,12 @@ Features más influyentes en la decisión errónea:
     </p>
   </div>
 </div>
-</div><div class="cell docutils container">
+</div></section>
+<section id="grafico-de-explicacion-lime-falso-positivo">
+<h2>4. Gráfico de explicación LIME (falso positivo)<a class="headerlink" href="#grafico-de-explicacion-lime-falso-positivo" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Gráfico de explicación LIME (falso positivo)</span>
-<span class="n">fig_fp</span> <span class="o">=</span> <span class="n">explanation_fp</span><span class="o">.</span><span class="n">as_pyplot_figure</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig_fp</span> <span class="o">=</span> <span class="n">explanation_fp</span><span class="o">.</span><span class="n">as_pyplot_figure</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">fig_fp</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
 <span class="n">fig_fp</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Explicación LIME — Falso Positivo&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
@@ -762,16 +749,15 @@ Features más influyentes en la decisión errónea:
 <p style="font-size: 15px; color: #b0b0b0;">
 La gráfica de barras horizontales muestra el <strong>peso de cada feature</strong> en la decisión local del modelo para esta instancia. Las barras hacia la <strong style="color: #ff6f61;">derecha (positivas)</strong> empujan la predicción hacia "Click", mientras que las barras hacia la <strong style="color: #4fc3f7;">izquierda (negativas)</strong> la empujan hacia "No Click". En este caso, las contribuciones positivas dominaron ampliamente, resultando en la predicción errónea con 96% de confianza.
 </p>
-</div><div style="background: linear-gradient(135deg, #1c1408 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #ffb703; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+</div></section>
+<section id="explicacion-lime-falso-negativo">
+<h2>5. Explicación LIME — Falso Negativo<a class="headerlink" href="#explicacion-lime-falso-negativo" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #1c1408 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #ffb703; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
-    <span style="color:#ffb703;">2.3</span> &nbsp;Explicación LIME — Falso Negativo
+    <span style="color:#ffb703;"></span> &nbsp;Analizamos un falso negativo: una instancia donde el modelo predijo “no clic” pero el usuario sí hizo clic. Esto revela qué patrones el modelo no logra capturar.
   </h2>
 </div>
-<div style="background-color:rgba(28,20,8,0.5); border-left:3px solid rgba(255,183,3,0.3); padding:10px 16px; border-radius:0 8px 8px 0; margin-top:4px;">
-  <p style="margin:0; color:#94a3b8; font-size:0.92rem; line-height:1.7;">
-    Analizamos un falso negativo: una instancia donde el modelo predijo “no clic” pero el usuario sí hizo clic. Esto revela qué patrones el modelo no logra capturar.
-  </p>
-</div><div class="cell docutils container">
+<div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Explicar un falso negativo</span>
 <span class="n">fn_idx</span> <span class="o">=</span> <span class="n">errors</span><span class="p">[</span><span class="s2">&quot;false_negatives&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
@@ -902,7 +888,10 @@ Features más influyentes en la decisión errónea:
     </p>
   </div>
 </div>
-</div><div class="cell docutils container">
+</div></section>
+<section id="grafico-de-explicacion-lime-falso-negativo">
+<h2>6. Gráfico de explicación LIME (falso negativo)<a class="headerlink" href="#grafico-de-explicacion-lime-falso-negativo" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Gráfico de explicación LIME (falso negativo)</span>
 <span class="n">fig_fn</span> <span class="o">=</span> <span class="n">explanation_fn</span><span class="o">.</span><span class="n">as_pyplot_figure</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -923,16 +912,15 @@ Features más influyentes en la decisión errónea:
 <p style="font-size: 15px; color: #b0b0b0;">
 Comparando ambas gráficas LIME (FP vs FN), se observa un contraste revelador: en el FP las contribuciones positivas son fuertes y dispersas entre varias features; en el FN, <strong>una sola feature negativa</strong> (<code>site_category</code>) domina la decisión. Esto sugiere que el modelo depende demasiado de ciertas categorías de sitio para "descartar" clics, lo que contribuye al bajo Recall global.
 </p>
-</div><div style="background: linear-gradient(135deg, #1c1408 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #fb8500; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+</div></section>
+<section id="interpret-the-explanation">
+<h2>7. Interpret the explanation<a class="headerlink" href="#interpret-the-explanation" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #1c1408 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #fb8500; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
-    <span style="color:#fb8500;">4.</span> &nbsp;Interpret the explanation
+    <span style="color:#fb8500;"></span>Positive weights increase the probability of <code style="background:#1e293b; color:#fb8500; padding:2px 6px; border-radius:4px;">click = 1</code>, while negative weights pull the prediction toward <code style="background:#1e293b; color:#fb8500; padding:2px 6px; border-radius:4px;">click = 0</code>. The table below separates the strongest positive and negative local drivers for this instance.
   </h2>
 </div>
-<div style="background-color:rgba(28,20,8,0.5); border-left:3px solid rgba(251,133,0,0.3); padding:10px 16px; border-radius:0 8px 8px 0; margin-top:4px;">
-  <p style="margin:0; color:#94a3b8; font-size:0.92rem; line-height:1.7;">
-    Positive weights increase the probability of <code style="background:#1e293b; color:#fb8500; padding:2px 6px; border-radius:4px;">click = 1</code>, while negative weights pull the prediction toward <code style="background:#1e293b; color:#fb8500; padding:2px 6px; border-radius:4px;">click = 0</code>. The table below separates the strongest positive and negative local drivers for this instance.
-  </p>
-</div><div class="cell docutils container">
+<div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">frame</span><span class="p">,</span> <span class="n">instance_type</span> <span class="ow">in</span> <span class="p">[</span>
     <span class="p">(</span><span class="s2">&quot;Falso Positivo&quot;</span><span class="p">,</span> <span class="n">fp_frame</span><span class="p">,</span> <span class="s2">&quot;FP&quot;</span><span class="p">),</span>
@@ -1192,25 +1180,15 @@ Comparando ambas gráficas LIME (FP vs FN), se observa un contraste revelador: e
 <div style="margin-top: 15px; padding: 12px 16px; background: rgba(255,255,255,0.03); border-left: 3px solid #ffb74d; border-radius: 6px;">
   <strong style="color: #ffb74d;">📌 Hallazgo clave de LIME:</strong> Las features <code>target_enc__C14</code> y <code>target_enc__C17</code> aparecen como las más influyentes en <strong>ambos</strong> tipos de error. Esto indica que el Target Encoding de estas variables anónimas es el principal driver del modelo, para bien y para mal.
 </div>
-</div><div style="background: linear-gradient(135deg, #1a0f0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #f28482; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+</div></section>
+<section id="tabla-comparativa-de-metricas">
+<h2>8. Tabla Comparativa de Métricas<a class="headerlink" href="#tabla-comparativa-de-metricas" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #0f1a0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #90be6d; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
-    <span style="color:#f28482;">5.</span> &nbsp;Framework comparison summary
+    <span style="color:#90be6d;"></span> Comparamos todas las métricas obligatorias lado a lado: Accuracy, Precision, Recall, F1, ROC AUC, tiempos de entrenamiento y predicción, y tamaño del dataset utilizado.
   </h2>
 </div>
-<div style="background-color:rgba(26,15,15,0.5); border-left:3px solid rgba(242,132,130,0.3); padding:10px 16px; border-radius:0 8px 8px 0; margin-top:4px;">
-  <p style="margin:0; color:#94a3b8; font-size:0.92rem; line-height:1.7;">
-    The final report should not stop at metrics. It should also explain why each framework is useful in practice.
-  </p>
-</div><div style="background: linear-gradient(135deg, #0f1a0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #90be6d; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
-  <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
-    <span style="color:#90be6d;">3.1</span> &nbsp;Tabla Comparativa de Métricas
-  </h2>
-</div>
-<div style="background-color:rgba(15,26,15,0.5); border-left:3px solid rgba(144,190,109,0.3); padding:10px 16px; border-radius:0 8px 8px 0; margin-top:4px;">
-  <p style="margin:0; color:#94a3b8; font-size:0.92rem; line-height:1.7;">
-    Comparamos todas las métricas obligatorias lado a lado: Accuracy, Precision, Recall, F1, ROC AUC, tiempos de entrenamiento y predicción, y tamaño del dataset utilizado.
-  </p>
-</div><div class="cell docutils container">
+<div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Cargar métricas de scikit-learn</span>
 <span class="n">sklearn_metrics_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">MODELS_DIR</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;sklearn_metrics.csv&quot;</span>
@@ -1345,16 +1323,15 @@ COMPARACIÓN: scikit-learn vs PySpark
     </p>
   </div>
 </div>
-</div><div style="background: linear-gradient(135deg, #0f1a0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #90be6d; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+</div></section>
+<section id="curvas-roc-superpuestas">
+<h2>9. Curvas ROC Superpuestas<a class="headerlink" href="#curvas-roc-superpuestas" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #0f1a0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #90be6d; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
-    <span style="color:#90be6d;">3.2</span> &nbsp;Curvas ROC Superpuestas
+    <span style="color:#90be6d;"></span> Comparamos visualmente las curvas ROC de ambos frameworks en un mismo gráfico. Si los datos de predicción de PySpark están disponibles, se superponen ambas curvas; de lo contrario, se muestra solo la de scikit-learn con referencia al AUC de Spark.
   </h2>
 </div>
-<div style="background-color:rgba(15,26,15,0.5); border-left:3px solid rgba(144,190,109,0.3); padding:10px 16px; border-radius:0 8px 8px 0; margin-top:4px;">
-  <p style="margin:0; color:#94a3b8; font-size:0.92rem; line-height:1.7;">
-    Comparamos visualmente las curvas ROC de ambos frameworks en un mismo gráfico. Si los datos de predicción de PySpark están disponibles, se superponen ambas curvas; de lo contrario, se muestra solo la de scikit-learn con referencia al AUC de Spark.
-  </p>
-</div><div class="cell docutils container">
+<div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Cargar predicciones de sklearn guardadas</span>
 <span class="n">sklearn_pred_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">MODELS_DIR</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;sklearn_predictions.parquet&quot;</span>
@@ -1406,16 +1383,15 @@ COMPARACIÓN: scikit-learn vs PySpark
 <p style="font-size: 15px; color: #b0b0b0;">
 La superposición de ambas curvas ROC confirma visualmente que los dos modelos tienen <strong>capacidad discriminativa similar</strong>, con scikit-learn ligeramente por encima de PySpark. Ambas curvas están claramente por encima de la diagonal (azar), pero ninguna alcanza la zona de "buena discriminación" (AUC > 0.8). La brecha entre ambas curvas es mínima, consistente con la diferencia de AUC de ~0.02 puntos.
 </p>
-</div><div style="background: linear-gradient(135deg, #0f1a0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #90be6d; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+</div></section>
+<section id="comparacion-de-tiempos-de-computo">
+<h2>10. Comparación de Tiempos de Cómputo<a class="headerlink" href="#comparacion-de-tiempos-de-computo" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #0f1a0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #90be6d; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
-    <span style="color:#90be6d;">3.3</span> &nbsp;Comparación de Tiempos de Cómputo
+    <span style="color:#90be6d;"></span> Visualizamos las diferencias en tiempo de entrenamiento y predicción entre ambos frameworks. PySpark tiene mayor overhead inicial pero escala mejor con datasets grandes.
   </h2>
 </div>
-<div style="background-color:rgba(15,26,15,0.5); border-left:3px solid rgba(144,190,109,0.3); padding:10px 16px; border-radius:0 8px 8px 0; margin-top:4px;">
-  <p style="margin:0; color:#94a3b8; font-size:0.92rem; line-height:1.7;">
-    Visualizamos las diferencias en tiempo de entrenamiento y predicción entre ambos frameworks. PySpark tiene mayor overhead inicial pero escala mejor con datasets grandes.
-  </p>
-</div><div class="cell docutils container">
+<div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">time_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span>
     <span class="p">{</span>
@@ -1484,15 +1460,13 @@ La superposición de ambas curvas ROC confirma visualmente que los dos modelos t
 <div style="margin-top: 15px; padding: 12px 16px; background: rgba(255,255,255,0.03); border-left: 3px solid #ffb74d; border-radius: 6px;">
   <strong style="color: #ffb74d;">📌 Conclusión clave:</strong> Para este problema, scikit-learn con 1M de registros obtiene <strong>mejores métricas en 20× menos tiempo</strong> que PySpark con 40M. PySpark justifica su uso cuando los datos no caben en memoria de una sola máquina o cuando se dispone de un cluster distribuido real. En entornos locales, el overhead de Spark penaliza sin aportar ganancia en rendimiento del modelo.
 </div>
-</div><div style="background: linear-gradient(135deg, #1a0f0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #f28482; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
+</div></section>
+<section id="reflexion-critica">
+<h2>11. reflexion critica<a class="headerlink" href="#reflexion-critica" title="Link to this heading">#</a></h2>
+<div style="background: linear-gradient(135deg, #1a0f0f 0%, #0f172a 100%); color:#f8fafc; padding:22px 26px; border-radius:14px; margin-bottom:8px; border-left:5px solid #f28482; box-shadow:0 12px 28px rgba(0,0,0,0.28);">
   <h2 style="margin:0; font-size:1.45rem; letter-spacing:-0.01em; color:#e2e8f0;">
-    <span style="color:#f28482;">4.</span> &nbsp;Reflexión Crítica
+    <span style="color:#f28482;"></span> Análisis crítico de los resultados y reflexiones sobre cuándo usar cada framework.
   </h2>
-</div>
-<div style="background-color:rgba(26,15,15,0.5); border-left:3px solid rgba(242,132,130,0.3); padding:10px 16px; border-radius:0 8px 8px 0; margin-top:4px;">
-  <p style="margin:0; color:#94a3b8; font-size:0.92rem; line-height:1.7;">
-    Análisis crítico de los resultados y reflexiones sobre cuándo usar cada framework.
-  </p>
 </div>
 <div style="background: linear-gradient(135deg, #1a0f0f 0%, #0f172a 100%); color:#f8fafc; padding:16px 22px; border-radius:12px; margin-bottom:6px; border-left:4px solid #f28482; box-shadow:0 8px 20px rgba(0,0,0,0.22);">
   <h3 style="margin:0; font-size:1.15rem; color:#e2e8f0;">
@@ -1565,6 +1539,7 @@ La superposición de ambas curvas ROC confirma visualmente que los dos modelos t
     Este proyecto demostró un flujo de trabajo completo de clasificación CTR, desde el análisis exploratorio hasta la explicabilidad local, comparando dos paradigmas de implementación. La combinación de scikit-learn para prototipado rápido e interpretabilidad, con PySpark para escalabilidad a datos masivos, representa un enfoque pragmático y realista para problemas de Machine Learning en producción.
   </p>
 </div></section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1611,6 +1586,33 @@ La superposición de ambas curvas ROC confirma visualmente que los dos modelos t
             </div>
             
             
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reload-the-sample">1. Reload the sample</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fit-a-local-model-for-explanation">2. Fit a local model for explanation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-a-lime-explanation-for-a-high-confidence-click-prediction">3. Generate a LIME explanation for a high-confidence click prediction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grafico-de-explicacion-lime-falso-positivo">4. Gráfico de explicación LIME (falso positivo)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#explicacion-lime-falso-negativo">5. Explicación LIME — Falso Negativo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grafico-de-explicacion-lime-falso-negativo">6. Gráfico de explicación LIME (falso negativo)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpret-the-explanation">7. Interpret the explanation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tabla-comparativa-de-metricas">8. Tabla Comparativa de Métricas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#curvas-roc-superpuestas">9. Curvas ROC Superpuestas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparacion-de-tiempos-de-computo">10. Comparación de Tiempos de Cómputo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reflexion-critica">11. reflexion critica</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
